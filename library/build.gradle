@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: 'git-version.gradle'
 apply plugin: 'com.github.dcendents.android-maven'
-group='io.nyris'
+group='com.github.nyris'
 
 def getDefaultPublishConfig = { ->
     def publishConfig = System.getenv("SDK_DEFAULT_PUBLISH_CONFIG")
