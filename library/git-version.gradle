@@ -1,0 +1,29 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.ajoberstar:grgit:$grgitVersion"
+    }
+}
+
+import org.ajoberstar.grgit.Grgit
+
+ext {
+    grgit = Grgit.open(currentDir: projectDir)
+
+    def gitNameBranch = grgit.branch.current().name
+    gitVersionName = grgit.describe()
+    gitVersionCode = grgit.log(includes: [gitNameBranch]).size()
+    gitCommitHash = grgit.head().abbreviatedId
+
+    if(gitVersionName == null){
+        gitVersionName="develop-$gitCommitHash"
+    }
+}
+
+task printVersion() {
+    println("Version Name: $gitVersionName")
+    println("Version Code: $gitVersionCode")
+    println("Commit Hash: $gitCommitHash")
+}

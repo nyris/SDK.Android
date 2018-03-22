@@ -1,0 +1,228 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: 'git-version.gradle'
+apply plugin: 'com.github.dcendents.android-maven'
+group='io.nyris'
+
+def getDefaultPublishConfig = { ->
+    def publishConfig = System.getenv("SDK_DEFAULT_PUBLISH_CONFIG")
+    if(publishConfig== null || publishConfig.isEmpty())
+        publishConfig = "prodRelease"
+    return publishConfig
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode gitVersionCode
+        versionName gitVersionName
+    }
+
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "GIT_COMMIT_HASH", "\""+gitCommitHash+"\""
+            buildConfigField "String", "SDK_VERSION", "\""+gitVersionName+"\""
+        }
+        release {
+            minifyEnabled true
+            buildConfigField "String", "GIT_COMMIT_HASH", "\""+gitCommitHash+"\""
+            buildConfigField "String", "SDK_VERSION", "\""+gitVersionName+"\""
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions 'environment'
+    productFlavors {
+        dev{
+            dimension 'environment'
+        }
+        prod{
+            dimension 'environment'
+        }
+    }
+
+    sourceSets {
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/di'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/di/component'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/di/module'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/di/qualifier'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/di/qualifier/network'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/di/qualifier/sdk'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/api'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/api/base'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/api/imagematching'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/api/manualmatching'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/api/objectproposal'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/api/offermanager'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/api/offersimilarity'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/api/textsearch'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/model'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/network/service'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/utils'
+        dev.java.srcDirs += 'src/dev/java/io/nyris/sdk/utils/rx'
+
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/di'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/di/component'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/di/module'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/di/qualifier'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/di/qualifier/network'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/di/qualifier/sdk'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/base'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/imagematching'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/manualmatching'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/objectproposal'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/offermanager'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/offersimilarity'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/textsearch'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/model'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/service'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/utils'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/utils/rx'
+
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/component'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/module'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/qualifier'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/qualifier/network'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/qualifier/sdk'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/base'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/imagematching'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/manualmatching'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/objectproposal'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/offermanager'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/offersimilarity'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/textsearch'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/model'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/service'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/utils'
+        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/utils/rx'
+
+
+        test.java.srcDirs += 'src/test/java/io/nyris/sdk/rules'
+        test.java.srcDirs += 'src/test/java/io/nyris/sdk/unit'
+
+        testDev.java.srcDirs += 'src/testDev/java/io/nyris/sdk/rules'
+        testDev.java.srcDirs += 'src/testDev/java/io/nyris/sdk/unit'
+    }
+
+    testOptions {
+        unitTests.all {
+            // All the usual Gradle options.
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen {false}
+                showStandardStreams = true
+            }
+        }
+    }
+
+    defaultPublishConfig getDefaultPublishConfig()
+    publishNonDefault true
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.version = gitVersionName
+            pom.groupId = 'io.nyris'
+            pom.artifactId = "sdk"
+            pom.project{
+                inceptionYear '2018'
+                organization {
+                    name 'nyris GmbH'
+                    url 'https://nyris.io/'
+                }
+
+                licenses {
+                    license {
+                        name 'APACHE LICENSE, VERSION 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'smellouk'
+                        name 'Sidali Mellouk'
+                    }
+                }
+            }
+
+            pom.withXml {
+                Node pomNode = asNode()
+                pomNode.dependencies.'*'.findAll() {
+                    it.scope.text() == 'test'
+                }.each() {
+                    it.parent().remove(it)
+                }
+            }
+
+            if (gitVersionName.contains("develop")) {
+                repository(url: System.getenv("NUGET_URL_DEVELOP")){
+                    authentication(userName: System.getenv("NUGET_USER"), password: System.getenv("NUGET_PASSWORD"))
+                }
+            } else {
+                repository(url: System.getenv("NUGET_URL")){
+                    authentication(userName: System.getenv("NUGET_USER"), password: System.getenv("NUGET_PASSWORD"))
+                }
+            }
+        }
+    }
+    doLast{
+        println android.defaultPublishConfig
+        println "\u001B[32mUploaded SDK version : $gitVersionName\u001B[0m"
+    }
+}
+
+dependencies {
+
+    //Test
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "org.powermock:powermock-module-junit4:$powermockVersion"
+    testImplementation "org.powermock:powermock-api-mockito2:$powermockVersion"
+
+    //Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    // parser
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$dagger2Version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2Version"
+    implementation "com.google.dagger:dagger-android:$dagger2Version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2Version"
+
+    // reactive
+    api "io.reactivex.rxjava2:rxjava:$rxjava2Version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
+
+    //Network
+    api "com.squareup.retrofit2:retrofit:$retrofit2Version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2Version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2Version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    //Arch lifecycle
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+}
