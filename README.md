@@ -15,7 +15,7 @@ The SDK is written in [Kotlin](https://kotlinlang.org/) and compatible with [Jav
 Why new SDK ?
 -----
 The the old [SDK](https://github.com/nyris/Nyris.IMX.Android) is offering only image matching services 
-and based on asynchronous callback system. This new SDK offers :
+and based on asynchronous callback system. This new SDK offers:
 
 * Support of Reactive programming paradigm
 * No more asynchronous callback/asyncTask
@@ -244,7 +244,7 @@ Extract objects from an image
 ```
 Returned response is a List of ObjectProposal. 
 
-The extracted object has :
+The extracted object has:
 * `confidence` is the probability of the top item. Value range between : `0-1`.
 * `region` is a Bounding box. It represents the location and  thesize of the object in the sent image. 
 
