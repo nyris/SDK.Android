@@ -18,11 +18,11 @@ The the old [SDK](https://github.com/nyris/Nyris.IMX.Android) is offering only i
 and based on asynchronous callback system. This new SDK offers :
 
 * Support of Reactive programming paradigm
-* No more Asynchronous Callback/AsyncTask
-* Better Multithreading handling
-* Better Error Handling
+* No more asynchronous callback/asyncTask
+* Better multithreading handling
+* Better error handling
 * Type-safe HTTP client
-* Unified Response
+* Unified response
 * All the different nyris services 
 
 nyris services 
