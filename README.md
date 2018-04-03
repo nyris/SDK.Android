@@ -246,7 +246,7 @@ Returned response is a List of ObjectProposal.
 
 The extracted object has:
 * `confidence` is the probability of the top item. Value range between : `0-1`.
-* `region` is a Bounding box. It represents the location and  thesize of the object in the sent image. 
+* `region` is a Bounding box. It represents the location and the size of the object in the sent image. 
 
 
 ### Mark sent image for manual matching : 
