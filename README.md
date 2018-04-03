@@ -210,7 +210,7 @@ dependencies {
 ```
 The response is an object of type `OfferResponseBody` that contains list of `offers`. 
 
-* If you have your provided output format, you should use this call to get response as `JSON` format :
+* If you specified a custom output format, you should use this call to get response as `JSON` format :
 
 `kotlin`
 ```kotlin
