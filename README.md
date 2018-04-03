@@ -250,7 +250,7 @@ The extracted object has:
 
 
 ### Mark sent image for manual matching
-It happened that our service can't recognize or match an image, this is why we provide you a service to notify us
+It may happen that our service can't recognize or match an image. This is why we provide you a service to notify us
 about the unrecognized image and we will match it manually.
 
 Before you mark an image for manual match you will need to extract the `requestId`. 
