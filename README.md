@@ -15,7 +15,7 @@ The SDK is written in [Kotlin](https://kotlinlang.org/) and compatible with [Jav
 Why new SDK ?
 -----
 The the old [SDK](https://github.com/nyris/Nyris.IMX.Android) is offering only image matching services 
-and based on Asynchronous Callback system. This new SDK offers :
+and based on asynchronous callback system. This new SDK offers :
 
 * Support of Reactive programming paradigm
 * No more Asynchronous Callback/AsyncTask
