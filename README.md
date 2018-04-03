@@ -10,11 +10,11 @@ for retail and industry.
 For more information please see [nyris.io](https://nyris.io/)
 
 We provide a new SDK with better error handling and reactive programming support.
-The SDK is written in `kotlin` and compatible with `Java`. 
+The SDK is written in [Kotlin](https://kotlinlang.org/) and compatible with [Java](https://docs.oracle.com/javase/8/docs/technotes/guides/language/index.html). 
 
 Why new SDK ?
 -----
-The the old [sdk](https://github.com/nyris/Nyris.IMX.Android) is offering only image matching service 
+The the old [SDK](https://github.com/nyris/Nyris.IMX.Android) is offering only image matching service 
 and based on Asynchronous Callback system. This new SDK offers :
 
 * Support of Reactive programming paradigm
