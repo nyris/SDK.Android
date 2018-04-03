@@ -38,7 +38,7 @@ We offer :
 Requirements
 ----- 
 * Android >= 4.0
-* Image media format `*.JPEG/*.JPG`
+* Images in **JPEG** format
 * The minimum resolution of the image is `512x512 px`
 * The Maximum size of the image must be equal or low to `0.5 mb` 
 
