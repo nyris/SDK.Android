@@ -287,7 +287,7 @@ After getting the `requestId` you can mark the image as not found.
 ### Text Match Search
 nyris offers a service that helps you to search offers by text, sku, barcode, ...etc
 
-you can use the text search service the same way like old [image matching service]()
+you can use the text search service the same way as [image matching service](#match-your-first-image)
 
 #### Basic way to search : 
 
