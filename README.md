@@ -249,7 +249,7 @@ The extracted object has:
 * `region` is a Bounding box. It represents the location and the size of the object in the sent image. 
 
 
-### Mark sent image for manual matching : 
+### Mark sent image for manual matching
 It happened that our service can't recognize or match an image, this is why we provide you a service to notify us
 about the unrecognized image and we will match it manually.
 
