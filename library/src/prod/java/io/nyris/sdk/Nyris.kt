@@ -95,8 +95,8 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDev
     /**
      * {@inheritDoc}
      */
-    override fun manualMatching(): IManualMatchingApi {
-        return apiHelper.manualMatching()
+    override fun notFoundMatching(): INotFoundMatchingApi {
+        return apiHelper.notFoundMatching()
     }
 
     /**

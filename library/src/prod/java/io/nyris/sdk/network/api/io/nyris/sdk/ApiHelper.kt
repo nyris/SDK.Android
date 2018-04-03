@@ -36,7 +36,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper, IDeve
 
     private lateinit var objectProposal: IObjectProposalApi
 
-    private lateinit var manualMatching: IManualMatchingApi
+    private lateinit var manualMatching: INotFoundMatchingApi
 
     private lateinit var textSearch: ITextSearchApi
 
@@ -155,14 +155,14 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper, IDeve
      * @param manualMatching the manual matching api
      */
     @Inject
-    fun setManualMatching(manualMatching: IManualMatchingApi){
+    fun setManualMatching(manualMatching: INotFoundMatchingApi){
         this.manualMatching = manualMatching
     }
 
     /**
      * {@inheritDoc}
      */
-    override fun manualMatching(): IManualMatchingApi {
+    override fun notFoundMatching(): INotFoundMatchingApi {
         return manualMatching
     }
 

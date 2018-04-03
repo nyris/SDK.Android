@@ -71,6 +71,7 @@ Get Started
 * [Destroy the instance](#destroy-the-instance)
 * [Match your first image](#match-your-first-image)
 * [Extract objects from your image](#extract-objects-from-your-image)
+* [Mark sent image as not found](#mark-sent-image-as-not-found)
 * [Text Match Search](#text-match-search)
 * [Dex Count Methods Info](#dex-count-methods-info)
 
@@ -249,11 +250,11 @@ The extracted object has:
 * `region` is a Bounding box. It represents the location and the size of the object in the sent image. 
 
 
-### Mark sent image for manual matching
+### Mark sent image as not found
 It may happen that our service can't recognize or match an image. This is why we provide you a service to notify us
-about the unrecognized image and we will match it manually.
+about the unrecognized image.
 
-Before you mark an image for manual match you will need to extract the `requestId`. 
+Before you mark an image as not found, you will need to extract the `requestId`. 
 
 `kotlin`
 ```kotlin   
@@ -274,8 +275,8 @@ After getting the `requestId` you can mark the image for manual matching.
 `kotlin`
 ```kotlin
     nyris
-        .manualMatching()
-        .markForManualMatch(requestId)
+        .notFoundMatching()
+        .markAsNotFound(requestId)
         .subscribe({/*it:ResponseBody*/    
             ...
         },{/*it:Throwable*/    

@@ -70,16 +70,16 @@ internal class ServiceModule {
     }
 
     /**
-     * Provide Manual Matching Service
-     * Used as service to send request id to the defined endpoint by the the {@code service}.
+     * Provide Not Found Matching Service
+     * Used as service to mark unrecognized image as not found to the defined endpoint by the the {@code service}.
      *
      * @param retrofit the retrofit
-     * @return the manual matching service
+     * @return the not fount matching service
      */
     @Provides
     @Singleton
-    fun provideManualMatchingService(retrofit: Retrofit): ManualMatchingService {
-        return retrofit.create<ManualMatchingService>(ManualMatchingService::class.java)
+    fun provideNotFoundMatchingService(retrofit: Retrofit): NotFoundMatchingService {
+        return retrofit.create<NotFoundMatchingService>(NotFoundMatchingService::class.java)
     }
 
     /**
@@ -153,22 +153,22 @@ internal class ServiceModule {
     }
 
     /**
-     * Provide Manual Matching Api
+     * Provide Not Found Matching Api
      * Used as api to to set image {X} to be matched manually.
      *
-     * @param manualMatchingService the manual matching service
+     * @param notFoundMatchingService the not found matching service
      * @param schedulerProvider the sdk scheduler
      * @param apiHeader the api header
      * @param endpoints the endpoint builder
-     * @return the manual matching api
+     * @return the not found matching api
      */
     @Provides
     @Singleton
-    fun provideManualMatchingApi(manualMatchingService: ManualMatchingService,
-                                 schedulerProvider : SdkSchedulerProvider,
-                                 apiHeader: ApiHeader,
-                                 endpoints: EndpointBuilder): IManualMatchingApi {
-        return ManualMatchingApi(manualMatchingService, schedulerProvider, apiHeader, endpoints)
+    fun provideNotFoundMatchingApi(notFoundMatchingService: NotFoundMatchingService,
+                                   schedulerProvider : SdkSchedulerProvider,
+                                   apiHeader: ApiHeader,
+                                   endpoints: EndpointBuilder): INotFoundMatchingApi {
+        return NotFoundMatchingApi(notFoundMatchingService, schedulerProvider, apiHeader, endpoints)
     }
 
     /**

@@ -7,9 +7,6 @@ import org.mockito.Mock;
 import java.io.IOException;
 import java.util.Objects;
 
-import io.nyris.sdk.IManualMatchingApi;
-import io.nyris.sdk.ManualMatchingApi;
-import io.nyris.sdk.ManualMatchingService;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import okhttp3.MediaType;
@@ -24,18 +21,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * ManualMatchingApiTest.java - Unit tests for the implementation of {@link IManualMatchingApi}.
+ * NotFoundMatchingApiTest.java - Unit tests for the implementation of {@link INotFoundMatchingApi}.
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 @SuppressWarnings("KotlinInternalInJava")
-public class ManualMatchingApiTest extends BaseTest {
+public class NotFoundMatchingApiTest extends BaseTest {
     @Mock
-    private ManualMatchingService manualMatchingService;
+    private NotFoundMatchingService notFoundMatchingService;
 
-    private ManualMatchingApi manualMatchingApi;
+    private NotFoundMatchingApi notFoundMatchingApi;
 
     private final String emptyResponse = "";
 
@@ -46,26 +43,26 @@ public class ManualMatchingApiTest extends BaseTest {
     public void setUp(){
         super.setUp();
 
-        manualMatchingApi = new ManualMatchingApi(manualMatchingService,
+        notFoundMatchingApi = new NotFoundMatchingApi(notFoundMatchingService,
                 sdkScheduler,
                 apiHeader,
                 endpoints);
     }
 
     @Test
-    public void markForManualMatch_shouldReturnEmptyResponseBody(){
+    public void markAsNotFound_shouldReturnEmptyResponseBody(){
         //Get an instance of ResponseBody
         ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),emptyResponse);
-        when(manualMatchingService.markForManualMatch(anyString(), anyMap()))
+        when(notFoundMatchingService.markAsNotFound(anyString(), anyMap()))
                 .thenReturn(Single.just(responseBody));
 
         //When Manual Matching Api is asked to mark image for manual matching
-        TestObserver<ResponseBody> testObserver = manualMatchingApi
-                .markForManualMatch(requestId)
+        TestObserver<ResponseBody> testObserver = notFoundMatchingApi
+                .markAsNotFound(requestId)
                 .test();
 
-        //verify markForManualMatch method called once
-        verify(manualMatchingService,times(1)).markForManualMatch(anyString(), anyMap());
+        //verify markAsNotFound method called once
+        verify(notFoundMatchingService,times(1)).markAsNotFound(anyString(), anyMap());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -74,18 +71,18 @@ public class ManualMatchingApiTest extends BaseTest {
     }
 
     @Test
-    public void markForManualMatch_shouldTerminatedWithHttpError() {
+    public void markAsNotFound_shouldTerminatedWithHttpError() {
         HttpException httpException = new HttpException(
                 Response.error(403, ResponseBody.create(MediaType.parse("application/json"),
                         "Forbidden")));
 
         //Get an instance of HttpException
-        when(manualMatchingService.markForManualMatch(anyString(), anyMap()))
+        when(notFoundMatchingService.markAsNotFound(anyString(), anyMap()))
                 .thenReturn(Single.error(httpException));
 
         //When Manual MatchingApi Api is asked to mark image for manual matching
-        TestObserver<ResponseBody> testObserver = manualMatchingApi
-                .markForManualMatch(requestId)
+        TestObserver<ResponseBody> testObserver = notFoundMatchingApi
+                .markAsNotFound(requestId)
                 .test();
 
         //Then
@@ -93,14 +90,14 @@ public class ManualMatchingApiTest extends BaseTest {
     }
 
     @Test
-    public void markForManualMatch_shouldTerminatedWithIOError() {
+    public void markAsNotFound_shouldTerminatedWithIOError() {
         //Get an instance of IOException
-        when(manualMatchingService.markForManualMatch(anyString(), anyMap()))
+        when(notFoundMatchingService.markAsNotFound(anyString(), anyMap()))
                 .thenReturn(Single.error(new IOException()));
 
         //When Manual MatchingApi Api is asked to mark image for manual matching
-        TestObserver<ResponseBody> testObserver = manualMatchingApi
-                .markForManualMatch(requestId)
+        TestObserver<ResponseBody> testObserver = notFoundMatchingApi
+                .markAsNotFound(requestId)
                 .test();
 
         //Then

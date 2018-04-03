@@ -56,12 +56,12 @@ interface IApiHelper {
     fun objectProposal() : IObjectProposalApi
 
     /**
-     * Get Manual Matching Api
+     * Get Not found Api
      *
-     * @see IManualMatchingApi
-     * @return the manual matching api
+     * @see INotFoundMatchingApi
+     * @return the not found api
      */
-    fun manualMatching() : IManualMatchingApi
+    fun notFoundMatching() : INotFoundMatchingApi
 
     /**
      * Get Text Search Api
