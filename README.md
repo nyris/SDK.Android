@@ -330,8 +330,8 @@ you can use the text search service the same way as [image matching service](#ma
 The dex count for the SDK is around 580 methods which mean around 1% of 64k methods Limit.  
 
     Total methods in library: 580 (0.89% used)
-    Total fields in library:  245 (0.37% used)
-    Total classes in library:  123 (0.19% used)
+    Total fields in library: 245 (0.37% used)
+    Total classes in library: 123 (0.19% used)
 
 License
 =======
