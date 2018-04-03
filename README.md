@@ -75,7 +75,7 @@ Get Started
 * [Dex Count Methods Info](#dex-count-methods-info)
 
 ### Get instance 
-First, initialize an instance of INyris with your API Key :
+First, initialize an instance of `INyris` with your API Key :
  
 `java`
 ```java
