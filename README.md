@@ -263,14 +263,14 @@ Before you mark an image as not found, you will need to extract the `requestId`.
         .match<OfferResponse>(imageByteArray, OfferResponse::class.java)
         .subscribe({/*it:OfferResponse*/        
             //Handle your response
-            requestId = it.headers!!["X-Matching-Request"]
+            requestId = it.getRequestId()
             
         },{/*it:Throwable*/    
             ...
         })
 ```
 
-After getting the `requestId` you can mark the image for manual matching. 
+After getting the `requestId` you can mark the image as not found. 
 
 `kotlin`
 ```kotlin
