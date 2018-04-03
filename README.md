@@ -79,29 +79,35 @@ First, initialize an instance of `INyris` with your API Key :
  
 `java`
 ```java
-class Sample{
+class DemoApp{
     private INyris nyris;
-    public Sample(){
-        nyris = Nyris.Companion.getInstance("YOUR_API_KEY");
+    @Override
+    public onCreate(){
+        nyris = Nyris.Companion.createInstance("YOUR_API_KEY");
         //OR
-        nyris = Nyris.Companion.getInstance("YOUR_API_KEY", /*Enable debug outputs*/true);
+        nyris = Nyris.Companion.createInstance("YOUR_API_KEY", /*Enable debug outputs*/true);
+    }
+    
+    public INyris getNyrisInstance(){
+        return nyris;
     }
 }
 ```
 
 `kotlin`
 ```kotlin
-class Sample{
-    private var nyris : INyris
-    init{
-        nyris = Nyris.getInstance("YOUR_API_KEY")
+class DemoApp : Application(){
+    private var nyris : INyris    
+    override fun onCreate() {
+        super.onCreate()
+        nyris = Nyris.createInstance(BuildConfig.API_KEY, true)
         //OR
-        nyris = Nyris.getInstance("YOUR_API_KEY", /*Enable debug outputs*/true)
+        nyris = Nyris.createInstance("YOUR_API_KEY", /*Enable debug outputs*/true)
     }
 }
 ```
-### Destroy the instance 
-You can easily free the created instance by adding the instance to the lifecyle of your main activity
+### Destroy the instances 
+You can easily free all the created instances by adding `nyris` to the lifecyle of your main activity
 or by calling `destroy()` of the sdk
 
 `kotlin`

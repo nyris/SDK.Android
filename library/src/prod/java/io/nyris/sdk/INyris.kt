@@ -33,7 +33,7 @@ interface INyris : IApiHelper, LifecycleObserver {
     override fun setApiKey(apiKey: String): INyris
 
     /**
-     * Destroy the instance of INyris
+     * Destroy all the instances of INyris
      */
     fun destroy()
 }
