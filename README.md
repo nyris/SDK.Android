@@ -40,7 +40,7 @@ Requirements
 * Android >= 4.0
 * Images in **JPEG** format
 * The minimum dimensions of the image are `512x512 px`
-* The Maximum size of the image must be equal or low to `0.5 mb` 
+* The maximum size of the image is less than or equal to `500 KB` 
 
 Installation
 -----
