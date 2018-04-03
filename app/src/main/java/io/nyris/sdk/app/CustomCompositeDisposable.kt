@@ -48,7 +48,7 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         return disposed
     }
 
-    override fun add(@NonNull d: Disposable): Boolean {
+    override fun add(d: Disposable): Boolean {
         ObjectHelper.requireNonNull(d, "d is null")
         if (!disposed) {
             synchronized(this) {
@@ -67,7 +67,7 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         return false
     }
 
-    override fun remove(@NonNull d: Disposable): Boolean {
+    override fun remove(d: Disposable): Boolean {
         if (delete(d)) {
             d.dispose()
             return true
@@ -75,7 +75,7 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         return false
     }
 
-    override fun delete(@NonNull d: Disposable): Boolean {
+    override fun delete(d: Disposable): Boolean {
         ObjectHelper.requireNonNull(d, "Disposable item is null")
         if (disposed) {
             return false
