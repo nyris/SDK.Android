@@ -50,20 +50,21 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
 
     override fun add(d: Disposable): Boolean {
         ObjectHelper.requireNonNull(d, "d is null")
-        if (!disposed) {
-            synchronized(this) {
-                if (!disposed) {
-                    var set = resources
-                    if (set == null) {
-                        set = OpenHashSet()
-                        resources = set
-                    }
-                    set.add(d)
-                    return true
+        if(disposed){
+            d.dispose()
+            return false
+        }
+        synchronized(this) {
+            if (!disposed) {
+                var set = resources
+                if (set == null) {
+                    set = OpenHashSet()
+                    resources = set
                 }
+                set.add(d)
+                return true
             }
         }
-        d.dispose()
         return false
     }
 
