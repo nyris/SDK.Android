@@ -143,24 +143,23 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         var errors: MutableList<Throwable>? = null
         val array = set.keys()
         for (o in array) {
-            if (o is Disposable) {
-                try {
-                    o.dispose()
-                } catch (ex: Throwable) {
-                    Exceptions.throwIfFatal(ex)
-                    if (errors == null) {
-                        errors = ArrayList()
-                    }
-                    errors.add(ex)
+            if (o !is Disposable)
+                continue
+            try {
+                o.dispose()
+            } catch (ex: Throwable) {
+                Exceptions.throwIfFatal(ex)
+                if (errors == null) {
+                    errors = ArrayList()
                 }
-
+                errors.add(ex)
             }
         }
-        if (errors != null) {
-            if (errors.size == 1) {
-                throw ExceptionHelper.wrapOrThrow(errors[0])
-            }
-            throw CompositeException(errors)
+        if (errors == null)
+            return
+        if (errors.size == 1) {
+            throw ExceptionHelper.wrapOrThrow(errors[0])
         }
+        throw CompositeException(errors)
     }
 }
