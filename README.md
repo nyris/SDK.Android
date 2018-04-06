@@ -187,11 +187,12 @@ dependencies {
 
 `kotlin`
 ```kotlin
+    //For more details about available feed attributes please check our documentation : http://docs.nyris.io/#available-feed-attributes.
     val imageByteArray : ByteArray = /*Your byte array*/
     nyris
         .imageMatching()
         .outputFormat("PROVIDED_OUTPUT_FORMAT") // Set the desired OUTPUT_FORMAT
-        .language("de") //Return only offer with language "de"
+        .language("de") //Return only offers with language "de".
         .exact(true) //Performs exact matching
         .similarity(true) //Performs similarity matching
         .similarityThreshold(0.5f) //The lower limit of confidences to be considered good from similarity
