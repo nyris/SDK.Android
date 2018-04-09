@@ -151,19 +151,19 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper, IDeve
     }
 
     /**
-     * Set Manual Matching Api
-     * @param manualMatching the manual matching api
+     * Set Not Found Api
+     * @param notFoundMatching the not found matching api
      */
     @Inject
-    fun setManualMatching(manualMatching: INotFoundMatchingApi){
-        this.manualMatching = manualMatching
+    fun setNotFoundMatching(notFoundMatching: INotFoundMatchingApi){
+        this.notFoundMatching = notFoundMatching
     }
 
     /**
      * {@inheritDoc}
      */
     override fun notFoundMatching(): INotFoundMatchingApi {
-        return manualMatching
+        return notFoundMatching
     }
 
     /**
