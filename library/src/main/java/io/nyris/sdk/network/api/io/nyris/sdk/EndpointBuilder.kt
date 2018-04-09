@@ -69,6 +69,7 @@ internal class EndpointBuilder (var scheme : String, var hostUrl: String, var ap
 
     /**
      * Get Not Found Matching Api Url
+     * Build Url of the not found offer endpoint
      */
     fun getNotFoundMatchingUrl(imageRequestId : String): String {
         return BasicUriBuilder()
