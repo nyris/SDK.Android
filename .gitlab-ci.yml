@@ -1,0 +1,99 @@
+stages:
+  - build
+  - test
+  - publish
+  - source
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+before_script:
+  - git submodule sync --recursive
+  - git submodule update --init --recursive
+
+Build:
+  stage: build
+  script:
+    - ./gradlew clean build -x test --stacktrace
+  tags:
+    - android
+  only:
+    - master
+    - develop
+
+Unit Test Dev:
+  stage: test
+  script:
+    - ./gradlew clean :library:testDevReleaseUnitTest --tests io.nyris.sdk*
+    - mkdir -p reports/
+    - cp -r library/build/reports/tests/testDevReleaseUnitTest/* reports/
+  tags:
+    - android
+  artifacts:
+    paths:
+    - reports/
+  only:
+    - develop
+
+Unit Test Prod:
+  stage: test
+  script:
+    - ./gradlew clean :library:testProdReleaseUnitTest --tests io.nyris.sdk*
+    - mkdir -p reports
+    - cp -r library/build/reports/tests/testProdReleaseUnitTest/* reports
+  tags:
+    - android
+  artifacts:
+    paths:
+    - reports/
+  only:
+    - master
+
+Integration Test Dev:
+  stage: test
+  script:
+    - ./gradlew clean :library:testDevReleaseUnitTest --tests io.nyris.integration*
+    - mkdir -p reports/
+    - cp -r library/build/reports/tests/testDevReleaseUnitTest/* reports
+  tags:
+    - android
+  artifacts:
+    paths:
+    - reports/
+  only:
+    - develop
+
+Integration Test Prod:
+  stage: test
+  script:
+    - ./gradlew clean :library:testProdReleaseUnitTest --tests io.nyris.integration*
+    - mkdir -p reports/
+    - cp -r library/build/reports/tests/testProdReleaseUnitTest/* reports/
+  tags:
+    - android
+  artifacts:
+    paths:
+    - reports/
+  only:
+    - master
+
+Publish SDK:
+  stage: publish
+  script:
+    - ./gradlew :library:uploadArchives --stacktrace
+  tags:
+    - android
+  only:
+    - develop
+    - master
+
+Push to Github:
+  stage: source
+  script:
+    - git remote add github git@github.com:nyris/SDK.Android.git
+    - git push github release/1.0
+  tags:
+    - android
+  when: manual
+  only:
+    - master

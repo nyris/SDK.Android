@@ -22,6 +22,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         debug {
             buildConfigField "String", "API_KEY", "\""+System.getenv("PUBLIC_API_KEY")+"\""
@@ -29,6 +30,13 @@ android {
         release {
             minifyEnabled false
             buildConfigField "String", "API_KEY", "\""+System.getenv("PUBLIC_API_KEY")+"\""
+        }
+    }
+
+    flavorDimensions 'environment'
+    productFlavors {
+        prod{
+            dimension 'environment'
         }
     }
 }
@@ -48,5 +56,5 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:$rxjava2Version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2Version"
-    api project(path : ':library', configuration: 'default')
+    implementation project(path : ':library')
 }
