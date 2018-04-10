@@ -36,7 +36,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper, IDeve
 
     private lateinit var objectProposal: IObjectProposalApi
 
-    private lateinit var manualMatching: INotFoundMatchingApi
+    private lateinit var notFoundMatching: INotFoundMatchingApi
 
     private lateinit var textSearch: ITextSearchApi
 
