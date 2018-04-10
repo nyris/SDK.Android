@@ -20,18 +20,18 @@ import io.reactivex.Single
 import okhttp3.ResponseBody
 
 /**
- * IManualMatchingApi.kt - interface for sending mark image for manual match.
+ * INotFoundMatchingApi.kt - interface for marking image as not found.
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-interface IManualMatchingApi{
+interface INotFoundMatchingApi{
     /**
      * Mark Image for Manual Match
      *
      * @param imageRequestId the request id
      * @return the Single ResponseBody
      */
-    fun markForManualMatch(imageRequestId: String): Single<ResponseBody>
+    fun markAsNotFound(imageRequestId: String): Single<ResponseBody>
 }

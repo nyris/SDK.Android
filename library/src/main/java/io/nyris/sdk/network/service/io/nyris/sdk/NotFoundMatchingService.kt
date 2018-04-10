@@ -23,13 +23,13 @@ import retrofit2.http.POST
 import retrofit2.http.Url
 
 /**
- * ManualMatchingService.kt - http interface of Manual Matching Service
+ * ManualMatchingService.kt - http interface of Not Found Service
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal interface ManualMatchingService {
+internal interface NotFoundMatchingService {
     /**
      * Http Post Mark For Manual Match
      *
@@ -38,5 +38,5 @@ internal interface ManualMatchingService {
      * @return the Single ResponseBody
      */
     @POST
-    fun markForManualMatch(@Url url : String, @HeaderMap headers : Map<String, String>): Single<ResponseBody>
+    fun markAsNotFound(@Url url : String, @HeaderMap headers : Map<String, String>): Single<ResponseBody>
 }

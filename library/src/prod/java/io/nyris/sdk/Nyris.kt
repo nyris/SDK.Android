@@ -95,8 +95,8 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDev
     /**
      * {@inheritDoc}
      */
-    override fun manualMatching(): IManualMatchingApi {
-        return apiHelper.manualMatching()
+    override fun notFoundMatching(): INotFoundMatchingApi {
+        return apiHelper.notFoundMatching()
     }
 
     /**
@@ -118,41 +118,39 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDev
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun destroy(){
-        instance = null
+        instances.clear()
     }
 
     /**
      * companion Object
      */
     companion object {
-        private var instance: INyris? = null
+        private var instances : HashMap<String, INyris> = hashMapOf()
         /**
-         * Get instance of Nyris SDK
+         * Create instances of Nyris SDK
          *
          * @param apiKey the api key
          * @param isDebug the debug mode
-         * @return the nyris sdk
+         * @return the nyris sdk instance
          */
-        fun getInstance(apiKey: String, isDebug: Boolean = false) : INyris {
-            if(instance == null)
-                instance = Nyris(apiKey, isDebug)
-            else
-                instance!!.setApiKey(apiKey)
-            return instance as INyris
+        fun createInstance(apiKey: String, isDebug: Boolean = false) : INyris {
+            return if(instances.containsKey(apiKey))
+                instances[apiKey] as INyris
+            else{
+                val instance = Nyris(apiKey, isDebug)
+                instances[apiKey] = instance
+                instance
+            }
         }
 
         /**
-         * Get instance of Nyris SDK
+         * Create instances of Nyris SDK
          *
          * @param apiKey the api key
-         * @return the nyris sdk
+         * @return the nyris sdk instance
          */
-        fun getInstance(apiKey: String) : INyris {
-            if(instance == null)
-                instance = Nyris(apiKey, false)
-            else
-                instance!!.setApiKey(apiKey)
-            return instance as INyris
+        fun createInstance(apiKey: String) : INyris {
+            return createInstance(apiKey, false)
         }
     }
 }

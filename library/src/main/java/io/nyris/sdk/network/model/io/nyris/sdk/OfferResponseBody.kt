@@ -34,6 +34,6 @@ open class OfferResponseBody : IResponse {
      * @return the List Offers
      */
     @SerializedName("results")
-    var offers: List<Offer> = arrayListOf()
+    lateinit var offers: List<Offer>
         internal set
 }

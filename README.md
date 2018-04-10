@@ -10,19 +10,19 @@ for retail and industry.
 For more information please see [nyris.io](https://nyris.io/)
 
 We provide a new SDK with better error handling and reactive programming support.
-The SDK is written in `kotlin` and compatible with `Java`. 
+The SDK is written in [Kotlin](https://kotlinlang.org/) and compatible with [Java](https://docs.oracle.com/javase/8/docs/technotes/guides/language/index.html). 
 
 Why new SDK ?
 -----
-The the old [sdk](https://github.com/nyris/Nyris.IMX.Android) is offering only image matching service 
-and based on Asynchronous Callback system. This new SDK offers :
+The the old [SDK](https://github.com/nyris/Nyris.IMX.Android) is offering only image matching services 
+and based on asynchronous callback system. This new SDK offers:
 
 * Support of Reactive programming paradigm
-* No more Asynchronous Callback/AsyncTask
-* Better Multithreading handling
-* Better Error Handling
+* No more asynchronous callback/asyncTask
+* Better multithreading handling
+* Better error handling
 * Type-safe HTTP client
-* Unified Response
+* Unified response
 * All the different nyris services 
 
 nyris services 
@@ -37,10 +37,10 @@ We offer :
 
 Requirements
 ----- 
-* Supports >= Android 4.0 
-* Image media format `*.JPEG/*.JPG`
-* The minimum resolution of the image is `512x512 px`
-* The Maximum size of the image must be equal or low to `0.5 mb` 
+* Android >= 4.0
+* Images in **JPEG** format
+* The minimum dimensions of the image are `512x512 px`
+* The maximum size of the image is less than or equal to `500 KB` 
 
 Installation
 -----
@@ -58,7 +58,7 @@ allprojects {
 Add the dependencies
 ```groovy
 dependencies {
-    implementation 'io.nyris:sdk:1.x.x'    
+    implementation 'com.github.nyris:sdk.android:1.x.x'
     implementation "android.arch.lifecycle:extensions:1.x.x" //Optional
 }
 ```
@@ -71,37 +71,44 @@ Get Started
 * [Destroy the instance](#destroy-the-instance)
 * [Match your first image](#match-your-first-image)
 * [Extract objects from your image](#extract-objects-from-your-image)
+* [Mark sent image as not found](#mark-sent-image-as-not-found)
 * [Text Match Search](#text-match-search)
 * [Dex Count Methods Info](#dex-count-methods-info)
 
 ### Get instance 
-First, initialize an instance of INyris with your API Key :
+First, initialize an instance of `INyris` with your API Key :
  
 `java`
 ```java
-class Sample{
+class DemoApp{
     private INyris nyris;
-    public Sample(){
-        nyris = Nyris.Companion.getInstance("YOUR_API_KEY");
+    @Override
+    public onCreate(){
+        nyris = Nyris.Companion.createInstance("YOUR_API_KEY");
         //OR
-        nyris = Nyris.Companion.getInstance("YOUR_API_KEY", /*Enable debug outputs*/true);
+        nyris = Nyris.Companion.createInstance("YOUR_API_KEY", /*Enable debug output*/true);
+    }
+    
+    public INyris getNyrisInstance(){
+        return nyris;
     }
 }
 ```
 
 `kotlin`
 ```kotlin
-class Sample{
-    private var nyris : INyris
-    init{
-        nyris = Nyris.getInstance("YOUR_API_KEY")
+class DemoApp : Application(){
+    private var nyris : INyris    
+    override fun onCreate() {
+        super.onCreate()
+        nyris = Nyris.createInstance(BuildConfig.API_KEY, true)
         //OR
-        nyris = Nyris.getInstance("YOUR_API_KEY", /*Enable debug outputs*/true)
+        nyris = Nyris.createInstance("YOUR_API_KEY", /*Enable debug output*/true)
     }
 }
 ```
-### Destroy the instance 
-You can easily free the created instance by adding the instance to the lifecyle of your main activity
+### Destroy the instances 
+You can easily free all the created instances by adding `nyris` to the lifecyle of your main activity
 or by calling `destroy()` of the sdk
 
 `kotlin`
@@ -180,11 +187,12 @@ dependencies {
 
 `kotlin`
 ```kotlin
+    //For more details about available feed attributes please check our documentation : http://docs.nyris.io/#available-feed-attributes.
     val imageByteArray : ByteArray = /*Your byte array*/
     nyris
         .imageMatching()
         .outputFormat("PROVIDED_OUTPUT_FORMAT") // Set the desired OUTPUT_FORMAT
-        .language("de") //Return only offer with language "de"
+        .language("de") //Return only offers with language "de".
         .exact(true) //Performs exact matching
         .similarity(true) //Performs similarity matching
         .similarityThreshold(0.5f) //The lower limit of confidences to be considered good from similarity
@@ -204,7 +212,7 @@ dependencies {
 ```
 The response is an object of type `OfferResponseBody` that contains list of `offers`. 
 
-* If you have your provided output format, you should use this call to get response as `JSON` format :
+* If you specified a custom output format, you should use this call to get response as `JSON` format :
 
 `kotlin`
 ```kotlin
@@ -238,16 +246,16 @@ Extract objects from an image
 ```
 Returned response is a List of ObjectProposal. 
 
-The extracted object has :
+The extracted object has:
 * `confidence` is the probability of the top item. Value range between : `0-1`.
-* `region` is a Bounding box. It represents the location and  thesize of the object in the sent image. 
+* `region` is a Bounding box. It represents the location and the size of the object in the sent image. 
 
 
-### Mark sent image for manual matching : 
-It happened that our service can't recognize or match an image, this is why we provide you a service to notify us
-about the unrecognized image and we will match it manually.
+### Mark sent image as not found
+It may happen that our service can't recognize or match an image. This is why we provide you a service to notify us
+about the unrecognized image.
 
-Before you mark an image for manual match you will need to extract the `requestId`. 
+Before you mark an image as not found, you will need to extract the `requestId`. 
 
 `kotlin`
 ```kotlin   
@@ -256,20 +264,20 @@ Before you mark an image for manual match you will need to extract the `requestI
         .match<OfferResponse>(imageByteArray, OfferResponse::class.java)
         .subscribe({/*it:OfferResponse*/        
             //Handle your response
-            requestId = it.headers!!["X-Matching-Request"]
+            requestId = it.getRequestId()
             
         },{/*it:Throwable*/    
             ...
         })
 ```
 
-After getting the `requestId` you can mark the image for manual matching. 
+After getting the `requestId` you can mark the image as not found. 
 
 `kotlin`
 ```kotlin
     nyris
-        .manualMatching()
-        .markForManualMatch(requestId)
+        .notFoundMatching()
+        .markAsNotFound(requestId)
         .subscribe({/*it:ResponseBody*/    
             ...
         },{/*it:Throwable*/    
@@ -278,9 +286,9 @@ After getting the `requestId` you can mark the image for manual matching.
 ```
 
 ### Text Match Search
-nyris offers a service that helps you to search offers by text, sku, barcode, ...etc
+nyris offers a service that helps you to search offers by text, SKU, barcode, etc.
 
-you can use the text search service the same way like old [image matching service]()
+you can use the text search service the same way as [image matching service](#match-your-first-image)
 
 #### Basic way to search : 
 
@@ -323,8 +331,8 @@ you can use the text search service the same way like old [image matching servic
 The dex count for the SDK is around 580 methods which mean around 1% of 64k methods Limit.  
 
     Total methods in library: 580 (0.89% used)
-    Total fields in library:  245 (0.37% used)
-    Total classes in library:  123 (0.19% used)
+    Total fields in library: 245 (0.37% used)
+    Total classes in library: 123 (0.19% used)
 
 License
 =======

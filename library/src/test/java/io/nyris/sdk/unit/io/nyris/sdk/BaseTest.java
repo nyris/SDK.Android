@@ -5,6 +5,7 @@ import org.junit.ClassRule;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import io.nyris.sdk.ApiHeader;
 import io.nyris.sdk.EndpointBuilder;
@@ -60,6 +61,7 @@ public class BaseTest {
      */
     OfferResponseBody getOfferResponseBody() {
         OfferResponseBody offerResponseBody = new OfferResponseBody();
+        offerResponseBody.offers = new ArrayList<>();
         for (int i = 0; i<OFFERS_SIZE; i++) {
             offerResponseBody.getOffers().add(new Offer());
         }

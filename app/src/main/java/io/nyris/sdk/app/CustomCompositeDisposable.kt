@@ -48,26 +48,27 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         return disposed
     }
 
-    override fun add(@NonNull d: Disposable): Boolean {
+    override fun add(d: Disposable): Boolean {
         ObjectHelper.requireNonNull(d, "d is null")
-        if (!disposed) {
-            synchronized(this) {
-                if (!disposed) {
-                    var set = resources
-                    if (set == null) {
-                        set = OpenHashSet()
-                        resources = set
-                    }
-                    set.add(d)
-                    return true
+        if(disposed){
+            d.dispose()
+            return false
+        }
+        synchronized(this) {
+            if (!disposed) {
+                var set = resources
+                if (set == null) {
+                    set = OpenHashSet()
+                    resources = set
                 }
+                set.add(d)
+                return true
             }
         }
-        d.dispose()
         return false
     }
 
-    override fun remove(@NonNull d: Disposable): Boolean {
+    override fun remove(d: Disposable): Boolean {
         if (delete(d)) {
             d.dispose()
             return true
@@ -75,7 +76,7 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         return false
     }
 
-    override fun delete(@NonNull d: Disposable): Boolean {
+    override fun delete(d: Disposable): Boolean {
         ObjectHelper.requireNonNull(d, "Disposable item is null")
         if (disposed) {
             return false
@@ -142,24 +143,23 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         var errors: MutableList<Throwable>? = null
         val array = set.keys()
         for (o in array) {
-            if (o is Disposable) {
-                try {
-                    o.dispose()
-                } catch (ex: Throwable) {
-                    Exceptions.throwIfFatal(ex)
-                    if (errors == null) {
-                        errors = ArrayList()
-                    }
-                    errors.add(ex)
+            if (o !is Disposable)
+                continue
+            try {
+                o.dispose()
+            } catch (ex: Throwable) {
+                Exceptions.throwIfFatal(ex)
+                if (errors == null) {
+                    errors = ArrayList()
                 }
-
+                errors.add(ex)
             }
         }
-        if (errors != null) {
-            if (errors.size == 1) {
-                throw ExceptionHelper.wrapOrThrow(errors[0])
-            }
-            throw CompositeException(errors)
+        if (errors == null)
+            return
+        if (errors.size == 1) {
+            throw ExceptionHelper.wrapOrThrow(errors[0])
         }
+        throw CompositeException(errors)
     }
 }

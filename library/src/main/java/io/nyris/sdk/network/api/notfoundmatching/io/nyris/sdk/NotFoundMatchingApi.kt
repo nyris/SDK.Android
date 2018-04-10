@@ -21,24 +21,24 @@ import okhttp3.ResponseBody
 
 /**
  * ManualMatchingApi.kt - class that implement IManualMatchingApi interface.
- * @see IManualMatchingApi
+ * @see INotFoundMatchingApi
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class ManualMatchingApi(private val manualMatchingService: ManualMatchingService,
-                        schedulerProvider : SdkSchedulerProvider,
-                        apiHeader: ApiHeader,
-                        endpoints: EndpointBuilder) : Api(schedulerProvider,apiHeader,endpoints), IManualMatchingApi {
+internal class NotFoundMatchingApi(private val notFoundMatchingService: NotFoundMatchingService,
+                                   schedulerProvider : SdkSchedulerProvider,
+                                   apiHeader: ApiHeader,
+                                   endpoints: EndpointBuilder) : Api(schedulerProvider,apiHeader,endpoints), INotFoundMatchingApi {
 
     /**
      * {@inheritDoc}
      */
-    override fun markForManualMatch(imageRequestId: String): Single<ResponseBody> {
+    override fun markAsNotFound(imageRequestId: String): Single<ResponseBody> {
         val headers = createDefaultHeadersMap()
-        return manualMatchingService
-                .markForManualMatch(endpoints.getManualImageMatchingUrl(imageRequestId), headers)
+        return notFoundMatchingService
+                .markAsNotFound(endpoints.getNotFoundMatchingUrl(imageRequestId), headers)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
     }

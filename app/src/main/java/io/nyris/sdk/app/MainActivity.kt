@@ -3,7 +3,6 @@ package io.nyris.sdk.app
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import io.nyris.sdk.Nyris
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -13,11 +12,12 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val nyris = Nyris.getInstance(BuildConfig.API_KEY, true)
+        val demoApp = application as DemoApp
+        val nyris = demoApp.nyris
         lifecycle.addObserver(nyris)
         lifecycle.addObserver(customCompositeDisposable)
+
+        setContentView(R.layout.activity_main)
 
         val inputStream = assets.open("test_image.jpg")
         val byteArray = ByteArray(inputStream.available())

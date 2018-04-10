@@ -1,0 +1,29 @@
+language: android
+
+android:
+  components:
+    - tools
+    - build-tools-27.0.2
+    - android-27
+git:
+  submodules: false
+
+before_install:
+  - yes | sdkmanager "platforms;android-27"
+
+jdk:
+  - oraclejdk8
+
+script:
+  - ./gradlew clean build -x test --stacktrace
+
+notifications:
+  email: false
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
