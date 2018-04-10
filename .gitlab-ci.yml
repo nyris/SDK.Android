@@ -91,7 +91,7 @@ Push to Github:
   stage: source
   script:
     - git remote add github git@github.com:nyris/SDK.Android.git
-    - git push github release/1.0
+    - git push github master
   tags:
     - android
   when: manual
