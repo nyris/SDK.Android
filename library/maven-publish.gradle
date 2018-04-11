@@ -2,7 +2,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group='io.nyris'
-version = '1.0'
+version = gitVersionName
 
 //TODO: to be removed when bintray fix the issue https://github.com/bintray/gradle-bintray-plugin/issues/199
 project.archivesBaseName = "sdk"
@@ -18,7 +18,7 @@ install {
 
             groupId POM_GROUP_ID
             artifactId POM_ARTIFACT_ID
-            version '1.0'
+            version gitVersionName
 
             organization {
                 name 'nyris GmbH'
@@ -65,9 +65,9 @@ bintray {
         publicDownloadNumbers = true
 
         version {
-            name = '1.0'
+            name = gitVersionName
             desc = POM_DESCRIPTION
-            vcsTag = '1.0'
+            vcsTag = gitVersionName
         }
     }
 }
