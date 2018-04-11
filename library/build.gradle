@@ -20,8 +20,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: 'git-version.gradle'
-apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.nyris'
+apply from: 'maven-publish.gradle'
 
 def getDefaultPublishConfig = { ->
     def publishConfig = System.getenv("SDK_DEFAULT_PUBLISH_CONFIG")
@@ -154,60 +153,6 @@ android {
     publishNonDefault true
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            pom.version = gitVersionName
-            pom.groupId = 'io.nyris'
-            pom.artifactId = "sdk"
-            pom.project{
-                inceptionYear '2018'
-                organization {
-                    name 'nyris GmbH'
-                    url 'https://nyris.io/'
-                }
-
-                licenses {
-                    license {
-                        name 'APACHE LICENSE, VERSION 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'smellouk'
-                        name 'Sidali Mellouk'
-                    }
-                }
-            }
-
-            pom.withXml {
-                Node pomNode = asNode()
-                pomNode.dependencies.'*'.findAll() {
-                    it.scope.text() == 'test'
-                }.each() {
-                    it.parent().remove(it)
-                }
-            }
-
-            if (gitVersionName.contains("develop")) {
-                repository(url: System.getenv("NUGET_URL_DEVELOP")){
-                    authentication(userName: System.getenv("NUGET_USER"), password: System.getenv("NUGET_PASSWORD"))
-                }
-            } else {
-                repository(url: System.getenv("NUGET_URL")){
-                    authentication(userName: System.getenv("NUGET_USER"), password: System.getenv("NUGET_PASSWORD"))
-                }
-            }
-        }
-    }
-    doLast{
-        println android.defaultPublishConfig
-        println "\u001B[32mUploaded SDK version : $gitVersionName\u001B[0m"
-    }
-}
-
 dependencies {
 
     //Test
@@ -240,5 +185,5 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
 
     //Arch lifecycle
-    implementation "android.arch.lifecycle:extensions:1.1.0"
+    implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
 }

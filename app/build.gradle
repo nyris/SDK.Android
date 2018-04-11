@@ -47,14 +47,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation"org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    implementation "android.arch.lifecycle:extensions:1.1.0"
-    implementation 'androidx.core:core-ktx:0.2'
-
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava2Version"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit2Version"
+    implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
     implementation project(path : ':library')
 }

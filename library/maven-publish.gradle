@@ -1,0 +1,128 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='io.nyris'
+version = gitVersionName
+
+//TODO: to be removed when bintray fix the issue https://github.com/bintray/gradle-bintray-plugin/issues/199
+project.archivesBaseName = "sdk"
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            url POM_URL
+            inceptionYear '2018'
+            packaging 'aar'
+            name POM_NAME
+            description POM_DESCRIPTION
+
+            groupId POM_GROUP_ID
+            artifactId POM_ARTIFACT_ID
+            version gitVersionName
+
+            organization {
+                name 'nyris GmbH'
+                url POM_URL
+            }
+
+            licenses {
+                license {
+                    name 'APACHE LICENSE, VERSION 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'smellouk'
+                    name 'Sidali Mellouk'
+                }
+            }
+        }
+
+        pom.withXml {
+            Node pomNode = asNode()
+            pomNode.dependencies.'*'.findAll() {
+                it.scope.text() == 'test'
+            }.each() {
+                it.parent().remove(it)
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
+    configurations = ['archives']
+    publish = true
+
+    pkg {
+        repo = BINTRAY_REPO
+        name = BINTRAY_NAME
+        userOrg = BINTRAY_ORG
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
+
+        version {
+            name = gitVersionName
+            desc = POM_DESCRIPTION
+            vcsTag = gitVersionName
+        }
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.version = gitVersionName
+            pom.groupId = POM_GROUP_ID
+            pom.artifactId = POM_ARTIFACT_ID
+
+            pom.project{
+                inceptionYear '2018'
+                organization {
+                    name 'nyris GmbH'
+                    url 'https://nyris.io/'
+                }
+
+                licenses {
+                    license {
+                        name 'APACHE LICENSE, VERSION 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'smellouk'
+                        name 'Sidali Mellouk'
+                    }
+                }
+            }
+
+            pom.withXml {
+                Node pomNode = asNode()
+                pomNode.dependencies.'*'.findAll() {
+                    it.scope.text() == 'test'
+                }.each() {
+                    it.parent().remove(it)
+                }
+            }
+
+            if (gitVersionName.contains("develop")) {
+                repository(url: System.getenv("NUGET_URL_DEVELOP")){
+                    authentication(userName: System.getenv("NUGET_USER"), password: System.getenv("NUGET_PASSWORD"))
+                }
+            } else {
+                repository(url: System.getenv("NUGET_URL")){
+                    authentication(userName: System.getenv("NUGET_USER"), password: System.getenv("NUGET_PASSWORD"))
+                }
+            }
+        }
+    }
+    doLast{
+        println android.defaultPublishConfig
+        println "\u001B[32mUploaded SDK version : $gitVersionName\u001B[0m"
+    }
+}
