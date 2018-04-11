@@ -50,7 +50,7 @@ Installation
 Add the dependencies
 ```groovy
 dependencies {
-    implementation 'io.nyris:sdk:1.x.x@aar'
+    implementation 'io.nyris:sdk:1.x.x'
     implementation "android.arch.lifecycle:extensions:1.x.x" //Optional
 }
 ```
