@@ -1,6 +1,8 @@
 nyris SDK for Android
 =======
 ![](nyris_logo.png)
+[![Build Status](https://travis-ci.org/nyris/SDK.Android.svg?branch=master)](https://travis-ci.org/nyris/SDK.Android)
+[![Download](https://api.bintray.com/packages/nyris/maven/SDK.Android/images/download.svg) ](https://bintray.com/nyris/maven/SDK.Android/_latestVersion)
 
 Introduction
 ------
@@ -45,20 +47,10 @@ Requirements
 Installation
 -----
 ### Java Gradle
-For easy package usage repository add [JitPack](https://jitpack.io/) in your root build.gradle:
-```groovy
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
-```
-
 Add the dependencies
 ```groovy
 dependencies {
-    implementation 'com.github.nyris:sdk.android:1.x.x'
+    implementation 'io.nyris:sdk:1.x.x@aar'
     implementation "android.arch.lifecycle:extensions:1.x.x" //Optional
 }
 ```
@@ -330,9 +322,9 @@ you can use the text search service the same way as [image matching service](#ma
 ### Dex Count Methods Info
 The dex count for the SDK is around 580 methods which mean around 1% of 64k methods Limit.  
 
-    Total methods in library: 580 (0.89% used)
+    Total methods in library: 583 (0.89% used)
     Total fields in library: 245 (0.37% used)
-    Total classes in library: 123 (0.19% used)
+    Total classes in library: 124 (0.19% used)
 
 License
 =======
