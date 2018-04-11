@@ -49,6 +49,12 @@ Installation
 ### Java Gradle
 Add the dependencies
 ```groovy
+repositories {
+    maven {
+        url  "https://dl.bintray.com/nyris/maven"
+    }
+}
+
 dependencies {
     implementation 'io.nyris:sdk:1.x.x'
     implementation "android.arch.lifecycle:extensions:1.x.x" //Optional
