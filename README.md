@@ -1,6 +1,7 @@
 nyris SDK for Android
 =======
 ![](nyris_logo.png)
+
 [![Build Status](https://travis-ci.org/nyris/SDK.Android.svg?branch=master)](https://travis-ci.org/nyris/SDK.Android)
 [![Download](https://api.bintray.com/packages/nyris/maven/SDK.Android/images/download.svg) ](https://bintray.com/nyris/maven/SDK.Android/_latestVersion)
 
