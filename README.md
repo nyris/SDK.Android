@@ -82,9 +82,9 @@ class DemoApp{
     private INyris nyris;
     @Override
     public onCreate(){
-        nyris = Nyris.Companion.createInstance("YOUR_API_KEY");
+        nyris = Nyris.createInstance("YOUR_API_KEY");
         //OR
-        nyris = Nyris.Companion.createInstance("YOUR_API_KEY", /*Enable debug output*/true);
+        nyris = Nyris.createInstance("YOUR_API_KEY", /*Enable debug output*/true);
     }
     
     public INyris getNyrisInstance(){
