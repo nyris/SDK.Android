@@ -3,11 +3,11 @@ package io.nyris.sdk.app
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import io.nyris.sdk.disposable
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    private val customCompositeDisposable = CustomCompositeDisposable()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         val demoApp = application as DemoApp
         val nyris = demoApp.nyris
         lifecycle.addObserver(nyris)
-        lifecycle.addObserver(customCompositeDisposable)
 
         setContentView(R.layout.activity_main)
 
@@ -25,13 +24,13 @@ class MainActivity : AppCompatActivity() {
         inputStream.close()
 
         tvResults.text = "Matching ..."
-        customCompositeDisposable.add(nyris.
+        nyris.
             imageMatching()
             .match(byteArray)
             .subscribe({
                 tvResults.text = "Matched offers : ${it.offers.size}"
             },{
                 tvResults.text = it.message
-            }))
+            }).disposable()
     }
 }
