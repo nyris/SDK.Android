@@ -18,6 +18,7 @@ package io.nyris.sdk
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
+import io.reactivex.disposables.Disposable
 
 /**
  * Nyris.kt - class implement INyris and IDeveloperMode
@@ -133,6 +134,7 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDev
          * @param isDebug the debug mode
          * @return the nyris sdk instance
          */
+        @JvmStatic
         fun createInstance(apiKey: String, isDebug: Boolean = false) : INyris {
             return if(instances.containsKey(apiKey))
                 instances[apiKey] as INyris
@@ -149,8 +151,14 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDev
          * @param apiKey the api key
          * @return the nyris sdk instance
          */
+        @JvmStatic
         fun createInstance(apiKey: String) : INyris {
             return createInstance(apiKey, false)
         }
     }
+}
+
+private var autoCompositeDisposable : AutoCompositeDisposable? = AutoCompositeDisposable()
+fun Disposable.disposable(){
+    autoCompositeDisposable?.add(this)
 }
