@@ -18,6 +18,7 @@ package io.nyris.sdk
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 /**
@@ -158,7 +159,7 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDev
     }
 }
 
-private var autoCompositeDisposable : AutoCompositeDisposable? = AutoCompositeDisposable()
+private var compositeDisposable : CompositeDisposable? = CompositeDisposable()
 fun Disposable.disposable(){
-    autoCompositeDisposable?.add(this)
+    compositeDisposable?.add(this)
 }
