@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.1 - 2018.05.14
+### Added
+- Kotlin extension to help dispose `Disposable` object easily
+
+### Updated
+- Updated demo app
+
 ## 1.0 - 2018.03.21
 ### Added
 - README now contains how to use nyris SDK
