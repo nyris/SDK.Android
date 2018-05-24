@@ -16,6 +16,7 @@
 
 package io.nyris.sdk
 
+import android.support.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -26,6 +27,8 @@ import com.google.gson.annotations.SerializedName
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
+
+@Keep
 open class OfferResponseBody : IResponse {
     /**
      * Get Offers

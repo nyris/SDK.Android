@@ -16,6 +16,7 @@
 
 package io.nyris.sdk
 
+import android.support.annotation.Keep
 import okhttp3.Headers
 
 /**
@@ -26,6 +27,8 @@ import okhttp3.Headers
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
+
+@Keep
 class OfferResponse : IResponse {
     /**
      * Get Headers
