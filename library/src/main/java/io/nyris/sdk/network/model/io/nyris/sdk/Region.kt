@@ -1,5 +1,6 @@
 package io.nyris.sdk
 
+import android.support.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -10,6 +11,8 @@ import java.io.Serializable
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
+
+@Keep
 class Region : Serializable {
     @SerializedName("left")
     var left: Float = 0.toFloat()
