@@ -21,13 +21,12 @@ import javax.inject.Inject
 /**
  * ApiHelper.kt - class that implement IApiHelper and IDebugMode
  * @see IApiHelper
- * @see IDeveloperMode
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper, IDeveloperMode{
+internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
     private lateinit var apiHeader : ApiHeader
 
     private lateinit var endpointBuilder : EndpointBuilder
@@ -88,34 +87,6 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper, IDeve
     @Inject
     fun setEndpointBuilder(endpointBuilder: EndpointBuilder){
         this.endpointBuilder = endpointBuilder
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun setScheme(scheme: String) {
-        endpointBuilder.scheme = scheme
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun setHostUrl(hostUrl: String) {
-        endpointBuilder.hostUrl = hostUrl
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun setApiVersion(apiVersion: String) {
-        endpointBuilder.apiVersion = apiVersion
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun setClientId(clientId: String) {
-        apiHeader.clientId = clientId
     }
 
     /**
