@@ -24,13 +24,12 @@ import io.reactivex.disposables.Disposable
 /**
  * Nyris.kt - class implement INyris and IDeveloperMode
  * @see INyris
- * @see IDeveloperMode
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDeveloperMode {
+class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris{
     private var apiHelper: IApiHelper = ApiHelper(apiKey, isDebug)
 
     /**
@@ -46,38 +45,6 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDev
      */
     override fun getApiKey(): String {
         return apiHelper.getApiKey()
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun setScheme(scheme: String) {
-        val debugMode = apiHelper as IDeveloperMode
-        debugMode.setScheme(scheme)
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun setHostUrl(hostUrl: String) {
-        val debugMode = apiHelper as IDeveloperMode
-        debugMode.setScheme(hostUrl)
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun setApiVersion(apiVersion: String) {
-        val debugMode = apiHelper as IDeveloperMode
-        debugMode.setScheme(apiVersion)
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun setClientId(clientId: String) {
-        val debugMode = apiHelper as IDeveloperMode
-        debugMode.setClientId(clientId)
     }
 
     /**
@@ -121,6 +88,7 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris, IDev
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun destroy(){
         instances.clear()
+        compositeDisposable?.clear()
     }
 
     /**
