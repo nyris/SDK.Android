@@ -39,5 +39,5 @@ internal class ApiHeader constructor(var apiKey: String,
             return field
         }
 
-    var clientId : String? = null
+    var clientId : String =""
 }

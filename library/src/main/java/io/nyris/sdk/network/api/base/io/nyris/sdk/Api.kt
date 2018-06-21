@@ -43,8 +43,9 @@ internal open class Api(protected val schedulerProvider : SdkSchedulerProvider,
         val headers = HashMap<String, String>()
         headers["X-Api-Key"] = apiHeader.apiKey
         headers["User-Agent"] = apiHeader.userAgent!!
-        if(apiHeader.clientId!= null)
-            headers["X-Nyris-ClientID"] = apiHeader.clientId!!
+        //TODO : Check if client id is empty
+        if(!apiHeader.clientId.isEmpty())
+            headers["X-Nyris-ClientID"] = apiHeader.clientId
         return headers
     }
 
