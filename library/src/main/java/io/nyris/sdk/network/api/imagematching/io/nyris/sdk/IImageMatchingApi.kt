@@ -118,6 +118,15 @@ interface IImageMatchingApi {
     fun match(image : ByteArray) : Single<OfferResponseBody>
 
     /**
+     * Match image float array
+     *
+     * Default image matching method for the advanced response return, please use {@link #match(image : ByteArray, clazz : Class<T>) label}
+     * @param image the image float array
+     * @return the Single{Observable} OfferResponseBody
+     */
+    fun match(image : FloatArray) : Single<OfferResponseBody>
+
+    /**
      * Generic Match image byte array
      *
      * @param image the image byte array
@@ -125,4 +134,13 @@ interface IImageMatchingApi {
      * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
      */
     fun <T : IResponse> match(image : ByteArray, clazz : Class<T>) : Single<T>
+
+    /**
+     * Generic Match image float array
+     *
+     * @param image the image float array
+     * @param clazz the desired return response class
+     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
+     */
+    fun <T : IResponse> match(image : FloatArray, clazz : Class<T>) : Single<T>
 }
