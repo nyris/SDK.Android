@@ -18,10 +18,13 @@ package io.nyris.sdk
 
 import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
+import android.util.Base64
 import com.google.gson.Gson
 import io.reactivex.Single
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 /**
  * ImageMatchingApi.kt - class that implement IImageMatchingApi interface.
@@ -183,11 +186,11 @@ internal class ImageMatchingApi(private val imageMatchingService : ImageMatching
     /**
      * Build Headers for image matching endpoint
      */
-    private fun buildHeaders(image: ByteArray) :  HashMap<String, String>{
+    private fun buildHeaders(contentSize : Int) :  HashMap<String, String>{
         val headers = createDefaultHeadersMap()
         headers["Accept"] = outputFormat
         headers["Accept-Language"] = language
-        headers["Content-Length"] = image.size.toString()
+        headers["Content-Length"] = contentSize.toString()
         headers["X-Options"] = buildXOptions()
         return headers
     }
@@ -202,8 +205,23 @@ internal class ImageMatchingApi(private val imageMatchingService : ImageMatching
     /**
      * {@inheritDoc}
      */
+    override fun match(image: FloatArray): Single<OfferResponseBody> {
+        return match(image, OfferResponseBody::class.java)
+    }
+
+    private fun encodeFloatArray(floatArray: FloatArray): String {
+        val buf = ByteBuffer
+                .allocate(java.lang.Float.SIZE / java.lang.Byte.SIZE * floatArray.size)
+                .order(ByteOrder.LITTLE_ENDIAN)
+        buf.asFloatBuffer().put(floatArray)
+        return Base64.encodeToString(buf.array(), Base64.NO_WRAP)
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     override fun <T : IResponse> match(image: ByteArray, clazz: Class<T>): Single<T> {
-        val headers = buildHeaders(image)
+        val headers = buildHeaders(image.size)
         val body = RequestBody.create(MediaType.parse("image/jpg"), image)
         val typeOfferResponse = OfferResponse::class.java
 
@@ -212,6 +230,25 @@ internal class ImageMatchingApi(private val imageMatchingService : ImageMatching
             convertResponseBasedOnType(image, obs1)
         }else{
             val obs1 = imageMatchingService.match(endpoints.imageMatchingUrl, headers, body)
+            convertResponseBodyBasedOnType(image, obs1, clazz, gson)
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun <T : IResponse> match(image: FloatArray, clazz: Class<T>): Single<T> {
+        val b64 = encodeFloatArray(image)
+        val json = "{\"b64\":\"$b64\"}"
+        val headers = buildHeaders(json.length)
+        val body = RequestBody.create(MediaType.parse("application/json"), json)
+        val typeOfferResponse = OfferResponse::class.java
+
+        return if(clazz.name == typeOfferResponse.name){
+            val obs1 = imageMatchingService.matchAndGetRequestId(endpoints.imageMatchingUrl2, headers, body)
+            convertResponseBasedOnType(image, obs1)
+        }else{
+            val obs1 = imageMatchingService.match(endpoints.imageMatchingUrl2, headers, body)
             convertResponseBodyBasedOnType(image, obs1, clazz, gson)
         }
     }

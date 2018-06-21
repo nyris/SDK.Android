@@ -39,6 +39,22 @@ internal class EndpointBuilder (var scheme : String, var hostUrl: String, var ap
         }
 
     /**
+     * Get Image Matching Api Url
+     */
+    var imageMatchingUrl2: String = ""
+        internal set
+        get() {
+            return BasicUriBuilder()
+                    .scheme(scheme)
+                    .authority(hostUrl)
+                    .appendPath("find")
+                    .appendPath(apiVersion)
+                    .appendPath("fingerprint")
+                    .appendPath("semantic")
+                    .build()
+        }
+
+    /**
      * Get Object Proposal Api Url
      */
     var objectProposalUrl: String = ""
