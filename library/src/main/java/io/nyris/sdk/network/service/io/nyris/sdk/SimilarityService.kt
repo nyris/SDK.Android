@@ -29,10 +29,10 @@ import retrofit2.http.Url
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal interface SimilarityService{
+internal interface SimilarityService {
     /**
      * Http Get By SKU
      */
     @GET
-    fun getBySku(@Url url : String, @HeaderMap headers : Map<String, String>): Single<ResponseBody>
+    fun getBySku(@Url url: String, @HeaderMap headers: Map<String, String>): Single<ResponseBody>
 }

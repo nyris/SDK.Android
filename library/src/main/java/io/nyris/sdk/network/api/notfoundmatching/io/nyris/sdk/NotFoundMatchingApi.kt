@@ -28,9 +28,9 @@ import okhttp3.ResponseBody
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 internal class NotFoundMatchingApi(private val notFoundMatchingService: NotFoundMatchingService,
-                                   schedulerProvider : SdkSchedulerProvider,
+                                   schedulerProvider: SdkSchedulerProvider,
                                    apiHeader: ApiHeader,
-                                   endpoints: EndpointBuilder) : Api(schedulerProvider,apiHeader,endpoints), INotFoundMatchingApi {
+                                   endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), INotFoundMatchingApi {
 
     /**
      * {@inheritDoc}

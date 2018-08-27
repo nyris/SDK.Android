@@ -25,19 +25,19 @@ package io.nyris.sdk
  */
 
 internal class ApiHeader constructor(var apiKey: String,
-                            private val sdkId: String,
-                            private val sdkVersion : String,
-                            private val gitCommitHash : String,
-                            private val androidVersion : String?){
+                                     private val sdkId: String,
+                                     private val sdkVersion: String,
+                                     private val gitCommitHash: String,
+                                     private val androidVersion: String?) {
     /**
      * Get User Agent
      */
-    var userAgent : String? = null
+    var userAgent: String? = null
         get() {
-            if(field == null)
+            if (field == null)
                 field = "$sdkId/$sdkVersion ($gitCommitHash Android $androidVersion)"
             return field
         }
 
-    var clientId : String =""
+    var clientId: String = ""
 }

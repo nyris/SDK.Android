@@ -30,14 +30,14 @@ interface IApiHelper {
      * @param apiKey the api key
      * @return the any object
      */
-    fun setApiKey(apiKey : String) : Any
+    fun setApiKey(apiKey: String): Any
 
     /**
      * Get Current Api Key
      *
      * @return the api key
      */
-    fun getApiKey() : String
+    fun getApiKey(): String
 
     /**
      * Get Image Matching Api instance
@@ -45,7 +45,7 @@ interface IApiHelper {
      * @see IImageMatchingApi
      * @return the image matching api
      */
-    fun imageMatching() : IImageMatchingApi
+    fun imageMatching(): IImageMatchingApi
 
     /**
      * Get Object Proposal Api instance
@@ -53,7 +53,7 @@ interface IApiHelper {
      * @see IObjectProposalApi
      * @return the image matching api
      */
-    fun objectProposal() : IObjectProposalApi
+    fun objectProposal(): IObjectProposalApi
 
     /**
      * Get Not found Api
@@ -61,7 +61,7 @@ interface IApiHelper {
      * @see INotFoundMatchingApi
      * @return the not found api
      */
-    fun notFoundMatching() : INotFoundMatchingApi
+    fun notFoundMatching(): INotFoundMatchingApi
 
     /**
      * Get Text Search Api
@@ -69,7 +69,7 @@ interface IApiHelper {
      * @see ITextSearchApi
      * @return the text search api
      */
-    fun textSearch() : ITextSearchApi
+    fun textSearch(): ITextSearchApi
 
     /**
      * Get Similarity Api
@@ -77,5 +77,5 @@ interface IApiHelper {
      * @see ISimilarityApi
      * @return the similarity api
      */
-    fun similarity() : ISimilarityApi
+    fun similarity(): ISimilarityApi
 }

@@ -25,14 +25,14 @@ import io.reactivex.Single
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-interface ISimilarityApi{
+interface ISimilarityApi {
     /**
      * Set Output Format
      *
      * @param outputFormat the output format
      * @return the current instance of ISimilarityApi
      */
-    fun outputFormat(outputFormat: String) : ISimilarityApi
+    fun outputFormat(outputFormat: String): ISimilarityApi
 
     /**
      * Set Filter Language
@@ -40,7 +40,7 @@ interface ISimilarityApi{
      * @param language the language
      * @return the current instance of IImageMatchingApi
      */
-    fun language(language: String) : ISimilarityApi
+    fun language(language: String): ISimilarityApi
 
     /**
      * Get Similar offer by sku
@@ -49,7 +49,7 @@ interface ISimilarityApi{
      * @param sku the offer sku
      * @return the Single{Observable} OfferResponseBody
      */
-    fun getBySku(sku : String) : Single<OfferResponseBody>
+    fun getBySku(sku: String): Single<OfferResponseBody>
 
     /**
      * Generic Get Similar offer by sku
@@ -58,5 +58,5 @@ interface ISimilarityApi{
      * @param clazz the desired return response class
      * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
      */
-    fun <T : IResponse> getBySku(sku : String, clazz : Class<T>) : Single<T>
+    fun <T : IResponse> getBySku(sku: String, clazz: Class<T>): Single<T>
 }

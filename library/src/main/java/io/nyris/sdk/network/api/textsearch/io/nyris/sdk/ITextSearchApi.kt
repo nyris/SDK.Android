@@ -34,7 +34,7 @@ interface ITextSearchApi {
      * @param outputFormat the output format
      * @return the current instance of IImageMatchingApi
      */
-    fun outputFormat(outputFormat: String) : ITextSearchApi
+    fun outputFormat(outputFormat: String): ITextSearchApi
 
     /**
      * Set Filter Language
@@ -42,7 +42,7 @@ interface ITextSearchApi {
      * @param language the language
      * @return the current instance of IImageMatchingApi
      */
-    fun language(language: String) : ITextSearchApi
+    fun language(language: String): ITextSearchApi
 
     /**
      * Set Return Limit
@@ -50,7 +50,7 @@ interface ITextSearchApi {
      * @param limit limit int value between 1-100 helps to limit returned response.
      * @return the current instance of IImageMatchingApi
      */
-    fun limit(@IntRange(from=1, to=100) limit : Int) : ITextSearchApi
+    fun limit(@IntRange(from = 1, to = 100) limit: Int): ITextSearchApi
 
     /**
      * Enable Offers Regroup
@@ -58,7 +58,7 @@ interface ITextSearchApi {
      * @param isEnabled boolean value, true to enable offer regrouping and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    fun regroup(isEnabled : Boolean) : ITextSearchApi
+    fun regroup(isEnabled: Boolean): ITextSearchApi
 
     /**
      * Set Regroup Threshold
@@ -66,7 +66,7 @@ interface ITextSearchApi {
      * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
-    fun regroupThreshold(@FloatRange(from=0.0, to=1.0) threshold: Float) : ITextSearchApi
+    fun regroupThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): ITextSearchApi
 
     /**
      * Search Offers
@@ -75,7 +75,7 @@ interface ITextSearchApi {
      * @param keyword the keyword
      * @return the Single{Observable} OfferResponseBody
      */
-    fun searchOffers(keyword: String) : Single<OfferResponseBody>
+    fun searchOffers(keyword: String): Single<OfferResponseBody>
 
     /**
      * Generic Search Offers
@@ -84,5 +84,5 @@ interface ITextSearchApi {
      * @param clazz the desired return response class
      * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
      */
-    fun <T : IResponse> searchOffers(keyword : String, clazz : Class<T>) : Single<T>
+    fun <T : IResponse> searchOffers(keyword: String, clazz: Class<T>): Single<T>
 }

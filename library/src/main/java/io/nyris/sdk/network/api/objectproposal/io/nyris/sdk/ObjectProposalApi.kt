@@ -28,10 +28,10 @@ import okhttp3.RequestBody
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class ObjectProposalApi (private val objectProposalService: ObjectProposalService,
-                         schedulerProvider : SdkSchedulerProvider,
-                         apiHeader: ApiHeader,
-                         endpoints: EndpointBuilder) : Api(schedulerProvider,apiHeader,endpoints), IObjectProposalApi {
+internal class ObjectProposalApi(private val objectProposalService: ObjectProposalService,
+                                 schedulerProvider: SdkSchedulerProvider,
+                                 apiHeader: ApiHeader,
+                                 endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), IObjectProposalApi {
 
     /**
      * {@inheritDoc}

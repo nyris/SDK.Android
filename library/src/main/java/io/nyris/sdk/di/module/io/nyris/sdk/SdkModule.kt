@@ -18,7 +18,6 @@ package io.nyris.sdk
 import android.os.Build
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 /**
  * SdkModule.kt - class defines methods which provide singleton dependencies for user agent creation.

@@ -23,7 +23,7 @@ package io.nyris.sdk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class EndpointBuilder (var scheme : String, var hostUrl: String, var apiVersion: String) {
+internal class EndpointBuilder(var scheme: String, var hostUrl: String, var apiVersion: String) {
     /**
      * Get Image Matching Api Url
      */
@@ -87,7 +87,7 @@ internal class EndpointBuilder (var scheme : String, var hostUrl: String, var ap
      * Get Not Found Matching Api Url
      * Build Url of the not found offer endpoint
      */
-    fun getNotFoundMatchingUrl(imageRequestId : String): String {
+    fun getNotFoundMatchingUrl(imageRequestId: String): String {
         return BasicUriBuilder()
                 .scheme(scheme)
                 .authority(hostUrl)
@@ -101,7 +101,7 @@ internal class EndpointBuilder (var scheme : String, var hostUrl: String, var ap
     /**
      * Get Offer Manager Api Url
      */
-    fun getOfferManagerUrl(offerId : String) : String{
+    fun getOfferManagerUrl(offerId: String): String {
         return BasicUriBuilder()
                 .scheme(scheme)
                 .authority(hostUrl)
@@ -116,7 +116,7 @@ internal class EndpointBuilder (var scheme : String, var hostUrl: String, var ap
     /**
      * Get Similarity Api Url
      */
-    fun getSimilarityUrl(sku : String) : String{
+    fun getSimilarityUrl(sku: String): String {
         return BasicUriBuilder()
                 .scheme(scheme)
                 .authority(hostUrl)

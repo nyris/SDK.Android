@@ -41,7 +41,7 @@ import javax.inject.Singleton
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 @Module
-internal class ClientModule(private val apiKey: String, private val isDebug: Boolean){
+internal class ClientModule(private val apiKey: String, private val isDebug: Boolean) {
     /**
      * Provide debug status
      * Used to enable debug output of the sdk.
@@ -165,8 +165,8 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
     @Provides
     @Singleton
     fun provideNyrisEndpoints(@SchemeInfo scheme: String,
-                              @HostUrlInfo hostUrl : String,
-                              @ApiVersionInfo apiVersion : String): EndpointBuilder {
+                              @HostUrlInfo hostUrl: String,
+                              @ApiVersionInfo apiVersion: String): EndpointBuilder {
         return EndpointBuilder(scheme, hostUrl, apiVersion)
     }
 
@@ -196,10 +196,10 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
     @Provides
     @Singleton
     fun provideApiHeader(@ApiInfo apiKey: String,
-                         @SdkIdInfo libraryId : String,
-                         @SdkVersionInfo sdkVersion : String,
-                         @GitCommitHashInfo gitCommitHash : String,
-                         @AndroidVersionInfo androidVersion : String?): ApiHeader {
+                         @SdkIdInfo libraryId: String,
+                         @SdkVersionInfo sdkVersion: String,
+                         @GitCommitHashInfo gitCommitHash: String,
+                         @AndroidVersionInfo androidVersion: String?): ApiHeader {
         return ApiHeader(apiKey, libraryId, sdkVersion, gitCommitHash, androidVersion)
     }
 
@@ -303,7 +303,7 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
     fun provideOkHttpClient(
             @DebugInfo isDebug: Boolean,
             @NetworkTimeOutInfo networkTimeoutInSeconds: Int,
-            loggingInterceptor : HttpLoggingInterceptor,
+            loggingInterceptor: HttpLoggingInterceptor,
             retryInterceptor: Interceptor): OkHttpClient {
 
         val okHttpClient = OkHttpClient.Builder()
@@ -311,7 +311,7 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
                 .connectTimeout(networkTimeoutInSeconds.toLong(), TimeUnit.SECONDS)
 
         //show logs if sdk is in Debug mode
-        if (isDebug){
+        if (isDebug) {
             okHttpClient.addInterceptor(loggingInterceptor)
         }
 
@@ -330,7 +330,7 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      */
     @Provides
     @Singleton
-    fun provideRetrofit(httpUrl : HttpUrl,
+    fun provideRetrofit(httpUrl: HttpUrl,
                         converterFactory: Converter.Factory,
                         callAdapterFactory: CallAdapter.Factory,
                         okHttpClient: OkHttpClient): Retrofit {

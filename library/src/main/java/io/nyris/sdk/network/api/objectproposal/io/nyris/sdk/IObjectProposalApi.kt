@@ -32,5 +32,5 @@ interface IObjectProposalApi {
      * @param image the image byte array
      * @return the Single List<ObjectProposal>
      */
-    fun extractObjects(image: ByteArray) : Single<List<ObjectProposal>>
+    fun extractObjects(image: ByteArray): Single<List<ObjectProposal>>
 }
