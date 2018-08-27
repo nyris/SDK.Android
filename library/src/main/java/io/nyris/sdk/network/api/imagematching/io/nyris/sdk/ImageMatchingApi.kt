@@ -49,6 +49,7 @@ internal class ImageMatchingApi(private val imageMatchingService : ImageMatching
     private var enableRegroup : Boolean = false
     private var regroupThreshold : Float = -1F
     private var limit : Int = 20
+    private var enableRecommendation : Boolean = false
 
     /**
      * Init local properties
@@ -62,6 +63,7 @@ internal class ImageMatchingApi(private val imageMatchingService : ImageMatching
         enableRegroup = false
         regroupThreshold = -1F
         limit = 20
+        enableRecommendation = false
     }
     /**
      * {@inheritDoc}
@@ -146,38 +148,38 @@ internal class ImageMatchingApi(private val imageMatchingService : ImageMatching
     /**
      * {@inheritDoc}
      */
+    override fun recommendation(isEnabled: Boolean): IImageMatchingApi {
+        enableRecommendation = isEnabled
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     override fun buildXOptions(): String {
         var xOptions = ""
 
-        if(enableExact && xOptions.isEmpty())
-            xOptions = "exact"
+        if(enableExact && xOptions.isEmpty()) xOptions = "exact"
 
-        if(enableSimilarity && xOptions.isEmpty())
-            xOptions = "similarity"
+        if(enableSimilarity && xOptions.isEmpty()) xOptions = "similarity"
         else
-            if(enableSimilarity)
-                xOptions+= " +similarity"
+            if(enableSimilarity) xOptions+= " +similarity"
 
-        if(enableOcr && xOptions.isEmpty())
-            xOptions = "ocr"
+        if(enableOcr && xOptions.isEmpty()) xOptions = "ocr"
         else
-            if(enableOcr)
-                xOptions+= " +ocr"
+            if(enableOcr) xOptions+= " +ocr"
 
-        if(enableSimilarity && similarityLimit!= -1)
-            xOptions+= " similarity.limit=$similarityLimit"
+        if(enableSimilarity && similarityLimit!= -1) xOptions+= " similarity.limit=$similarityLimit"
 
-        if(enableSimilarity && similarityThreshold!= -1F)
-            xOptions+= " similarity.threshold=$similarityThreshold"
+        if(enableSimilarity && similarityThreshold!= -1F) xOptions+= " similarity.threshold=$similarityThreshold"
 
-        if(enableRegroup)
-            xOptions +=" +regroup"
+        if(enableRegroup) xOptions +=" +regroup"
 
-        if(enableRegroup && regroupThreshold!= -1F)
-            xOptions += " regroup.threshold=$regroupThreshold"
+        if(enableRegroup && regroupThreshold!= -1F) xOptions += " regroup.threshold=$regroupThreshold"
 
-        if(limit!= 20)
-            xOptions+= " limit=$limit"
+        if(limit!= 20) xOptions+= " limit=$limit"
+
+        if(enableRecommendation) xOptions +=" +recommendation"
 
         init()
         return xOptions
@@ -221,6 +223,16 @@ internal class ImageMatchingApi(private val imageMatchingService : ImageMatching
      * {@inheritDoc}
      */
     override fun <T : IResponse> match(image: ByteArray, clazz: Class<T>): Single<T> {
+        if(enableRecommendation && !ternaryXor(enableExact, enableSimilarity, enableOcr)){
+            val exception = Exception("To use the recommendation feature, You need to enable one of this stages : exact, similarity, ocr")
+            return Single.error<T>(exception)
+        }
+
+        if(enableRegroup && !ternaryXor(enableExact, enableSimilarity, enableOcr)){
+            val exception = Exception("To use the regrouping feature, You need to enable one of this stages : exact, similarity, ocr")
+            return Single.error<T>(exception)
+        }
+
         val headers = buildHeaders(image.size)
         val body = RequestBody.create(MediaType.parse("image/jpg"), image)
         val typeOfferResponse = OfferResponse::class.java
@@ -238,6 +250,16 @@ internal class ImageMatchingApi(private val imageMatchingService : ImageMatching
      * {@inheritDoc}
      */
     override fun <T : IResponse> match(image: FloatArray, clazz: Class<T>): Single<T> {
+        if(enableRecommendation && !ternaryXor(enableExact, enableSimilarity, enableOcr)){
+            val exception = Exception("To use the recommendation feature, You need to enable one of this stages : exact, similarity")
+            return Single.error<T>(exception)
+        }
+
+        if(enableRegroup && !ternaryXor(enableExact, enableSimilarity, enableOcr)){
+            val exception = Exception("To use the regrouping feature, You need to enable one of this stages : exact, similarity, ocr")
+            return Single.error<T>(exception)
+        }
+
         val b64 = encodeFloatArray(image)
         val json = "{\"b64\":\"$b64\"}"
         val headers = buildHeaders(json.length)
