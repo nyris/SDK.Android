@@ -50,6 +50,16 @@ internal open class Api(protected val schedulerProvider : SdkSchedulerProvider,
     }
 
     /**
+     * Ternary Xor
+     * A method to check one of the parameters is enabled
+     *
+     * @return the boolean
+     */
+    fun ternaryXor(a: Boolean, b: Boolean, c: Boolean): Boolean {
+        return !a && b xor c || a && !(b || c)
+    }
+
+    /**
      * Build X-Options
      * This method builds x-options for specifics needs. can be overrode to build the desired x-options
      * for more details check {@link http://docs.nyris.io/}
