@@ -149,7 +149,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
     /**
      * {@inheritDoc}
      */
-    override fun recommendation(isEnabled: Boolean): IImageMatchingApi {
+    override fun recommendations(isEnabled: Boolean): IImageMatchingApi {
         enableRecommendation = isEnabled
         return this
     }
@@ -180,7 +180,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
 
         if (limit != 20) xOptions += " limit=$limit"
 
-        if (enableRecommendation) xOptions += " +recommendation"
+        if (enableRecommendation) xOptions += " +recommendations"
 
         init()
         return xOptions
@@ -225,7 +225,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      */
     override fun <T : IResponse> match(image: ByteArray, clazz: Class<T>): Single<T> {
         if (enableRecommendation && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
-            val exception = Exception("To use the recommendation feature, You need to enable one of this stages : exact, similarity, ocr")
+            val exception = Exception("To use the recommendations feature, You need to enable one of this stages : exact, similarity, ocr")
             return Single.error<T>(exception)
         }
 
@@ -252,7 +252,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      */
     override fun <T : IResponse> match(image: FloatArray, clazz: Class<T>): Single<T> {
         if (enableRecommendation && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
-            val exception = Exception("To use the recommendation feature, You need to enable one of this stages : exact, similarity")
+            val exception = Exception("To use the recommendations feature, You need to enable one of this stages : exact, similarity")
             return Single.error<T>(exception)
         }
 

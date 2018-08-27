@@ -111,10 +111,10 @@ interface IImageMatchingApi {
     /**
      * Enable Recommendation XOptions
      *
-     * @param isEnabled boolean value, true to enable offer recommendation and false for disabled it.
+     * @param isEnabled boolean value, true to enable offer recommendations and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    fun recommendation(isEnabled: Boolean): IImageMatchingApi
+    fun recommendations(isEnabled: Boolean): IImageMatchingApi
 
     /**
      * Match image byte array
