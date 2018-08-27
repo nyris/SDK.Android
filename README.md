@@ -16,7 +16,7 @@ The SDK is written in [Kotlin](https://kotlinlang.org/) and compatible with [Jav
 
 Why new SDK ?
 -----
-The the old [SDK](https://github.com/nyris/Nyris.IMX.Android) is offering only image matching services 
+The old [SDK](https://github.com/nyris/Nyris.IMX.Android) is offering only image matching services
 and based on asynchronous callback system. This new SDK offers:
 
 * Support of Reactive programming paradigm
@@ -199,6 +199,7 @@ dependencies {
         .regroup(true) //This mode enables regrouping of the items
         .regroupThreshold(0.5f) //The lower limit of confidences for the regroup
         .limit(10) //Limit returned offers
+        .recommendations(true) //Enable this for searches that don't early-exit in presence of a perfect result and always return indicative results.
         .match(imageTestBytes)
         .subscribe({/*it:OfferResponseBody*/        
             //Handle your response
