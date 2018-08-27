@@ -26,7 +26,7 @@ package io.nyris.sdk
 internal object Constants {
     const val SCHEME = "https"
     const val HOST_URL = "api.nyris.io"
-    const val API_VERSION  = "v1"
+    const val API_VERSION = "v1"
     const val DEFAULT_OUTPUT_FORMAT = "application/offers.complete+json"
     const val DEFAULT_LANGUAGE = "*"
     const val NETWORK_CONNECTION_TIMEOUT = 30

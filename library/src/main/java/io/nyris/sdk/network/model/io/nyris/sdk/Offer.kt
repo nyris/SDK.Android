@@ -28,7 +28,7 @@ import java.io.Serializable
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 @Keep
-open class Offer : Serializable{
+open class Offer : Serializable {
     /**
      * Get Offer Id
      * @return String value

@@ -42,8 +42,8 @@ internal interface ImageMatchingService {
      * @return the Single Response Body
      */
     @POST
-    fun match(@Url url : String, @HeaderMap headers : Map<String, String>,
-                       @Body body : RequestBody): Single<ResponseBody>
+    fun match(@Url url: String, @HeaderMap headers: Map<String, String>,
+              @Body body: RequestBody): Single<ResponseBody>
 
     /**
      * http Post Match image byte Array
@@ -54,6 +54,6 @@ internal interface ImageMatchingService {
      * @return the Single Response Offer Response Body
      */
     @POST
-    fun matchAndGetRequestId(@Url url : String, @HeaderMap headers : Map<String, String>,
-                                   @Body body : RequestBody): Single<Response<OfferResponseBody>>
+    fun matchAndGetRequestId(@Url url: String, @HeaderMap headers: Map<String, String>,
+                             @Body body: RequestBody): Single<Response<OfferResponseBody>>
 }

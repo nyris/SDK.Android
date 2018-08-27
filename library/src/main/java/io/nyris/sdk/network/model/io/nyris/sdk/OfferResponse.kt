@@ -35,7 +35,7 @@ class OfferResponse : IResponse {
      *
      * @return the headers
      */
-    var headers : Headers? = null
+    var headers: Headers? = null
         internal set
     /**
      * Get Offer Response Body
@@ -43,7 +43,7 @@ class OfferResponse : IResponse {
      * @see OfferResponseBody
      * @return the offer response body
      */
-    var body : OfferResponseBody? = null
+    var body: OfferResponseBody? = null
         internal set
 
     /**
@@ -51,7 +51,7 @@ class OfferResponse : IResponse {
      *
      * @return the request id
      */
-    fun getRequestId() : String?{
+    fun getRequestId(): String? {
         return headers!!["X-Matching-Request"]
     }
 }

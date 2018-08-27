@@ -29,13 +29,13 @@ import java.io.Serializable
  */
 
 @Keep
-class Links : Serializable{
+class Links : Serializable {
     /**
      * Get main link
      * @return String value
      */
     @SerializedName("main")
-    var main: String?= null
+    var main: String? = null
         internal set
 
     /**

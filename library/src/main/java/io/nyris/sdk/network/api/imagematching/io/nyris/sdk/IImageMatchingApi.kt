@@ -34,7 +34,7 @@ interface IImageMatchingApi {
      * @param outputFormat the output format
      * @return the current instance of IImageMatchingApi
      */
-    fun outputFormat(outputFormat: String) : IImageMatchingApi
+    fun outputFormat(outputFormat: String): IImageMatchingApi
 
     /**
      * Set Filter Language
@@ -42,7 +42,7 @@ interface IImageMatchingApi {
      * @param language the language
      * @return the current instance of IImageMatchingApi
      */
-    fun language(language: String) : IImageMatchingApi
+    fun language(language: String): IImageMatchingApi
 
     /**
      * Enable exact matching phase
@@ -50,7 +50,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable exact matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    fun exact(isEnabled : Boolean) : IImageMatchingApi
+    fun exact(isEnabled: Boolean): IImageMatchingApi
 
     /**
      * Enable similarity phase
@@ -58,7 +58,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable similarity matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    fun similarity(isEnabled : Boolean) : IImageMatchingApi
+    fun similarity(isEnabled: Boolean): IImageMatchingApi
 
     /**
      * Set Similarity Return Limit
@@ -66,7 +66,7 @@ interface IImageMatchingApi {
      * @param limit limit int value between 1-100 helps to limit returned similarity response.
      * @return the current instance of IImageMatchingApi
      */
-    fun similarityLimit(@IntRange(from=1, to=100) limit : Int) : IImageMatchingApi
+    fun similarityLimit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi
 
     /**
      * Set Similarity Threshold
@@ -74,7 +74,7 @@ interface IImageMatchingApi {
      * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
-    fun similarityThreshold(@FloatRange(from=0.0, to=1.0) threshold: Float) : IImageMatchingApi
+    fun similarityThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
 
     /**
      * Enable OCR phase
@@ -82,7 +82,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable ocr matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    fun ocr(isEnabled : Boolean) : IImageMatchingApi
+    fun ocr(isEnabled: Boolean): IImageMatchingApi
 
     /**
      * Set Return Limit
@@ -90,7 +90,7 @@ interface IImageMatchingApi {
      * @param limit limit int value between 1-100 helps to limit returned response.
      * @return the current instance of IImageMatchingApi
      */
-    fun limit(@IntRange(from=1, to=100) limit : Int) : IImageMatchingApi
+    fun limit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi
 
     /**
      * Enable Offers Regroup
@@ -98,7 +98,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable offer regrouping and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    fun regroup(isEnabled : Boolean) : IImageMatchingApi
+    fun regroup(isEnabled: Boolean): IImageMatchingApi
 
     /**
      * Set Regroup Threshold
@@ -106,7 +106,7 @@ interface IImageMatchingApi {
      * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
-    fun regroupThreshold(@FloatRange(from=0.0, to=1.0) threshold: Float) : IImageMatchingApi
+    fun regroupThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
 
     /**
      * Enable Recommendation XOptions
@@ -114,7 +114,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable offer recommendation and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    fun recommendation(isEnabled : Boolean) : IImageMatchingApi
+    fun recommendation(isEnabled: Boolean): IImageMatchingApi
 
     /**
      * Match image byte array
@@ -123,7 +123,7 @@ interface IImageMatchingApi {
      * @param image the image byte array
      * @return the Single{Observable} OfferResponseBody
      */
-    fun match(image : ByteArray) : Single<OfferResponseBody>
+    fun match(image: ByteArray): Single<OfferResponseBody>
 
     /**
      * Match image float array
@@ -132,7 +132,7 @@ interface IImageMatchingApi {
      * @param image the image float array
      * @return the Single{Observable} OfferResponseBody
      */
-    fun match(image : FloatArray) : Single<OfferResponseBody>
+    fun match(image: FloatArray): Single<OfferResponseBody>
 
     /**
      * Generic Match image byte array
@@ -141,7 +141,7 @@ interface IImageMatchingApi {
      * @param clazz the desired return response class
      * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
      */
-    fun <T : IResponse> match(image : ByteArray, clazz : Class<T>) : Single<T>
+    fun <T : IResponse> match(image: ByteArray, clazz: Class<T>): Single<T>
 
     /**
      * Generic Match image float array
@@ -150,5 +150,5 @@ interface IImageMatchingApi {
      * @param clazz the desired return response class
      * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
      */
-    fun <T : IResponse> match(image : FloatArray, clazz : Class<T>) : Single<T>
+    fun <T : IResponse> match(image: FloatArray, clazz: Class<T>): Single<T>
 }

@@ -29,9 +29,9 @@ import retrofit2.Response
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal open class Api(protected val schedulerProvider : SdkSchedulerProvider,
-               protected val apiHeader: ApiHeader,
-               protected val endpoints: EndpointBuilder){
+internal open class Api(protected val schedulerProvider: SdkSchedulerProvider,
+                        protected val apiHeader: ApiHeader,
+                        protected val endpoints: EndpointBuilder) {
 
     /**
      * Create Default Headers
@@ -39,12 +39,12 @@ internal open class Api(protected val schedulerProvider : SdkSchedulerProvider,
      *
      * @return the headers hash map
      */
-    fun createDefaultHeadersMap() : HashMap<String, String>{
+    fun createDefaultHeadersMap(): HashMap<String, String> {
         val headers = HashMap<String, String>()
         headers["X-Api-Key"] = apiHeader.apiKey
         headers["User-Agent"] = apiHeader.userAgent!!
         //TODO : Check if client id is empty
-        if(!apiHeader.clientId.isEmpty())
+        if (!apiHeader.clientId.isEmpty())
             headers["X-Nyris-ClientID"] = apiHeader.clientId
         return headers
     }
@@ -66,7 +66,7 @@ internal open class Api(protected val schedulerProvider : SdkSchedulerProvider,
      *
      * @return the x-options string
      */
-    open fun buildXOptions() : String{
+    open fun buildXOptions(): String {
         return String()
     }
 
@@ -87,10 +87,10 @@ internal open class Api(protected val schedulerProvider : SdkSchedulerProvider,
      * @return the generic single
      */
     @Suppress("UNCHECKED_CAST")
-    fun <T : IResponse, Z> convertResponseBodyBasedOnType(id : Z, obs1 : Single<ResponseBody>, clazz: Class<T>, gson: Gson) : Single<T> {
+    fun <T : IResponse, Z> convertResponseBodyBasedOnType(id: Z, obs1: Single<ResponseBody>, clazz: Class<T>, gson: Gson): Single<T> {
         obs1
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
 
         val obs2 = Single.just(id)
 
@@ -98,11 +98,10 @@ internal open class Api(protected val schedulerProvider : SdkSchedulerProvider,
                 .zip(obs1, obs2, BiFunction<ResponseBody, Z, T> { responseBody: ResponseBody, _: Z ->
                     val strResponse = responseBody.string()
                     val typeOfferResponseBody = OfferResponseBody::class.java
-                    if(typeOfferResponseBody.name == clazz.name){
+                    if (typeOfferResponseBody.name == clazz.name) {
                         val offerResponse = gson.fromJson(strResponse, OfferResponseBody::class.java)
                         offerResponse as T
-                    }
-                    else{
+                    } else {
                         val jsonResponse = JsonResponseBody()
                         jsonResponse.json = strResponse
                         jsonResponse as T
@@ -127,10 +126,10 @@ internal open class Api(protected val schedulerProvider : SdkSchedulerProvider,
      * @return the generic single
      */
     @Suppress("UNCHECKED_CAST")
-    fun <T , Z> convertResponseBasedOnType(id : Z, obs1 : Single<Response<OfferResponseBody>>) : Single<T> {
+    fun <T, Z> convertResponseBasedOnType(id: Z, obs1: Single<Response<OfferResponseBody>>): Single<T> {
         obs1
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
 
         val obs2 = Single.just(id)
 

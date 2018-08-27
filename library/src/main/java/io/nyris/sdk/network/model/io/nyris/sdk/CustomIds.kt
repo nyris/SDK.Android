@@ -29,7 +29,7 @@ import java.io.Serializable
  */
 
 @Keep
-class CustomIds : Serializable{
+class CustomIds : Serializable {
     /**
      * Get Gtin
      * @return String value

@@ -40,6 +40,6 @@ internal interface ObjectProposalService {
      * @return the Single List Object Proposal
      */
     @POST
-    fun extractObjects(@Url url : String, @HeaderMap headers : Map<String, String>,
-                        @Body body : RequestBody): Single<List<ObjectProposal>>
+    fun extractObjects(@Url url: String, @HeaderMap headers: Map<String, String>,
+                       @Body body: RequestBody): Single<List<ObjectProposal>>
 }

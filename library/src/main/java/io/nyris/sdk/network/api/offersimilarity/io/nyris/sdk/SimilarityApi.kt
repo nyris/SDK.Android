@@ -28,12 +28,12 @@ import io.reactivex.Single
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 internal class SimilarityApi(private val similarityService: SimilarityService,
-                    private var outputFormat : String,
-                    private var language : String,
-                    private var gson : Gson,
-                    schedulerProvider : SdkSchedulerProvider,
-                    apiHeader: ApiHeader,
-                    endpoints: EndpointBuilder) : Api(schedulerProvider,apiHeader,endpoints), ISimilarityApi {
+                             private var outputFormat: String,
+                             private var language: String,
+                             private var gson: Gson,
+                             schedulerProvider: SdkSchedulerProvider,
+                             apiHeader: ApiHeader,
+                             endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), ISimilarityApi {
     /**
      * {@inheritDoc}
      */

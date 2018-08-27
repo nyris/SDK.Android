@@ -29,18 +29,15 @@ import static org.mockito.Mockito.when;
  */
 @SuppressWarnings("KotlinInternalInJava")
 public class NotFoundMatchingApiTest extends BaseTest {
+    private final String emptyResponse = "";
+    private final String requestId = "requestId";
     @Mock
     private NotFoundMatchingService notFoundMatchingService;
-
     private NotFoundMatchingApi notFoundMatchingApi;
-
-    private final String emptyResponse = "";
-
-    private final String requestId = "requestId";
 
     @Before
     @Override
-    public void setUp(){
+    public void setUp() {
         super.setUp();
 
         notFoundMatchingApi = new NotFoundMatchingApi(notFoundMatchingService,
@@ -50,9 +47,9 @@ public class NotFoundMatchingApiTest extends BaseTest {
     }
 
     @Test
-    public void markAsNotFound_shouldReturnEmptyResponseBody(){
+    public void markAsNotFound_shouldReturnEmptyResponseBody() {
         //Get an instance of ResponseBody
-        ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),emptyResponse);
+        ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"), emptyResponse);
         when(notFoundMatchingService.markAsNotFound(anyString(), anyMap()))
                 .thenReturn(Single.just(responseBody));
 
@@ -62,7 +59,7 @@ public class NotFoundMatchingApiTest extends BaseTest {
                 .test();
 
         //verify markAsNotFound method called once
-        verify(notFoundMatchingService,times(1)).markAsNotFound(anyString(), anyMap());
+        verify(notFoundMatchingService, times(1)).markAsNotFound(anyString(), anyMap());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
