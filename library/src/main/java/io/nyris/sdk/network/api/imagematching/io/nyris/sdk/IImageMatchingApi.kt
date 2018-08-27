@@ -109,6 +109,14 @@ interface IImageMatchingApi {
     fun regroupThreshold(@FloatRange(from=0.0, to=1.0) threshold: Float) : IImageMatchingApi
 
     /**
+     * Enable Recommendation XOptions
+     *
+     * @param isEnabled boolean value, true to enable offer recommendation and false for disabled it.
+     * @return the current instance of IImageMatchingApi
+     */
+    fun recommendation(isEnabled : Boolean) : IImageMatchingApi
+
+    /**
      * Match image byte array
      *
      * Default image matching method for the advanced response return, please use {@link #match(image : ByteArray, clazz : Class<T>) label}
