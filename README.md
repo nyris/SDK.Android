@@ -199,7 +199,7 @@ dependencies {
         .regroup(true) //This mode enables regrouping of the items
         .regroupThreshold(0.5f) //The lower limit of confidences for the regroup
         .limit(10) //Limit returned offers
-        .recommendations(true) //Enable this for searches that don't early-exit in presence of a perfect result and always return indicative results.
+        .recommendations(true) //Enables recommendation type searches that return all discovered results regardless of their score.
         .match(imageTestBytes)
         .subscribe({/*it:OfferResponseBody*/        
             //Handle your response
