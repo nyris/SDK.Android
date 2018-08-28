@@ -224,12 +224,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun <T : IResponse> match(image: ByteArray, clazz: Class<T>): Single<T> {
-        if (enableRecommendation && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
+        if (enableRecommendation && !ternaryOr(enableExact, enableSimilarity, enableOcr)) {
             val exception = Exception("To use the recommendation feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }
 
-        if (enableRegroup && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
+        if (enableRegroup && !ternaryOr(enableExact, enableSimilarity, enableOcr)) {
             val exception = Exception("To use the regrouping feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }
@@ -251,12 +251,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun <T : IResponse> match(image: FloatArray, clazz: Class<T>): Single<T> {
-        if (enableRecommendation && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
+        if (enableRecommendation && !ternaryOr(enableExact, enableSimilarity, enableOcr)) {
             val exception = Exception("To use the recommendation feature, you need to enable one of this stages : exact, similarity.")
             return Single.error<T>(exception)
         }
 
-        if (enableRegroup && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
+        if (enableRegroup && !ternaryOr(enableExact, enableSimilarity, enableOcr)) {
             val exception = Exception("To use the regrouping feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }
