@@ -225,12 +225,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      */
     override fun <T : IResponse> match(image: ByteArray, clazz: Class<T>): Single<T> {
         if (enableRecommendation && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
-            val exception = Exception("To use the recommendations feature, You need to enable one of this stages : exact, similarity, ocr")
+            val exception = Exception("To use the recommendation feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }
 
         if (enableRegroup && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
-            val exception = Exception("To use the regrouping feature, You need to enable one of this stages : exact, similarity, ocr")
+            val exception = Exception("To use the regrouping feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }
 
@@ -252,12 +252,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      */
     override fun <T : IResponse> match(image: FloatArray, clazz: Class<T>): Single<T> {
         if (enableRecommendation && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
-            val exception = Exception("To use the recommendations feature, You need to enable one of this stages : exact, similarity")
+            val exception = Exception("To use the recommendation feature, you need to enable one of this stages : exact, similarity.")
             return Single.error<T>(exception)
         }
 
         if (enableRegroup && !ternaryXor(enableExact, enableSimilarity, enableOcr)) {
-            val exception = Exception("To use the regrouping feature, You need to enable one of this stages : exact, similarity, ocr")
+            val exception = Exception("To use the regrouping feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }
 
