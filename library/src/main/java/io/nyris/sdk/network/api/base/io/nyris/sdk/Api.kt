@@ -55,8 +55,8 @@ internal open class Api(protected val schedulerProvider: SdkSchedulerProvider,
      *
      * @return the boolean
      */
-    fun ternaryXor(a: Boolean, b: Boolean, c: Boolean): Boolean {
-        return !a && b xor c || a && !(b || c)
+    fun ternaryOr(a: Boolean, b: Boolean, c: Boolean): Boolean {
+        return a || b || c
     }
 
     /**
