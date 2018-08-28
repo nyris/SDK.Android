@@ -9,10 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import io.nyris.sdk.IObjectProposalApi;
-import io.nyris.sdk.ObjectProposal;
-import io.nyris.sdk.ObjectProposalApi;
-import io.nyris.sdk.ObjectProposalService;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import okhttp3.MediaType;
@@ -37,16 +33,14 @@ import static org.mockito.Mockito.when;
 
 @SuppressWarnings("KotlinInternalInJava")
 public class ObjectProposalApiTest extends BaseTest {
+    private final int OBJECTS_SIZE = 10;
     @Mock
     private ObjectProposalService objectProposalService;
-
     private ObjectProposalApi objectProposalApi;
-
-    private final int OBJECTS_SIZE = 10;
 
     @Before
     @Override
-    public void setUp(){
+    public void setUp() {
         super.setUp();
 
         objectProposalApi = new ObjectProposalApi(objectProposalService,
@@ -57,14 +51,14 @@ public class ObjectProposalApiTest extends BaseTest {
 
     private List<ObjectProposal> getObjectProposalList() {
         List<ObjectProposal> list = new ArrayList<>();
-        for (int i = 0; i<OBJECTS_SIZE; i++) {
+        for (int i = 0; i < OBJECTS_SIZE; i++) {
             list.add(new ObjectProposal());
         }
         return list;
     }
 
     @Test
-    public void extractObjects_shouldReturnOfferResponseBody(){
+    public void extractObjects_shouldReturnOfferResponseBody() {
         //Get an instance of List of ObjectProposal
         List<ObjectProposal> objectProposals = getObjectProposalList();
         when(objectProposalService.extractObjects(anyString(), anyMap(), any()))
@@ -76,7 +70,7 @@ public class ObjectProposalApiTest extends BaseTest {
                 .test();
 
         //verify extractObjects method called once
-        verify(objectProposalService,times(1)).extractObjects(anyString(), anyMap(), any());
+        verify(objectProposalService, times(1)).extractObjects(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();

@@ -41,6 +41,6 @@ internal interface TextSearchService {
      * @return the Single Response Body
      */
     @POST
-    fun searchOffers(@Url url : String, @HeaderMap headers : Map<String, String>,
-                     @Body body : RequestBody): Single<ResponseBody>
+    fun searchOffers(@Url url: String, @HeaderMap headers: Map<String, String>,
+                     @Body body: RequestBody): Single<ResponseBody>
 }

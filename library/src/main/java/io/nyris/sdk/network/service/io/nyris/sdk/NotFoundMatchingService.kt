@@ -38,5 +38,5 @@ internal interface NotFoundMatchingService {
      * @return the Single ResponseBody
      */
     @POST
-    fun markAsNotFound(@Url url : String, @HeaderMap headers : Map<String, String>): Single<ResponseBody>
+    fun markAsNotFound(@Url url: String, @HeaderMap headers: Map<String, String>): Single<ResponseBody>
 }

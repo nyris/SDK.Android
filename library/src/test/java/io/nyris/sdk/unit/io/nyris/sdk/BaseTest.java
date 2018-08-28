@@ -4,15 +4,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import io.nyris.sdk.ApiHeader;
-import io.nyris.sdk.EndpointBuilder;
-import io.nyris.sdk.Offer;
-import io.nyris.sdk.OfferResponseBody;
-import io.nyris.sdk.SdkSchedulerProvider;
-import io.nyris.sdk.TestSchedulerRule;
 
 /**
  * BaseTest.java - Base Unit Test class
@@ -25,16 +17,13 @@ import io.nyris.sdk.TestSchedulerRule;
 public class BaseTest {
     @ClassRule
     public static final TestSchedulerRule testSchedulerRule = new TestSchedulerRule();
+    final int OFFERS_SIZE = 10;
     SdkSchedulerProvider sdkScheduler;
-
     ApiHeader apiHeader;
-
     EndpointBuilder endpoints;
 
-    final int OFFERS_SIZE = 10;
-
     @Before
-    public void setUp(){
+    public void setUp() {
         //Mock fields
         MockitoAnnotations.initMocks(this);
 
@@ -56,13 +45,14 @@ public class BaseTest {
 
     /**
      * Get Offer Response Body : Get dummy offerResponse
+     *
      * @return OfferResponseBody instance
      * @see OfferResponseBody
      */
     OfferResponseBody getOfferResponseBody() {
         OfferResponseBody offerResponseBody = new OfferResponseBody();
         offerResponseBody.offers = new ArrayList<>();
-        for (int i = 0; i<OFFERS_SIZE; i++) {
+        for (int i = 0; i < OFFERS_SIZE; i++) {
             offerResponseBody.getOffers().add(new Offer());
         }
         return offerResponseBody;

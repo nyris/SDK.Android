@@ -9,10 +9,6 @@ import org.mockito.Mock;
 import java.io.IOException;
 import java.util.Objects;
 
-import io.nyris.sdk.JsonResponseBody;
-import io.nyris.sdk.OfferResponseBody;
-import io.nyris.sdk.TextSearchApi;
-import io.nyris.sdk.TextSearchService;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import okhttp3.MediaType;
@@ -37,18 +33,15 @@ import static org.mockito.Mockito.when;
 
 @SuppressWarnings("KotlinInternalInJava")
 public class TextSearchApiTest extends BaseTest {
+    private final String keyword = "keyword";
     @Mock
     private TextSearchService textSearchService;
-
     private TextSearchApi textSearchApi;
-
     private Gson gson;
-
-    private final String keyword = "keyword";
 
     @Before
     @Override
-    public void setUp(){
+    public void setUp() {
         super.setUp();
 
         gson = new Gson();
@@ -63,7 +56,7 @@ public class TextSearchApiTest extends BaseTest {
     }
 
     @Test
-    public void searchOffers_shouldReturnOfferResponseBody(){
+    public void searchOffers_shouldReturnOfferResponseBody() {
         //Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
@@ -78,7 +71,7 @@ public class TextSearchApiTest extends BaseTest {
                 .test();
 
         //verify match method called once
-        verify(textSearchService,times(1)).searchOffers(anyString(), anyMap(), any());
+        verify(textSearchService, times(1)).searchOffers(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -87,7 +80,7 @@ public class TextSearchApiTest extends BaseTest {
     }
 
     @Test
-    public void searchOffers_shouldReturnJsonResponseBody(){
+    public void searchOffers_shouldReturnJsonResponseBody() {
         //Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
@@ -102,7 +95,7 @@ public class TextSearchApiTest extends BaseTest {
                 .test();
 
         //verify match method was not called
-        verify(textSearchService,times(1)).searchOffers(anyString(), anyMap(), any());
+        verify(textSearchService, times(1)).searchOffers(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -111,7 +104,7 @@ public class TextSearchApiTest extends BaseTest {
     }
 
     @Test
-    public void searchOffers_shouldTerminatedWithHttpError()  {
+    public void searchOffers_shouldTerminatedWithHttpError() {
         //Get an instance of HttpException
         HttpException httpException = new HttpException(
                 Response.error(403, ResponseBody.create(MediaType.parse("application/json"),

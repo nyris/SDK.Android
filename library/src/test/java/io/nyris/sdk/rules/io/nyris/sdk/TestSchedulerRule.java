@@ -15,8 +15,8 @@ import io.reactivex.plugins.RxJavaPlugins;
 
 /**
  * @author Sidali Mellouk
- *         Created by nyris GmbH
- *         Copyright © 2018 nyris GmbH. All rights reserved.
+ * Created by nyris GmbH
+ * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 
 public class TestSchedulerRule implements TestRule {

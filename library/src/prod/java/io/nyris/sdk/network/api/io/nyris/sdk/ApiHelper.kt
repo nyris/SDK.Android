@@ -26,10 +26,10 @@ import javax.inject.Inject
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
-    private lateinit var apiHeader : ApiHeader
+internal class ApiHelper(apiKey: String, isDebug: Boolean) : IApiHelper {
+    private lateinit var apiHeader: ApiHeader
 
-    private lateinit var endpointBuilder : EndpointBuilder
+    private lateinit var endpointBuilder: EndpointBuilder
 
     private lateinit var imageMatching: IImageMatchingApi
 
@@ -39,7 +39,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
 
     private lateinit var textSearch: ITextSearchApi
 
-    private lateinit var similarity : ISimilarityApi
+    private lateinit var similarity: ISimilarityApi
 
     /**
      * Create instance of SdkComponent
@@ -47,7 +47,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
     private var sdkComponent: SdkComponent = DaggerSdkComponent
             .builder()
             .sdkModule(SdkModule())
-            .clientModule(ClientModule(apiKey,isDebug))
+            .clientModule(ClientModule(apiKey, isDebug))
             .serviceModule(ServiceModule())
             .build()
 
@@ -60,7 +60,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
      * @param apiHeader the api header
      */
     @Inject
-    fun setApiHeader(apiHeader: ApiHeader){
+    fun setApiHeader(apiHeader: ApiHeader) {
         this.apiHeader = apiHeader
     }
 
@@ -68,7 +68,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
      *
      * {@inheritDoc}
      */
-    override fun setApiKey(apiKey: String) : IApiHelper {
+    override fun setApiKey(apiKey: String): IApiHelper {
         apiHeader.apiKey = apiKey
         return this
     }
@@ -85,7 +85,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
      * @param endpointBuilder the endpoint builder
      */
     @Inject
-    fun setEndpointBuilder(endpointBuilder: EndpointBuilder){
+    fun setEndpointBuilder(endpointBuilder: EndpointBuilder) {
         this.endpointBuilder = endpointBuilder
     }
 
@@ -94,7 +94,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
      * @param imageMatching the image matching api
      */
     @Inject
-    fun setImageMatching(imageMatching: IImageMatchingApi){
+    fun setImageMatching(imageMatching: IImageMatchingApi) {
         this.imageMatching = imageMatching
     }
 
@@ -110,7 +110,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
      * @param objectProposal the object proposal api
      */
     @Inject
-    fun setObjectProposal(objectProposal: IObjectProposalApi){
+    fun setObjectProposal(objectProposal: IObjectProposalApi) {
         this.objectProposal = objectProposal
     }
 
@@ -126,7 +126,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
      * @param notFoundMatching the not found matching api
      */
     @Inject
-    fun setNotFoundMatching(notFoundMatching: INotFoundMatchingApi){
+    fun setNotFoundMatching(notFoundMatching: INotFoundMatchingApi) {
         this.notFoundMatching = notFoundMatching
     }
 
@@ -142,7 +142,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
      * @param textSearch the text search api
      */
     @Inject
-    fun setTextSearch(textSearch: ITextSearchApi){
+    fun setTextSearch(textSearch: ITextSearchApi) {
         this.textSearch = textSearch
     }
 
@@ -158,7 +158,7 @@ internal class ApiHelper(apiKey : String, isDebug : Boolean) : IApiHelper{
      * @param similarity the offer similarity api
      */
     @Inject
-    fun setSimilarity(similarity: ISimilarityApi){
+    fun setSimilarity(similarity: ISimilarityApi) {
         this.similarity = similarity
     }
 

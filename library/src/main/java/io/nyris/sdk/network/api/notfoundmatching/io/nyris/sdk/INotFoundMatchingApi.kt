@@ -26,7 +26,7 @@ import okhttp3.ResponseBody
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-interface INotFoundMatchingApi{
+interface INotFoundMatchingApi {
     /**
      * Mark Image for Manual Match
      *

@@ -29,13 +29,13 @@ import io.reactivex.disposables.Disposable
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris{
+class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris {
     private var apiHelper: IApiHelper = ApiHelper(apiKey, isDebug)
 
     /**
      * {@inheritDoc}
      */
-    override fun setApiKey(apiKey: String) : INyris {
+    override fun setApiKey(apiKey: String): INyris {
         apiHelper.setApiKey(apiKey)
         return this
     }
@@ -86,7 +86,7 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris{
      * {@inheritDoc}
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    override fun destroy(){
+    override fun destroy() {
         instances.clear()
         compositeDisposable?.clear()
     }
@@ -95,7 +95,7 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris{
      * companion Object
      */
     companion object {
-        private var instances : HashMap<String, INyris> = hashMapOf()
+        private var instances: HashMap<String, INyris> = hashMapOf()
         /**
          * Create instances of Nyris SDK
          *
@@ -104,10 +104,10 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris{
          * @return the nyris sdk instance
          */
         @JvmStatic
-        fun createInstance(apiKey: String, isDebug: Boolean = false) : INyris {
-            return if(instances.containsKey(apiKey))
+        fun createInstance(apiKey: String, isDebug: Boolean = false): INyris {
+            return if (instances.containsKey(apiKey))
                 instances[apiKey] as INyris
-            else{
+            else {
                 val instance = Nyris(apiKey, isDebug)
                 instances[apiKey] = instance
                 instance
@@ -121,13 +121,13 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris{
          * @return the nyris sdk instance
          */
         @JvmStatic
-        fun createInstance(apiKey: String) : INyris {
+        fun createInstance(apiKey: String): INyris {
             return createInstance(apiKey, false)
         }
     }
 }
 
-private var compositeDisposable : CompositeDisposable? = CompositeDisposable()
-fun Disposable.disposable(){
+private var compositeDisposable: CompositeDisposable? = CompositeDisposable()
+fun Disposable.disposable() {
     compositeDisposable?.add(this)
 }

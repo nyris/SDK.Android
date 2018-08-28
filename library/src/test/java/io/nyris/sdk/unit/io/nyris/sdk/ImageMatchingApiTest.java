@@ -9,12 +9,6 @@ import org.mockito.Mock;
 import java.io.IOException;
 import java.util.Objects;
 
-import io.nyris.sdk.IImageMatchingApi;
-import io.nyris.sdk.ImageMatchingApi;
-import io.nyris.sdk.ImageMatchingService;
-import io.nyris.sdk.JsonResponseBody;
-import io.nyris.sdk.OfferResponse;
-import io.nyris.sdk.OfferResponseBody;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import okhttp3.MediaType;
@@ -47,7 +41,7 @@ public class ImageMatchingApiTest extends BaseTest {
 
     @Before
     @Override
-    public void setUp(){
+    public void setUp() {
         super.setUp();
 
         gson = new Gson();
@@ -62,7 +56,7 @@ public class ImageMatchingApiTest extends BaseTest {
     }
 
     @Test
-    public void match_shouldReturnCorrectOfferResponseBody(){
+    public void match_shouldReturnCorrectOfferResponseBody() {
         //Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
@@ -77,7 +71,7 @@ public class ImageMatchingApiTest extends BaseTest {
                 .test();
 
         //verify match method called once
-        verify(imageMatchingService,times(1)).match(anyString(), anyMap(), any());
+        verify(imageMatchingService, times(1)).match(anyString(), anyMap(), any());
 
         //verify matchAndGetRequestId method was not called
         verify(imageMatchingService, times(0)).matchAndGetRequestId(anyString(), anyMap(), any());
@@ -90,7 +84,7 @@ public class ImageMatchingApiTest extends BaseTest {
     }
 
     @Test
-    public void match_shouldReturnCorrectJsonResponseBody(){
+    public void match_shouldReturnCorrectJsonResponseBody() {
         //Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
@@ -105,7 +99,7 @@ public class ImageMatchingApiTest extends BaseTest {
                 .test();
 
         //verify match method was not called
-        verify(imageMatchingService,times(1)).match(anyString(), anyMap(), any());
+        verify(imageMatchingService, times(1)).match(anyString(), anyMap(), any());
 
         //verify matchAndGetRequestId method was once
         verify(imageMatchingService, times(0)).matchAndGetRequestId(anyString(), anyMap(), any());
@@ -118,7 +112,7 @@ public class ImageMatchingApiTest extends BaseTest {
     }
 
     @Test
-    public void match_shouldReturnCorrectOfferResponse(){
+    public void match_shouldReturnCorrectOfferResponse() {
         //Get an instance of OfferResponseBody
         Response<OfferResponseBody> response = Response.success(getOfferResponseBody());
         when(imageMatchingService.matchAndGetRequestId(anyString(), anyMap(), any()))
@@ -130,7 +124,7 @@ public class ImageMatchingApiTest extends BaseTest {
                 .test();
 
         //verify match method was not called
-        verify(imageMatchingService,times(0)).match(anyString(), anyMap(), any());
+        verify(imageMatchingService, times(0)).match(anyString(), anyMap(), any());
 
         //verify matchAndGetRequestId method was once
         verify(imageMatchingService, times(1)).matchAndGetRequestId(anyString(), anyMap(), any());

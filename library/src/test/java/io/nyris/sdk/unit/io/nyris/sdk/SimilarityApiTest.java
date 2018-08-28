@@ -9,11 +9,6 @@ import org.mockito.Mock;
 import java.io.IOException;
 import java.util.Objects;
 
-import io.nyris.sdk.ISimilarityApi;
-import io.nyris.sdk.JsonResponseBody;
-import io.nyris.sdk.OfferResponseBody;
-import io.nyris.sdk.SimilarityApi;
-import io.nyris.sdk.SimilarityService;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import okhttp3.MediaType;
@@ -37,17 +32,15 @@ import static org.mockito.Mockito.when;
 
 @SuppressWarnings("KotlinInternalInJava")
 public class SimilarityApiTest extends BaseTest {
+    private final String sku = "sku";
     @Mock
     private SimilarityService similarityService;
-
     private SimilarityApi similarityApi;
-
     private Gson gson;
 
-    private final String sku = "sku";
     @Before
     @Override
-    public void setUp(){
+    public void setUp() {
         super.setUp();
 
         gson = new Gson();
@@ -62,7 +55,7 @@ public class SimilarityApiTest extends BaseTest {
     }
 
     @Test
-    public void getBySku_shouldReturnOfferResponseBody(){
+    public void getBySku_shouldReturnOfferResponseBody() {
         //Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
@@ -77,7 +70,7 @@ public class SimilarityApiTest extends BaseTest {
                 .test();
 
         //verify match method called once
-        verify(similarityService,times(1)).getBySku(anyString(), anyMap());
+        verify(similarityService, times(1)).getBySku(anyString(), anyMap());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -86,7 +79,7 @@ public class SimilarityApiTest extends BaseTest {
     }
 
     @Test
-    public void getBySku_shouldReturnJsonResponseBody(){
+    public void getBySku_shouldReturnJsonResponseBody() {
         //Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
@@ -101,7 +94,7 @@ public class SimilarityApiTest extends BaseTest {
                 .test();
 
         //verify match method was not called
-        verify(similarityService,times(1)).getBySku(anyString(), anyMap());
+        verify(similarityService, times(1)).getBySku(anyString(), anyMap());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
