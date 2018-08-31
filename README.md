@@ -200,6 +200,9 @@ dependencies {
         .regroupThreshold(0.5f) //The lower limit of confidences for the regroup
         .limit(10) //Limit returned offers
         .recommendations(true) //Enables recommendation type searches that return all discovered results regardless of their score.
+        .categoryPrediction(true) //Enables the output of predicted categories.
+        .categoryPredictionLimit(3) // Limits the number of categories to return.
+        .categoryPredictionThreshold(0.2F) //Sets the cutoff threshold for category predictions (range 0..1).
         .match(imageTestBytes)
         .subscribe({/*it:OfferResponseBody*/        
             //Handle your response
