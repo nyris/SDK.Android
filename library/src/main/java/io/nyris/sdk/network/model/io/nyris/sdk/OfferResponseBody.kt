@@ -18,6 +18,7 @@ package io.nyris.sdk
 
 import android.support.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 /**
  * OfferResponseBody.kt - class model implement IResponse
@@ -38,5 +39,15 @@ open class OfferResponseBody : IResponse {
      */
     @SerializedName("results")
     lateinit var offers: List<Offer>
+        internal set
+
+    /**
+     * Get Offers
+     *
+     * @see Offer
+     * @return the List Offers
+     */
+    @SerializedName("predicted_category")
+    var predictedCategories: Map<String, Float> = mapOf()
         internal set
 }
