@@ -117,6 +117,30 @@ interface IImageMatchingApi {
     fun recommendations(isEnabled: Boolean): IImageMatchingApi
 
     /**
+     * Enables the output of predicted categories.
+     *
+     * @param isEnabled boolean value, true to enable categories predictions and false for disabled it.
+     * @return the current instance of IImageMatchingApi
+     */
+    fun categoryPrediction(isEnabled: Boolean): IImageMatchingApi
+
+    /**
+     * Set Similarity Return Limit
+     *
+     * @param limit limit int value between 1-100 helps to limit returned category response.
+     * @return the current instance of IImageMatchingApi
+     */
+    fun categoryPredictionLimit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi
+
+    /**
+     * Set Similarity Threshold
+     *
+     * @param threshold threshold int value between 0-1 helps to return only category with score above the threshold
+     * @return the current instance of IImageMatchingApi
+     */
+    fun categoryPredictionThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
+
+    /**
      * Match image byte array
      *
      * Default image matching method for the advanced response return, please use {@link #match(image : ByteArray, clazz : Class<T>) label}

@@ -16,6 +16,6 @@ class DemoApp : Application(){
 
     override fun onCreate() {
         super.onCreate()
-        nyris = Nyris.createInstance(BuildConfig.API_KEY, true)
+        nyris = Nyris.createInstance(BuildConfig.API_KEY, BuildConfig.DEBUG)
     }
 }
