@@ -48,6 +48,6 @@ open class OfferResponseBody : IResponse {
      * @return the List Offers
      */
     @SerializedName("predicted_category")
-    lateinit var predictedCategories: Map<String, Float>
+    var predictedCategories: Map<String, Float> = mapOf()
         internal set
 }
