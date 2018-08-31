@@ -200,6 +200,9 @@ dependencies {
         .regroupThreshold(0.5f) //The lower limit of confidences for the regroup
         .limit(10) //Limit returned offers
         .recommendations(true) //Enables recommendation type searches that return all discovered results regardless of their score.
+        .categoryPrediction(true) //Enables the output of predicted categories.
+        .categoryPredictionLimit(3) // Limits the number of categories to return.
+        .categoryPredictionThreshold(0.2F) //Sets the cutoff threshold for category predictions (range 0..1).
         .match(imageTestBytes)
         .subscribe({/*it:OfferResponseBody*/        
             //Handle your response
@@ -329,9 +332,9 @@ you can use the text search service the same way as [image matching service](#ma
 ### Dex Count Methods Info
 The dex count for the SDK is around 580 methods which mean around 1% of 64k methods Limit.  
 
-    Total methods in library: 583 (0.89% used)
-    Total fields in library: 245 (0.37% used)
-    Total classes in library: 124 (0.19% used)
+    Total methods in library: 652 (0.99% used)
+    Total fields in library:  265 (0.40% used)
+    Total classes in library: 136 (0.21% used)
 
 License
 =======
