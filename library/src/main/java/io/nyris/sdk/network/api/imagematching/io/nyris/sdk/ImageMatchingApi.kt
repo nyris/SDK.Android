@@ -41,15 +41,24 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
                                 schedulerProvider: SdkSchedulerProvider,
                                 apiHeader: ApiHeader,
                                 endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), IImageMatchingApi {
+
     private var enableExact: Boolean = true
+
     private var enableSimilarity: Boolean = true
     private var similarityLimit: Int = -1
     private var similarityThreshold: Float = -1F
+
     private var enableOcr: Boolean = true
+
     private var enableRegroup: Boolean = false
     private var regroupThreshold: Float = -1F
     private var limit: Int = 20
+
     private var enableRecommendation: Boolean = false
+
+    private var enableCategoryPrediction: Boolean = false
+    private var categoryPredictionLimit: Int = -1
+    private var categoryPredictionThreshold: Float = -1F
 
     /**
      * Init local properties
@@ -64,6 +73,9 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
         regroupThreshold = -1F
         limit = 20
         enableRecommendation = false
+        enableCategoryPrediction = false
+        categoryPredictionLimit = -1
+        categoryPredictionThreshold = -1F
     }
 
     /**
@@ -157,6 +169,30 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
     /**
      * {@inheritDoc}
      */
+    override fun categoryPrediction(isEnabled: Boolean): IImageMatchingApi {
+        enableCategoryPrediction = isEnabled
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun categoryPredictionLimit(limit: Int): IImageMatchingApi {
+        categoryPredictionLimit = limit
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun categoryPredictionThreshold(threshold: Float): IImageMatchingApi {
+        categoryPredictionThreshold = threshold
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     override fun buildXOptions(): String {
         var xOptions = ""
 
@@ -181,6 +217,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
         if (limit != 20) xOptions += " limit=$limit"
 
         if (enableRecommendation) xOptions += " +recommendations"
+
+        if (enableCategoryPrediction) xOptions += " +category-prediction"
+
+        if (enableCategoryPrediction && categoryPredictionLimit != -1) xOptions += " category-prediction.limit=$similarityLimit"
+
+        if (enableCategoryPrediction && categoryPredictionThreshold != -1F) xOptions += " category-prediction.threshold=$similarityThreshold"
 
         init()
         return xOptions
