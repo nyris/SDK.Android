@@ -58,14 +58,24 @@ interface ITextSearchApi {
      * @param isEnabled boolean value, true to enable offer regrouping and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("regroup(Boolean) is deprecated, will be remove in version 1.6.")
     fun regroup(isEnabled: Boolean): ITextSearchApi
 
+    /**
+     * Enable Offers Regroup
+     *
+     * @param action parameter function function type with RegroupOptions receiver.
+     * @return the current instance of IImageMatchingApi
+     * @see RegroupOptions
+     */
+    fun regroup(action: RegroupOptions.() -> Unit) : ITextSearchApi
     /**
      * Set Regroup Threshold
      *
      * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("regroupThreshold(Float) is deprecated, will be remove in version 1.6.")
     fun regroupThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): ITextSearchApi
 
     /**
