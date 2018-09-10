@@ -4,16 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.5
+### Added
+- Add xOptions classes
+- deprecation of some methods in classes `ITextSearchApi` && `IImageMatchingApi`
+
+### Modified
+- `TextSearchApi` && `ITextSearchApi` classes to support the new advanced for offer querying
+- `ImageMatchingApi` && `IImageMatchingApi` classes to support the new advanced for offer querying
+
 ## 1.4 - 2018.08.31
-### Add
+### Added
 - Add category prediction
 
 ## 1.3 - 2018.08.27
-### Add
+### Added
 - Add offer recommendation feature
 
 ## 1.2 - 2018.05.24
-### Add
+### Added
 - Matching offer using float array
 
 ## 1.1.1 - 2018.05.24
