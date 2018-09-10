@@ -42,40 +42,24 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
                                 apiHeader: ApiHeader,
                                 endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), IImageMatchingApi {
 
-    private var enableExact: Boolean = true
-
-    private var enableSimilarity: Boolean = true
-    private var similarityLimit: Int = -1
-    private var similarityThreshold: Float = -1F
-
-    private var enableOcr: Boolean = true
-
-    private var enableRegroup: Boolean = false
-    private var regroupThreshold: Float = -1F
+    private val exactOptions : ExactOptions = ExactOptions()
+    private val similarityOptions : SimilarityOptions = SimilarityOptions()
+    private val ocrOptions : OcrOptions = OcrOptions()
+    private val regroupOptions : RegroupOptions = RegroupOptions()
+    private val recommendationOptions : RecommendationOptions = RecommendationOptions()
+    private val categoryPredictionOptions : CategoryPredictionOptions = CategoryPredictionOptions()
     private var limit: Int = 20
-
-    private var enableRecommendation: Boolean = false
-
-    private var enableCategoryPrediction: Boolean = false
-    private var categoryPredictionLimit: Int = -1
-    private var categoryPredictionThreshold: Float = -1F
 
     /**
      * Init local properties
      */
-    private fun `init`() {
-        enableExact = true
-        enableSimilarity = true
-        similarityLimit = -1
-        similarityThreshold = -1F
-        enableOcr = true
-        enableRegroup = false
-        regroupThreshold = -1F
+    private fun reset() {
+        exactOptions.reset()
+        similarityOptions.reset()
+        ocrOptions.reset()
+        recommendationOptions.reset()
+        categoryPredictionOptions.reset()
         limit = 20
-        enableRecommendation = false
-        enableCategoryPrediction = false
-        categoryPredictionLimit = -1
-        categoryPredictionThreshold = -1F
     }
 
     /**
@@ -97,8 +81,13 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
     /**
      * {@inheritDoc}
      */
+    override fun exact(action: ExactOptions.() -> Unit): IImageMatchingApi {
+        action(exactOptions)
+        return this
+    }
+
     override fun exact(isEnabled: Boolean): IImageMatchingApi {
-        enableExact = isEnabled
+        exactOptions.enabled = isEnabled
         return this
     }
 
@@ -106,7 +95,15 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun similarity(isEnabled: Boolean): IImageMatchingApi {
-        enableSimilarity = isEnabled
+        similarityOptions.enabled = isEnabled
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun similarity(action: SimilarityOptions.() -> Unit): IImageMatchingApi {
+        action(similarityOptions)
         return this
     }
 
@@ -114,7 +111,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun similarityLimit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi {
-        similarityLimit = limit
+        similarityOptions.limit = limit
         return this
     }
 
@@ -122,7 +119,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun similarityThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi {
-        similarityThreshold = threshold
+        similarityOptions.threshold = threshold
         return this
     }
 
@@ -130,7 +127,15 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun ocr(isEnabled: Boolean): IImageMatchingApi {
-        enableOcr = isEnabled
+        ocrOptions.enabled = isEnabled
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun ocr(action: OcrOptions.() -> Unit): IImageMatchingApi {
+        action(ocrOptions)
         return this
     }
 
@@ -146,7 +151,15 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun regroup(isEnabled: Boolean): IImageMatchingApi {
-        enableRegroup = isEnabled
+        regroupOptions.enabled = isEnabled
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun regroup(action: RegroupOptions.() -> Unit): IImageMatchingApi {
+        action(regroupOptions)
         return this
     }
 
@@ -154,7 +167,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun regroupThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi {
-        regroupThreshold = threshold
+        regroupOptions.threshold = threshold
         return this
     }
 
@@ -162,7 +175,15 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun recommendations(isEnabled: Boolean): IImageMatchingApi {
-        enableRecommendation = isEnabled
+        recommendationOptions.enabled = isEnabled
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun recommendations(action: RecommendationOptions.() -> Unit): IImageMatchingApi {
+        action(recommendationOptions)
         return this
     }
 
@@ -170,7 +191,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun categoryPrediction(isEnabled: Boolean): IImageMatchingApi {
-        enableCategoryPrediction = isEnabled
+        categoryPredictionOptions.enabled = isEnabled
+        return this
+    }
+
+    override fun categoryPrediction(action: CategoryPredictionOptions.() -> Unit): IImageMatchingApi {
+        action(categoryPredictionOptions)
         return this
     }
 
@@ -178,7 +204,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun categoryPredictionLimit(limit: Int): IImageMatchingApi {
-        categoryPredictionLimit = limit
+        categoryPredictionOptions.limit = limit
         return this
     }
 
@@ -186,7 +212,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun categoryPredictionThreshold(threshold: Float): IImageMatchingApi {
-        categoryPredictionThreshold = threshold
+        categoryPredictionOptions.threshold = threshold
         return this
     }
 
@@ -196,35 +222,35 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
     override fun buildXOptions(): String {
         var xOptions = ""
 
-        if (enableExact && xOptions.isEmpty()) xOptions = "exact"
+        if (exactOptions.enabled && xOptions.isEmpty()) xOptions = "exact"
 
-        if (enableSimilarity && xOptions.isEmpty()) xOptions = "similarity"
+        if (similarityOptions.enabled && xOptions.isEmpty()) xOptions = "similarity"
         else
-            if (enableSimilarity) xOptions += " +similarity"
+            if (similarityOptions.enabled) xOptions += " +similarity"
 
-        if (enableOcr && xOptions.isEmpty()) xOptions = "ocr"
+        if (ocrOptions.enabled && xOptions.isEmpty()) xOptions = "ocr"
         else
-            if (enableOcr) xOptions += " +ocr"
+            if (ocrOptions.enabled) xOptions += " +ocr"
 
-        if (enableSimilarity && similarityLimit != -1) xOptions += " similarity.limit=$similarityLimit"
+        if (similarityOptions.enabled && similarityOptions.limit != -1) xOptions += " similarity.limit=${similarityOptions.limit}"
 
-        if (enableSimilarity && similarityThreshold != -1F) xOptions += " similarity.threshold=$similarityThreshold"
+        if (similarityOptions.enabled && similarityOptions.threshold != -1F) xOptions += " similarity.threshold=${similarityOptions.threshold}"
 
-        if (enableRegroup) xOptions += " +regroup"
+        if (regroupOptions.enabled) xOptions += " +regroup"
 
-        if (enableRegroup && regroupThreshold != -1F) xOptions += " regroup.threshold=$regroupThreshold"
+        if (regroupOptions.enabled && regroupOptions.threshold != -1F) xOptions += " regroup.threshold=${regroupOptions.threshold}"
 
         if (limit != 20) xOptions += " limit=$limit"
 
-        if (enableRecommendation) xOptions += " +recommendations"
+        if (recommendationOptions.enabled) xOptions += " +recommendations"
 
-        if (enableCategoryPrediction) xOptions += " +category-prediction"
+        if (categoryPredictionOptions.enabled) xOptions += " +category-prediction"
 
-        if (enableCategoryPrediction && categoryPredictionLimit != -1) xOptions += " category-prediction.limit=$similarityLimit"
+        if (categoryPredictionOptions.enabled && categoryPredictionOptions.limit != -1) xOptions += " category-prediction.limit=${categoryPredictionOptions.limit}"
 
-        if (enableCategoryPrediction && categoryPredictionThreshold != -1F) xOptions += " category-prediction.threshold=$similarityThreshold"
+        if (categoryPredictionOptions.enabled && categoryPredictionOptions.threshold != -1F) xOptions += " category-prediction.threshold=${categoryPredictionOptions.threshold}"
 
-        init()
+        reset()
         return xOptions
     }
 
@@ -266,12 +292,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun <T : IResponse> match(image: ByteArray, clazz: Class<T>): Single<T> {
-        if (enableRecommendation && !ternaryOr(enableExact, enableSimilarity, enableOcr)) {
+        if (recommendationOptions.enabled && !ternaryOr(exactOptions.enabled, similarityOptions.enabled, ocrOptions.enabled)) {
             val exception = Exception("To use the recommendation feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }
 
-        if (enableRegroup && !ternaryOr(enableExact, enableSimilarity, enableOcr)) {
+        if (regroupOptions.enabled && !ternaryOr(exactOptions.enabled, similarityOptions.enabled, ocrOptions.enabled)) {
             val exception = Exception("To use the regrouping feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }
@@ -293,12 +319,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
      * {@inheritDoc}
      */
     override fun <T : IResponse> match(image: FloatArray, clazz: Class<T>): Single<T> {
-        if (enableRecommendation && !ternaryOr(enableExact, enableSimilarity, enableOcr)) {
+        if (recommendationOptions.enabled && !ternaryOr(exactOptions.enabled, similarityOptions.enabled, ocrOptions.enabled)) {
             val exception = Exception("To use the recommendation feature, you need to enable one of this stages : exact, similarity.")
             return Single.error<T>(exception)
         }
 
-        if (enableRegroup && !ternaryOr(enableExact, enableSimilarity, enableOcr)) {
+        if (regroupOptions.enabled && !ternaryOr(exactOptions.enabled, similarityOptions.enabled, ocrOptions.enabled)) {
             val exception = Exception("To use the regrouping feature, you need to enable one of this stages : exact, similarity, ocr.")
             return Single.error<T>(exception)
         }

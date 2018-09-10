@@ -50,7 +50,17 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable exact matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("similarity(Boolean) is deprecated, will be remove in version 1.6.")
     fun exact(isEnabled: Boolean): IImageMatchingApi
+
+    /**
+     * Enable exact matching phase
+     *
+     * @param action parameter function function type with ExactOptions receiver.
+     * @return the current instance of IImageMatchingApi
+     * @see ExactOptions
+     */
+    fun exact(action: ExactOptions.() -> Unit) : IImageMatchingApi
 
     /**
      * Enable similarity phase
@@ -58,7 +68,17 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable similarity matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("similarity(Boolean) is deprecated, will be remove in version 1.6.")
     fun similarity(isEnabled: Boolean): IImageMatchingApi
+
+    /**
+     * Enable similarity phase
+     *
+     * @param action parameter function function type with SimilarityOptions receiver.
+     * @return the current instance of IImageMatchingApi
+     * @see SimilarityOptions
+     */
+    fun similarity(action: SimilarityOptions.() -> Unit) : IImageMatchingApi
 
     /**
      * Set Similarity Return Limit
@@ -66,6 +86,7 @@ interface IImageMatchingApi {
      * @param limit limit int value between 1-100 helps to limit returned similarity response.
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("similarityLimit(Int) is deprecated, will be remove in version 1.6.")
     fun similarityLimit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi
 
     /**
@@ -74,6 +95,7 @@ interface IImageMatchingApi {
      * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("similarityThreshold(Float) is deprecated, will be remove in version 1.6.")
     fun similarityThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
 
     /**
@@ -82,7 +104,17 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable ocr matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("ocr(Boolean) is deprecated, will be remove in version 1.6.")
     fun ocr(isEnabled: Boolean): IImageMatchingApi
+
+    /**
+     * Enable OCR phase
+     *
+     * @param action parameter function function type with OcrOptions receiver.
+     * @return the current instance of IImageMatchingApi
+     * @see OcrOptions
+     */
+    fun ocr(action: OcrOptions.() -> Unit) : IImageMatchingApi
 
     /**
      * Set Return Limit
@@ -98,7 +130,17 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable offer regrouping and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("regroup(Boolean) is deprecated, will be remove in version 1.6.")
     fun regroup(isEnabled: Boolean): IImageMatchingApi
+
+    /**
+     * Enable Offers Regroup
+     *
+     * @param action parameter function function type with RegroupOptions receiver.
+     * @return the current instance of IImageMatchingApi
+     * @see RegroupOptions
+     */
+    fun regroup(action: RegroupOptions.() -> Unit) : IImageMatchingApi
 
     /**
      * Set Regroup Threshold
@@ -106,6 +148,7 @@ interface IImageMatchingApi {
      * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("regroupThreshold(Float) is deprecated, will be remove in version 1.6.")
     fun regroupThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
 
     /**
@@ -114,15 +157,35 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable offer recommendations and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    fun recommendations(isEnabled: Boolean): IImageMatchingApi
+    @Deprecated("recommendations(Boolean) is deprecated, will be remove in version 1.6.")
+    fun recommendations(isEnabled: Boolean):IImageMatchingApi
 
     /**
-     * Enables the output of predicted categories.
+     * Enable Offer Recommendation
+     *
+     * @param action parameter function function type with RecommendationOptions receiver.
+     * @return the current instance of IImageMatchingApi
+     * @see RecommendationOptions
+     */
+    fun recommendations(action: RecommendationOptions.() -> Unit) : IImageMatchingApi
+
+    /**
+     * Enable the output of predicted categories.
      *
      * @param isEnabled boolean value, true to enable categories predictions and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("categoryPrediction(Boolean) is deprecated, will be remove in version 1.6.")
     fun categoryPrediction(isEnabled: Boolean): IImageMatchingApi
+
+    /**
+     * Enable the output of predicted categories.
+     *
+     * @param action parameter function function type with CategoryPredictionOptions receiver.
+     * @return the current instance of IImageMatchingApi
+     * @see CategoryPredictionOptions
+     */
+    fun categoryPrediction(action: CategoryPredictionOptions.() -> Unit) : IImageMatchingApi
 
     /**
      * Set Similarity Return Limit
@@ -130,6 +193,7 @@ interface IImageMatchingApi {
      * @param limit limit int value between 1-100 helps to limit returned category response.
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("categoryPredictionLimit(Int) is deprecated, will be remove in version 1.6.")
     fun categoryPredictionLimit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi
 
     /**
@@ -138,6 +202,7 @@ interface IImageMatchingApi {
      * @param threshold threshold int value between 0-1 helps to return only category with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
+    @Deprecated("categoryPredictionThreshold(Float) is deprecated, will be remove in version 1.6.")
     fun categoryPredictionThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
 
     /**
