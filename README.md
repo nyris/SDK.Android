@@ -191,18 +191,29 @@ dependencies {
         .imageMatching()
         .outputFormat("PROVIDED_OUTPUT_FORMAT") // Set the desired OUTPUT_FORMAT
         .language("de") //Return only offers with language "de".
-        .exact(true) //Performs exact matching
-        .similarity(true) //Performs similarity matching
-        .similarityThreshold(0.5f) //The lower limit of confidences to be considered good from similarity
-        .similarityLimit(10) //The upper limit for the number of results to be returned from similarity
-        .ocr(true) //Performs optical character recognition on the images
-        .regroup(true) //This mode enables regrouping of the items
-        .regroupThreshold(0.5f) //The lower limit of confidences for the regroup
+        .exact({
+            enabled = false //disable exact matching
+        })
+        .similarity({//Performs similarity matching
+            threshold = 0.5F //The lower limit of confidences to be considered good from similarity
+            limit = 10 //The upper limit for the number of results to be returned from similarity
+        })
+        .ocr({//Performs optical character recognition on the images
+            enabled = false //disable OCR
+        })
+        .regroup({
+            enabled = false //This mode enables regrouping of the items
+            threshold = 0.5F //The lower limit of confidences to be considered good from similarity
+        })
+        .recommendations({
+            enabled = true //Enables recommendation type searches that return all discovered results regardless of their score.
+        })
+        .categoryPrediction({
+            enabled = true //Enables the output of predicted categories.
+            threshold = 0.5F //Sets the cutoff threshold for category predictions (range 0..1).
+            limit = 10 // Limits the number of categories to return.
+        })
         .limit(10) //Limit returned offers
-        .recommendations(true) //Enables recommendation type searches that return all discovered results regardless of their score.
-        .categoryPrediction(true) //Enables the output of predicted categories.
-        .categoryPredictionLimit(3) // Limits the number of categories to return.
-        .categoryPredictionThreshold(0.2F) //Sets the cutoff threshold for category predictions (range 0..1).
         .match(imageTestBytes)
         .subscribe({/*it:OfferResponseBody*/        
             //Handle your response
@@ -316,8 +327,10 @@ you can use the text search service the same way as [image matching service](#ma
         .textSearch()
         .outputFormat("PROVIDED_OUTPUT_FORMAT") // Set the desired OUTPUT_FORMAT
         .language("de") //Return only offer with language "de"
-        .regroup(true) //This mode enables regrouping of the items
-        .regroupThreshold(0.5f) //The lower limit of confidences for the regroup
+        .regroup({
+            enabled = true //This mode enables regrouping of the items
+            threshold = 0.5F //The lower limit of confidences for the regroup
+        })
         .limit(10) //Limit returned offers
         .searchOffers<JsonResponseBody>("YOUR_TEXT", JsonResponseBody::class.java)
         .subscribe({/*it:JsonResponseBody*/        
