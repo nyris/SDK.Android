@@ -6,12 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.5
 ### Added
-- Add xOptions classes
-- deprecation of some methods in classes `ITextSearchApi` && `IImageMatchingApi`
+- xOptions feature to image and text search
+- deprecation of some methods in classes image search && text search api
 
 ### Modified
-- `TextSearchApi` && `ITextSearchApi` classes to support the new advanced for offer querying
-- `ImageMatchingApi` && `IImageMatchingApi` classes to support the new advanced for offer querying
+- image search to support the new advanced offer querying
+- text search to support the new advanced offer querying
 
 ## 1.4 - 2018.08.31
 ### Added
