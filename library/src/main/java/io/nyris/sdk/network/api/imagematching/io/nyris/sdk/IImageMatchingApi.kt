@@ -50,7 +50,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable exact matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("similarity(Boolean) is deprecated, will be remove in version 1.6.")
+    @Deprecated("similarity(Boolean) is deprecated and will be remove in version 1.6.")
     fun exact(isEnabled: Boolean): IImageMatchingApi
 
     /**
@@ -68,7 +68,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable similarity matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("similarity(Boolean) is deprecated, will be remove in version 1.6.")
+    @Deprecated("similarity(Boolean) is deprecated and will be remove in version 1.6.")
     fun similarity(isEnabled: Boolean): IImageMatchingApi
 
     /**
@@ -86,7 +86,7 @@ interface IImageMatchingApi {
      * @param limit limit int value between 1-100 helps to limit returned similarity response.
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("similarityLimit(Int) is deprecated, will be remove in version 1.6.")
+    @Deprecated("similarityLimit(Int) is deprecated and will be remove in version 1.6.")
     fun similarityLimit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi
 
     /**
@@ -95,7 +95,7 @@ interface IImageMatchingApi {
      * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("similarityThreshold(Float) is deprecated, will be remove in version 1.6.")
+    @Deprecated("similarityThreshold(Float) is deprecated and will be remove in version 1.6.")
     fun similarityThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
 
     /**
@@ -104,7 +104,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable ocr matching phase and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("ocr(Boolean) is deprecated, will be remove in version 1.6.")
+    @Deprecated("ocr(Boolean) is deprecated and will be remove in version 1.6.")
     fun ocr(isEnabled: Boolean): IImageMatchingApi
 
     /**
@@ -130,7 +130,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable offer regrouping and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("regroup(Boolean) is deprecated, will be remove in version 1.6.")
+    @Deprecated("regroup(Boolean) is deprecated and will be remove in version 1.6.")
     fun regroup(isEnabled: Boolean): IImageMatchingApi
 
     /**
@@ -148,7 +148,7 @@ interface IImageMatchingApi {
      * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("regroupThreshold(Float) is deprecated, will be remove in version 1.6.")
+    @Deprecated("regroupThreshold(Float) is deprecated and will be remove in version 1.6.")
     fun regroupThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
 
     /**
@@ -157,7 +157,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable offer recommendations and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("recommendations(Boolean) is deprecated, will be remove in version 1.6.")
+    @Deprecated("recommendations(Boolean) is deprecated and will be remove in version 1.6.")
     fun recommendations(isEnabled: Boolean): IImageMatchingApi
 
     /**
@@ -175,7 +175,7 @@ interface IImageMatchingApi {
      * @param isEnabled boolean value, true to enable categories predictions and false for disabled it.
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("categoryPrediction(Boolean) is deprecated, will be remove in version 1.6.")
+    @Deprecated("categoryPrediction(Boolean) is deprecated and will be remove in version 1.6.")
     fun categoryPrediction(isEnabled: Boolean): IImageMatchingApi
 
     /**
@@ -193,7 +193,7 @@ interface IImageMatchingApi {
      * @param limit limit int value between 1-100 helps to limit returned category response.
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("categoryPredictionLimit(Int) is deprecated, will be remove in version 1.6.")
+    @Deprecated("categoryPredictionLimit(Int) is deprecated and will be remove in version 1.6.")
     fun categoryPredictionLimit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi
 
     /**
@@ -202,7 +202,7 @@ interface IImageMatchingApi {
      * @param threshold threshold int value between 0-1 helps to return only category with score above the threshold
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("categoryPredictionThreshold(Float) is deprecated, will be remove in version 1.6.")
+    @Deprecated("categoryPredictionThreshold(Float) is deprecated and will be remove in version 1.6.")
     fun categoryPredictionThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
 
     /**
