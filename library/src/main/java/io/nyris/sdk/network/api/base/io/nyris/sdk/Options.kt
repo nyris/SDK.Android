@@ -7,7 +7,7 @@ package io.nyris.sdk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-abstract class Options{
+abstract class Options {
     var enabled = false
 
     abstract fun reset()

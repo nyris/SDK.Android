@@ -7,8 +7,9 @@ package io.nyris.sdk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class RegroupOptions : Options(){
+class RegroupOptions : Options() {
     var threshold = -1F
+
     init {
         enabled = false
     }

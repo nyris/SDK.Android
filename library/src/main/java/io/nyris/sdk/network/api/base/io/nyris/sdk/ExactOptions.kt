@@ -7,7 +7,7 @@ package io.nyris.sdk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class ExactOptions : Options(){
+class ExactOptions : Options() {
     init {
         enabled = true
     }

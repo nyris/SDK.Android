@@ -7,7 +7,7 @@ package io.nyris.sdk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class SimilarityOptions : Options(){
+class SimilarityOptions : Options() {
     var threshold = -1F
     var limit = -1
 

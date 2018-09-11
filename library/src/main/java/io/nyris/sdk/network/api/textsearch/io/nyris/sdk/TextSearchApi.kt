@@ -38,7 +38,7 @@ internal class TextSearchApi(private val textSearchService: TextSearchService,
                              apiHeader: ApiHeader,
                              endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), ITextSearchApi {
 
-    private var regroupOptions : RegroupOptions = RegroupOptions()
+    private var regroupOptions: RegroupOptions = RegroupOptions()
     private var limit: Int = 20
 
     /**

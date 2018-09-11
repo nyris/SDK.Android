@@ -7,7 +7,7 @@ package io.nyris.sdk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class RecommendationOptions : Options(){
+class RecommendationOptions : Options() {
     init {
         enabled = false
     }

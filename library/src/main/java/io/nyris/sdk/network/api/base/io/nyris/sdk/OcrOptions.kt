@@ -7,7 +7,7 @@ package io.nyris.sdk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class OcrOptions : Options(){
+class OcrOptions : Options() {
     init {
         enabled = true
     }
