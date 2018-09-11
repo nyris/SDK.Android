@@ -60,7 +60,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see ExactOptions
      */
-    fun exact(action: ExactOptions.() -> Unit) : IImageMatchingApi
+    fun exact(action: ExactOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
      * Enable similarity phase
@@ -78,7 +78,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see SimilarityOptions
      */
-    fun similarity(action: SimilarityOptions.() -> Unit) : IImageMatchingApi
+    fun similarity(action: SimilarityOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
      * Set Similarity Return Limit
@@ -114,7 +114,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see OcrOptions
      */
-    fun ocr(action: OcrOptions.() -> Unit) : IImageMatchingApi
+    fun ocr(action: OcrOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
      * Set Return Limit
@@ -140,7 +140,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see RegroupOptions
      */
-    fun regroup(action: RegroupOptions.() -> Unit) : IImageMatchingApi
+    fun regroup(action: RegroupOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
      * Set Regroup Threshold
@@ -158,7 +158,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      */
     @Deprecated("recommendations(Boolean) is deprecated, will be remove in version 1.6.")
-    fun recommendations(isEnabled: Boolean):IImageMatchingApi
+    fun recommendations(isEnabled: Boolean): IImageMatchingApi
 
     /**
      * Enable Offer Recommendation
@@ -167,7 +167,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see RecommendationOptions
      */
-    fun recommendations(action: RecommendationOptions.() -> Unit) : IImageMatchingApi
+    fun recommendations(action: RecommendationOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
      * Enable the output of predicted categories.
@@ -185,7 +185,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see CategoryPredictionOptions
      */
-    fun categoryPrediction(action: CategoryPredictionOptions.() -> Unit) : IImageMatchingApi
+    fun categoryPrediction(action: CategoryPredictionOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
      * Set Similarity Return Limit

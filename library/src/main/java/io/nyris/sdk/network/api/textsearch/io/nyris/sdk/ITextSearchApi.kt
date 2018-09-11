@@ -68,7 +68,8 @@ interface ITextSearchApi {
      * @return the current instance of IImageMatchingApi
      * @see RegroupOptions
      */
-    fun regroup(action: RegroupOptions.() -> Unit) : ITextSearchApi
+    fun regroup(action: RegroupOptions.() -> Unit = { enabled = true }): ITextSearchApi
+
     /**
      * Set Regroup Threshold
      *

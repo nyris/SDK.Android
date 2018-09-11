@@ -42,12 +42,12 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
                                 apiHeader: ApiHeader,
                                 endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), IImageMatchingApi {
 
-    private val exactOptions : ExactOptions = ExactOptions()
-    private val similarityOptions : SimilarityOptions = SimilarityOptions()
-    private val ocrOptions : OcrOptions = OcrOptions()
-    private val regroupOptions : RegroupOptions = RegroupOptions()
-    private val recommendationOptions : RecommendationOptions = RecommendationOptions()
-    private val categoryPredictionOptions : CategoryPredictionOptions = CategoryPredictionOptions()
+    private val exactOptions: ExactOptions = ExactOptions()
+    private val similarityOptions: SimilarityOptions = SimilarityOptions()
+    private val ocrOptions: OcrOptions = OcrOptions()
+    private val regroupOptions: RegroupOptions = RegroupOptions()
+    private val recommendationOptions: RecommendationOptions = RecommendationOptions()
+    private val categoryPredictionOptions: CategoryPredictionOptions = CategoryPredictionOptions()
     private var limit: Int = 20
 
     /**

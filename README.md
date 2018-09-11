@@ -205,9 +205,7 @@ dependencies {
             enabled = false // This mode enables regrouping of the items
             threshold = 0.5F // The lower limit of confidences to be considered good from similarity
         })
-        .recommendations({
-            enabled = true // Enables recommendation type searches that return all discovered results regardless of their score.
-        })
+        .recommendations() // Enables recommendation type searches that return all discovered results regardless of their score.
         .categoryPrediction({
             enabled = true // Enables the output of predicted categories.
             threshold = 0.5F // Sets the cutoff threshold for category predictions (range 0..1).
