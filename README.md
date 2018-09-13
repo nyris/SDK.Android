@@ -83,7 +83,7 @@ class DemoApp{
     @Override
     public onCreate(){
         nyris = Nyris.createInstance("YOUR_API_KEY");
-        //OR
+        // OR
         nyris = Nyris.createInstance("YOUR_API_KEY", /*Enable debug output*/true);
     }
     
@@ -100,8 +100,8 @@ class DemoApp : Application(){
     override fun onCreate() {
         super.onCreate()
         nyris = Nyris.createInstance(BuildConfig.API_KEY, true)
-        //OR
-        nyris = Nyris.createInstance("YOUR_API_KEY", /*Enable debug output*/true)
+        // OR
+        nyris = Nyris.createInstance("YOUR_API_KEY", /* Enable debug output */true)
     }
 }
 ```
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(nyris)
     }
     
-    //OR
+    // OR
     override fun onDestroy(){
         super.onDestroy()
         nyris.destroy()    
@@ -143,7 +143,7 @@ dependencies {
         .imageMatching()
         .match(imageByteArray)
         .subscribe(offerResponseBody -> {   
-            //Handle your response
+            // Handle your response
             List<Offer> offers = offerResponseBody.offers
         }, throwable -> {
             if(throwable instanceof HttpException){
@@ -151,7 +151,7 @@ dependencies {
             }else if(throwable instanceof IOException){
                 ...
             }else {
-                //Unknown                
+                // Unknown
             }
         });
 ```
@@ -163,10 +163,10 @@ dependencies {
         .imageMatching()
         .match(imageByteArray)
         .subscribe({/*it:OfferResponseBody*/        
-            //Handle your response
+            // Handle your response
             val offers = it.offers
             
-        },{/*it:Throwable*/            
+        },{/* it:Throwable */
             when (it) {
                 is HttpException -> {
                     ...
@@ -175,7 +175,7 @@ dependencies {
                     ...
                 }
                 else -> {
-                    //Unknown
+                    // Unknown
                 }
             }
         })
@@ -186,29 +186,38 @@ dependencies {
 `kotlin`
 ```kotlin
     //For more details about available feed attributes please check our documentation : http://docs.nyris.io/#available-feed-attributes.
-    val imageByteArray : ByteArray = /*Your byte array*/
+    val imageByteArray : ByteArray = /* Your byte array */
     nyris
         .imageMatching()
         .outputFormat("PROVIDED_OUTPUT_FORMAT") // Set the desired OUTPUT_FORMAT
-        .language("de") //Return only offers with language "de".
-        .exact(true) //Performs exact matching
-        .similarity(true) //Performs similarity matching
-        .similarityThreshold(0.5f) //The lower limit of confidences to be considered good from similarity
-        .similarityLimit(10) //The upper limit for the number of results to be returned from similarity
-        .ocr(true) //Performs optical character recognition on the images
-        .regroup(true) //This mode enables regrouping of the items
-        .regroupThreshold(0.5f) //The lower limit of confidences for the regroup
-        .limit(10) //Limit returned offers
-        .recommendations(true) //Enables recommendation type searches that return all discovered results regardless of their score.
-        .categoryPrediction(true) //Enables the output of predicted categories.
-        .categoryPredictionLimit(3) // Limits the number of categories to return.
-        .categoryPredictionThreshold(0.2F) //Sets the cutoff threshold for category predictions (range 0..1).
+        .language("de") // Return only offers with language "de".
+        .exact({
+            enabled = false // disable exact matching
+        })
+        .similarity({//Performs similarity matching
+            threshold = 0.5F // The lower limit of confidences to be considered good from similarity
+            limit = 10 // The upper limit for the number of results to be returned from similarity
+        })
+        .ocr({//Performs optical character recognition on the images
+            enabled = false // disable OCR
+        })
+        .regroup({
+            enabled = false // This mode enables regrouping of the items
+            threshold = 0.5F // The lower limit of confidences to be considered good from similarity
+        })
+        .recommendations() // Enables recommendation type searches that return all discovered results regardless of their score.
+        .categoryPrediction({
+            enabled = true // Enables the output of predicted categories.
+            threshold = 0.5F // Sets the cutoff threshold for category predictions (range 0..1).
+            limit = 10 // Limits the number of categories to return.
+        })
+        .limit(10) // Limit returned offers
         .match(imageTestBytes)
-        .subscribe({/*it:OfferResponseBody*/        
-            //Handle your response
+        .subscribe({/* it:OfferResponseBody */
+            // Handle your response
             val offers = it.offers
             
-        },{/*it:Throwable*/            
+        },{/* it:Throwable */
             ...
         })
 ```
@@ -222,9 +231,9 @@ The response is an object of type `OfferResponseBody` that contains list of `off
     nyris
         .imageMatching()
         .match<JsonResponseBody>(imageByteArray, JsonResponseBody::class.java)
-        .subscribe({/*it:JsonResponseBody*/
-        
-            //Handle your response
+        .subscribe({/* it:JsonResponseBody */
+
+            // Handle your response
             val json = it.json
         },{/*it:Throwable*/            
             ...
@@ -239,10 +248,10 @@ Extract objects from an image
     nyris
         .objectProposal()
         .extractObjects(imageByteArray)
-        .subscribe({/*it:List<ObjectProposal>*/
-            //Handle your response
+        .subscribe({/* it:List<ObjectProposal> */
+            // Handle your response
             val objects = it
-        },{/*it:Throwable*/   
+        },{/* it:Throwable */
             ...
         })
 ```
@@ -264,11 +273,11 @@ Before you mark an image as not found, you will need to extract the `requestId`.
     nyris
         .imageMatching()
         .match<OfferResponse>(imageByteArray, OfferResponse::class.java)
-        .subscribe({/*it:OfferResponse*/        
-            //Handle your response
+        .subscribe({/* it:OfferResponse */
+            // Handle your response
             requestId = it.getRequestId()
             
-        },{/*it:Throwable*/    
+        },{/* it:Throwable */
             ...
         })
 ```
@@ -280,9 +289,9 @@ After getting the `requestId` you can mark the image as not found.
     nyris
         .notFoundMatching()
         .markAsNotFound(requestId)
-        .subscribe({/*it:ResponseBody*/    
+        .subscribe({/* it:ResponseBody */
             ...
-        },{/*it:Throwable*/    
+        },{/* it:Throwable */
             ...
         })
 ```
@@ -300,10 +309,10 @@ you can use the text search service the same way as [image matching service](#ma
         .textSearch()
         .searchOffers("YOUR_TEXT")
         .subscribe({/*it:OfferResponseBody*/        
-            //Handle your response
+            // Handle your response
             val offers = it.offers
             
-        },{/*it:Throwable*/ 
+        },{/* it:Throwable */
             ...
         })
 ```
@@ -315,16 +324,18 @@ you can use the text search service the same way as [image matching service](#ma
     nyris
         .textSearch()
         .outputFormat("PROVIDED_OUTPUT_FORMAT") // Set the desired OUTPUT_FORMAT
-        .language("de") //Return only offer with language "de"
-        .regroup(true) //This mode enables regrouping of the items
-        .regroupThreshold(0.5f) //The lower limit of confidences for the regroup
-        .limit(10) //Limit returned offers
+        .language("de") // Return only offer with language "de"
+        .regroup({
+            enabled = true // This mode enables regrouping of the items
+            threshold = 0.5F // The lower limit of confidences for the regroup
+        })
+        .limit(10) // Limit returned offers
         .searchOffers<JsonResponseBody>("YOUR_TEXT", JsonResponseBody::class.java)
-        .subscribe({/*it:JsonResponseBody*/        
+        .subscribe({/* it:JsonResponseBody */
             //Handle your response
             val json = it.json
             
-        },{/*it:Throwable*/ 
+        },{/* it:Throwable */
             ...
         })
 ```

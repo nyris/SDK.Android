@@ -38,16 +38,14 @@ internal class TextSearchApi(private val textSearchService: TextSearchService,
                              apiHeader: ApiHeader,
                              endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), ITextSearchApi {
 
-    private var enableRegroup: Boolean = false
-    private var regroupThreshold: Float = -1F
+    private var regroupOptions: RegroupOptions = RegroupOptions()
     private var limit: Int = 20
 
     /**
      * Init local properties
      */
-    private fun `init`() {
-        enableRegroup = false
-        regroupThreshold = -1F
+    private fun reset() {
+        regroupOptions.reset()
         limit = 20
     }
 
@@ -79,7 +77,15 @@ internal class TextSearchApi(private val textSearchService: TextSearchService,
      * {@inheritDoc}
      */
     override fun regroup(isEnabled: Boolean): ITextSearchApi {
-        enableRegroup = isEnabled
+        regroupOptions.enabled = isEnabled
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun regroup(action: RegroupOptions.() -> Unit): ITextSearchApi {
+        action(regroupOptions)
         return this
     }
 
@@ -87,19 +93,19 @@ internal class TextSearchApi(private val textSearchService: TextSearchService,
      * {@inheritDoc}
      */
     override fun regroupThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): ITextSearchApi {
-        regroupThreshold = threshold
+        regroupOptions.threshold = threshold
         return this
     }
 
     override fun buildXOptions(): String {
         var xOptions = ""
-        if (enableRegroup) xOptions += "regroup"
+        if (regroupOptions.enabled) xOptions += "regroup"
 
-        if (enableRegroup && regroupThreshold != -1F) xOptions += " regroup.threshold=$regroupThreshold"
+        if (regroupOptions.enabled && regroupOptions.threshold != -1F) xOptions += " regroup.threshold=${regroupOptions.threshold}"
 
         if (limit != 20) xOptions += " limit=$limit"
 
-        init()
+        reset()
         return xOptions
     }
 

@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         tvResults.text = "Matching ..."
         nyris.
             imageMatching()
-            .categoryPrediction(true)
+            .recommendations()
             .match(byteArray)
             .subscribe({
                 tvResults.text = "Matched offers : ${it.offers.size} \n Predicted categories : ${it.predictedCategories}"
