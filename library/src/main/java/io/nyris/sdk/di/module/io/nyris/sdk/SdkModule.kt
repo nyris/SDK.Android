@@ -37,7 +37,7 @@ internal class SdkModule {
     @Provides
     @SdkIdInfo
     fun provideLibraryId(): String {
-        return BuildConfig.APPLICATION_ID
+        return BuildConfig.LIBRARY_PACKAGE_NAME
     }
 
     /**

@@ -21,7 +21,7 @@ import android.support.annotation.IntRange
 import android.util.Base64
 import com.google.gson.Gson
 import io.reactivex.Single
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -303,7 +303,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
         }
 
         val headers = buildHeaders(image.size)
-        val body = RequestBody.create(MediaType.parse("image/jpg"), image)
+        val body = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
         val typeOfferResponse = OfferResponse::class.java
 
         return if (clazz.name == typeOfferResponse.name) {
@@ -332,7 +332,7 @@ internal class ImageMatchingApi(private val imageMatchingService: ImageMatchingS
         val b64 = encodeFloatArray(image)
         val json = "{\"b64\":\"$b64\"}"
         val headers = buildHeaders(json.length)
-        val body = RequestBody.create(MediaType.parse("application/json"), json)
+        val body = RequestBody.create("application/json".toMediaTypeOrNull(), json)
         val typeOfferResponse = OfferResponse::class.java
 
         return if (clazz.name == typeOfferResponse.name) {

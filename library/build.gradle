@@ -19,14 +19,20 @@ apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply from: 'git-version.gradle'
-apply from: 'maven-publish.gradle'
+// TODO temporary removed until grgit and maven-publish wasn't updated
+//apply from: 'git-version.gradle'
+//apply from: 'maven-publish.gradle'
 
 def getDefaultPublishConfig = { ->
     def publishConfig = System.getenv("SDK_DEFAULT_PUBLISH_CONFIG")
-    if(publishConfig== null || publishConfig.isEmpty())
+    if (publishConfig == null || publishConfig.isEmpty()) {
         publishConfig = "prodRelease"
+    }
     return publishConfig
+}
+
+kapt {
+    correctErrorTypes true
 }
 
 android {
@@ -36,6 +42,13 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // TODO remove after grgit was updated
+    ext {
+        gitVersionCode = 1
+        gitVersionName = "1"
+        gitCommitHash = "30083ba4d86f9b21ab8333000c06532ca2188652"
     }
 
     defaultConfig {
@@ -162,8 +175,8 @@ dependencies {
     testImplementation "org.powermock:powermock-module-junit4:$powermockVersion"
     testImplementation "org.powermock:powermock-api-mockito2:$powermockVersion"
 
-    //Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    //Kotlin gRPC
+    api("io.grpc:grpc-kotlin-stub:1.0.0")
 
     // parser
     implementation "com.google.code.gson:gson:$gsonVersion"

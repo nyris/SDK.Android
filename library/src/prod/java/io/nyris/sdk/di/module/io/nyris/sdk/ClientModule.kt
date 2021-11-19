@@ -15,11 +15,11 @@
  */
 package io.nyris.sdk
 
-import android.net.Uri
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -124,9 +124,9 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
     @Singleton
     fun provideHttpUrl(): HttpUrl {
         val builder = BasicUriBuilder()
-                .scheme(Constants.SCHEME)
-                .authority(Constants.HOST_URL)
-        return HttpUrl.parse(builder.build())!!
+            .scheme(Constants.SCHEME)
+            .authority(Constants.HOST_URL)
+        return builder.build().toHttpUrlOrNull()!!
     }
 
     /**
@@ -247,7 +247,7 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
                 throw exception
 
             // otherwise just pass the original response on
-            response
+            response!!
         }
     }
 

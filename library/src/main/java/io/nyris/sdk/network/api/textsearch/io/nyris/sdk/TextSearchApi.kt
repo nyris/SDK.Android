@@ -19,7 +19,7 @@ package io.nyris.sdk
 import android.support.annotation.FloatRange
 import com.google.gson.Gson
 import io.reactivex.Single
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 
 /**
@@ -127,7 +127,7 @@ internal class TextSearchApi(private val textSearchService: TextSearchService,
         headers["Content-Length"] = keyword.length.toString()
         if (!xOptions.isEmpty())
             headers["X-Options"] = xOptions
-        val body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), keyword)
+        val body = RequestBody.create("text/plain; charset=utf-8".toMediaTypeOrNull(), keyword)
 
         val obs1 = textSearchService.searchOffers(endpoints.textSearchUrl, headers, body)
 
