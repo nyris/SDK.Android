@@ -16,10 +16,12 @@
 
 buildscript {
     repositories {
-        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
-        classpath "org.ajoberstar:grgit:$grgitVersion"
+        classpath "org.ajoberstar.grgit:grgit-gradle:$grgitVersion"
     }
 }
 
@@ -33,7 +35,7 @@ ext {
     gitVersionCode = grgit.log(includes: [gitNameBranch]).size()
     gitCommitHash = grgit.head().abbreviatedId
 
-    if(gitVersionName == null){
+    if (gitVersionName == null) {
         gitVersionName="develop-$gitCommitHash"
     }
 }

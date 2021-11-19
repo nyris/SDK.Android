@@ -19,8 +19,8 @@ apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-// TODO temporary removed until grgit and maven-publish wasn't updated
-//apply from: 'git-version.gradle'
+apply from: 'git-version.gradle'
+// TODO temporary removed until maven-publish wasn't updated
 //apply from: 'maven-publish.gradle'
 
 def getDefaultPublishConfig = { ->
@@ -42,13 +42,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    // TODO remove after grgit was updated
-    ext {
-        gitVersionCode = 1
-        gitVersionName = "1"
-        gitCommitHash = "30083ba4d86f9b21ab8333000c06532ca2188652"
     }
 
     defaultConfig {
