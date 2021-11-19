@@ -16,7 +16,7 @@
 
 package io.nyris.sdk
 
-import android.arch.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleObserver
 
 /**
  * INyris.kt - interface that inherit all the features of IApiHelper and implement LifecycleObserver

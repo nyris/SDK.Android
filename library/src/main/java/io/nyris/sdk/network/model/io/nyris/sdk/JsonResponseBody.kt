@@ -16,7 +16,7 @@
 
 package io.nyris.sdk
 
-import android.support.annotation.Keep
+import androidx.annotation.Keep
 
 /**
  * JsonResponseBody.kt - class model implement IResponse

@@ -16,9 +16,8 @@
 
 package io.nyris.sdk
 
-import android.support.annotation.Keep
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /**
  * OfferResponseBody.kt - class model implement IResponse

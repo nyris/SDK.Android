@@ -17,7 +17,7 @@
 package io.nyris.sdk
 
 import io.reactivex.Single
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 
 /**
@@ -39,7 +39,7 @@ internal class ObjectProposalApi(private val objectProposalService: ObjectPropos
     override fun extractObjects(image: ByteArray): Single<List<ObjectProposal>> {
         val headers = createDefaultHeadersMap()
         headers["Content-Length"] = image.size.toString()
-        val body = RequestBody.create(MediaType.parse("image/jpg"), image)
+        val body = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
 
         return objectProposalService
                 .extractObjects(endpoints.objectProposalUrl, headers, body)

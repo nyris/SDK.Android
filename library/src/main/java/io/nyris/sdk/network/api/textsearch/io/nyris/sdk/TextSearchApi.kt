@@ -16,7 +16,7 @@
 
 package io.nyris.sdk
 
-import android.support.annotation.FloatRange
+import androidx.annotation.FloatRange
 import com.google.gson.Gson
 import io.reactivex.Single
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

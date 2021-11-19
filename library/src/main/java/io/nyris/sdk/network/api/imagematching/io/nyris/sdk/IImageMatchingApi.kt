@@ -16,8 +16,8 @@
 
 package io.nyris.sdk
 
-import android.support.annotation.FloatRange
-import android.support.annotation.IntRange
+import androidx.annotation.FloatRange
+import androidx.annotation.IntRange
 import io.reactivex.Single
 
 /**
