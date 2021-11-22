@@ -17,7 +17,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: 'git-version.gradle'
 // TODO temporary removed until maven-publish wasn't updated

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
 
@@ -31,6 +30,10 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     flavorDimensions 'environment'
     productFlavors {
         prod{
@@ -47,7 +50,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation project(path : ':library')
