@@ -87,17 +87,6 @@ Publish SDK:
     - develop
     - master
 
-Publish SDK To Bintray:
-  stage: publish
-  script:
-    - export SDK_DEFAULT_PUBLISH_CONFIG=""
-    - ./gradlew :library:bintrayUpload --stacktrace
-  tags:
-    - android
-  when: manual
-  only:
-    - master
-
 Push to Github:
   stage: source
   script:

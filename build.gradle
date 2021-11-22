@@ -15,7 +15,6 @@
  */
 
 buildscript {
-    ext.bintrayVersion = '1.8.5'
     ext.gradleVersion = '7.0.3'
     ext.kotlinVersion = '1.6.0'
     ext.grgitVersion = '4.1.0'
@@ -26,17 +25,12 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:$bintrayVersion"
 //        classpath "com.github.dcendents:android-maven-gradle-plugin:$githubMavenVersion"
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$dexcountVersion"
     }
-}
-
-plugins {
-    id "com.jfrog.bintray" version "$bintrayVersion"
 }
 
 allprojects {
@@ -54,7 +48,7 @@ ext {
     // Tools
     buildToolsVersion = '32.0.0 rc1'
     compileSdkVersion = 31
-    minSdkVersion = 23
+    minSdkVersion = 21
     targetSdkVersion = 30
 
     // Sdk dependencies
