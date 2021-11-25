@@ -43,9 +43,8 @@ afterEvaluate {
                     }
                 }
             }
-            println android.defaultPublishConfig
-            println "\u001B[32mUploaded SDK version : $gitVersionName\u001B[0m"
         }
+
         repositories {
             maven {
                 credentials {
@@ -60,4 +59,17 @@ afterEvaluate {
             }
         }
     }
+
+    println android.defaultPublishConfig
+    println "\u001B[32mUploaded SDK version : $gitVersionName\u001B[0m"
+/**
+ * The Signing Plugin is used to generate a signature file for each artifact. In addition,
+ * checksum files will be generated for all artifacts and signature files.
+ * You can find more information about signing plugin here:
+ * {@link https://docs.gradle.org/current/userguide/signing_plugin.html}
+ */
+//    signing {
+//        sign publishing.publications.mavenDeployer
+//    }
+
 }
