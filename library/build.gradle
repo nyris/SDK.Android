@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply plugin: 'com.getkeepsafe.dexcount'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply from: 'git-version.gradle'
-// TODO temporary removed until maven-publish wasn't updated
-//apply from: 'maven-publish.gradle'
+plugins {
+    id 'com.android.library'
+    id 'com.getkeepsafe.dexcount'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'maven-publish'
+}
+
+apply {
+    from 'git-version.gradle'
+    from 'maven-publish.gradle'
+}
 
 def getDefaultPublishConfig = { ->
     def publishConfig = System.getenv("SDK_DEFAULT_PUBLISH_CONFIG")
@@ -168,7 +173,7 @@ dependencies {
     testImplementation "org.powermock:powermock-api-mockito2:$powermockVersion"
 
     //Kotlin gRPC
-    api("io.grpc:grpc-kotlin-stub:1.0.0")
+    api("io.grpc:grpc-kotlin-stub:1.2.0")
 
     // parser
     implementation "com.google.code.gson:gson:$gsonVersion"

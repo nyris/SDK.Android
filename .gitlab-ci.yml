@@ -80,7 +80,7 @@ Integration Test Prod:
 Publish SDK:
   stage: publish
   script:
-    - ./gradlew :library:uploadArchives --stacktrace
+    - ./gradlew :library:publish --stacktrace
   tags:
     - android
   only:

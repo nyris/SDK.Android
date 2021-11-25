@@ -1,103 +1,63 @@
-apply plugin: 'com.github.dcendents.android-maven'
-
 group='io.nyris'
 version = gitVersionName
 
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            url POM_URL
-            inceptionYear '2018'
-            packaging 'aar'
-            name POM_NAME
-            description POM_DESCRIPTION
+afterEvaluate {
+    publishing {
+        publications {
+            mavenDeployer(MavenPublication) {
+                pom {
+                    url = POM_URL
+                    name = POM_NAME
+                    description = POM_DESCRIPTION
+                    inceptionYear = '2018'
+                    packaging = 'aar'
+                    groupId = POM_GROUP_ID
+                    artifactId = POM_ARTIFACT_ID
 
-            groupId POM_GROUP_ID
-            artifactId POM_ARTIFACT_ID
-            version gitVersionName
-
-            organization {
-                name 'nyris GmbH'
-                url POM_URL
-            }
-
-            licenses {
-                license {
-                    name 'APACHE LICENSE, VERSION 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                }
-            }
-
-            developers {
-                developer {
-                    id 'smellouk'
-                    name 'Sidali Mellouk'
-                }
-            }
-        }
-
-        pom.withXml {
-            Node pomNode = asNode()
-            pomNode.dependencies.'*'.findAll() {
-                it.scope.text() == 'test'
-            }.each() {
-                it.parent().remove(it)
-            }
-        }
-    }
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            pom.version = gitVersionName
-            pom.groupId = POM_GROUP_ID
-            pom.artifactId = POM_ARTIFACT_ID
-
-            pom.project{
-                inceptionYear '2018'
-                organization {
-                    name 'nyris GmbH'
-                    url 'https://nyris.io/'
-                }
-
-                licenses {
-                    license {
-                        name 'APACHE LICENSE, VERSION 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    organization {
+                        name = POM_ORGANIZATION_NAME
+                        url = POM_URL
                     }
-                }
 
-                developers {
-                    developer {
-                        id 'smellouk'
-                        name 'Sidali Mellouk'
+                    licenses {
+                        license {
+                            name = 'APACHE LICENSE, VERSION 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = POM_DEVELOPER_ID
+                            name = POM_DEVELOPER_NAME
+                        }
+                    }
+
+                    withXml {
+                        def pomNode = asNode()
+                        pomNode.dependencies.'*'.findAll() {
+                            it.scope.text() == 'test'
+                        }.each() {
+                            it.parent().remove(it)
+                        }
                     }
                 }
             }
-
-            pom.withXml {
-                Node pomNode = asNode()
-                pomNode.dependencies.'*'.findAll() {
-                    it.scope.text() == 'test'
-                }.each() {
-                    it.parent().remove(it)
+            println android.defaultPublishConfig
+            println "\u001B[32mUploaded SDK version : $gitVersionName\u001B[0m"
+        }
+        repositories {
+            maven {
+                credentials {
+                    username System.getenv("NUGET_USER")
+                    password System.getenv("NUGET_PASSWORD")
                 }
-            }
-
-            if (gitVersionName.contains("develop")) {
-                repository(url: System.getenv("NUGET_URL_DEVELOP")){
-                    authentication(userName: System.getenv("NUGET_USER"), password: System.getenv("NUGET_PASSWORD"))
-                }
-            } else {
-                repository(url: System.getenv("NUGET_URL")){
-                    authentication(userName: System.getenv("NUGET_USER"), password: System.getenv("NUGET_PASSWORD"))
+                if (gitVersionName.contains("develop")) {
+                    url System.getenv("NUGET_URL_DEVELOP")
+                } else {
+                    url System.getenv("NUGET_URL")
                 }
             }
         }
-    }
-    doLast{
-        println android.defaultPublishConfig
-        println "\u001B[32mUploaded SDK version : $gitVersionName\u001B[0m"
     }
 }
