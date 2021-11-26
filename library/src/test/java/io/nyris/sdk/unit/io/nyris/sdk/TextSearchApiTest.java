@@ -31,7 +31,6 @@ import static org.mockito.Mockito.when;
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 
-@SuppressWarnings("KotlinInternalInJava")
 public class TextSearchApiTest extends BaseTest {
     private final String keyword = "keyword";
     @Mock
@@ -43,35 +42,38 @@ public class TextSearchApiTest extends BaseTest {
     @Override
     public void setUp() {
         super.setUp();
-
         gson = new Gson();
-
-        textSearchApi = new TextSearchApi(textSearchService,
+        textSearchApi = new TextSearchApi(
+                textSearchService,
                 "OUTPUT_FORMAT",
                 "OUTPUT_FORMAT",
                 gson,
                 sdkScheduler,
                 apiHeader,
-                endpoints);
+                endpoints
+        );
     }
 
     @Test
     public void searchOffers_shouldReturnOfferResponseBody() {
-        //Get an instance of OfferResponseBody
+        // Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
-        ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
-                gson.toJson(offerResponseBody, OfferResponseBody.class));
+        ResponseBody responseBody = ResponseBody.create(
+                gson.toJson(offerResponseBody, OfferResponseBody.class),
+                MediaType.parse("application/json")
+        );
 
         when(textSearchService.searchOffers(anyString(), anyMap(), any()))
                 .thenReturn(Single.just(responseBody));
 
-        //When Text Search Api is asked to search offers using keyword
+        // When Text Search Api is asked to search offers using keyword
         TestObserver<OfferResponseBody> testObserver = textSearchApi
                 .searchOffers(keyword)
                 .test();
 
-        //verify match method called once
-        verify(textSearchService, times(1)).searchOffers(anyString(), anyMap(), any());
+        // Verify match method called once
+        verify(textSearchService, times(1))
+                .searchOffers(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -81,59 +83,66 @@ public class TextSearchApiTest extends BaseTest {
 
     @Test
     public void searchOffers_shouldReturnJsonResponseBody() {
-        //Get an instance of OfferResponseBody
+        // Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
-        ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
-                gson.toJson(offerResponseBody, OfferResponseBody.class));
+        ResponseBody responseBody = ResponseBody.create(
+                gson.toJson(offerResponseBody, OfferResponseBody.class),
+                MediaType.parse("application/json")
+        );
 
         when(textSearchService.searchOffers(anyString(), anyMap(), any()))
                 .thenReturn(Single.just(responseBody));
 
-        //When Text Search Api is asked to search offers using keyword
+        // When Text Search Api is asked to search offers using keyword
         TestObserver<JsonResponseBody> testObserver = textSearchApi
                 .searchOffers(keyword, JsonResponseBody.class)
                 .test();
 
-        //verify match method was not called
-        verify(textSearchService, times(1)).searchOffers(anyString(), anyMap(), any());
+        // Verify match method was not called
+        verify(textSearchService, times(1))
+                .searchOffers(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
         testObserver.assertValue(Objects::nonNull);
-        testObserver.assertValue(r -> r.getJson().equals(gson.toJson(offerResponseBody)));
+        testObserver.assertValue(r -> Objects.equals(r.getJson(), gson.toJson(offerResponseBody)));
     }
 
     @Test
     public void searchOffers_shouldTerminatedWithHttpError() {
-        //Get an instance of HttpException
+        // Get an instance of HttpException
         HttpException httpException = new HttpException(
-                Response.error(403, ResponseBody.create(MediaType.parse("application/json"),
-                        "Forbidden")));
-        //Given
+                Response.error(
+                        403,
+                        ResponseBody.create("Forbidden", MediaType.parse("application/json"))
+                )
+        );
+        // Given
         when(textSearchService.searchOffers(anyString(), anyMap(), any()))
                 .thenReturn(Single.error(httpException));
 
-        //When Text Search Api is asked to search offers using keyword
+        // When Text Search Api is asked to search offers using keyword
         TestObserver<OfferResponseBody> testObserver = textSearchApi
                 .searchOffers(keyword)
                 .test();
 
-        //Then
+        // Then
         testObserver.assertError(HttpException.class);
     }
 
     @Test
     public void searchOffers_shouldTerminatedWithIOError() {
-        //Get an instance of IOException
+        // Get an instance of IOException
         when(textSearchService.searchOffers(anyString(), anyMap(), any()))
                 .thenReturn(Single.error(new IOException()));
 
-        //When Text Search Api is asked to search offers using keyword
+        // When Text Search Api is asked to search offers using keyword
         TestObserver<OfferResponseBody> testObserver = textSearchApi
                 .searchOffers(keyword)
                 .test();
 
-        //Then
+        // Then
         testObserver.assertError(IOException.class);
     }
+
 }

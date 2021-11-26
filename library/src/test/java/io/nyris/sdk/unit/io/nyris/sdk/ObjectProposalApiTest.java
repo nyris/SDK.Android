@@ -31,7 +31,6 @@ import static org.mockito.Mockito.when;
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 
-@SuppressWarnings("KotlinInternalInJava")
 public class ObjectProposalApiTest extends BaseTest {
     private final int OBJECTS_SIZE = 10;
     @Mock
@@ -42,11 +41,12 @@ public class ObjectProposalApiTest extends BaseTest {
     @Override
     public void setUp() {
         super.setUp();
-
-        objectProposalApi = new ObjectProposalApi(objectProposalService,
+        objectProposalApi = new ObjectProposalApi(
+                objectProposalService,
                 sdkScheduler,
                 apiHeader,
-                endpoints);
+                endpoints
+        );
     }
 
     private List<ObjectProposal> getObjectProposalList() {
@@ -59,18 +59,19 @@ public class ObjectProposalApiTest extends BaseTest {
 
     @Test
     public void extractObjects_shouldReturnOfferResponseBody() {
-        //Get an instance of List of ObjectProposal
+        // Get an instance of List of ObjectProposal
         List<ObjectProposal> objectProposals = getObjectProposalList();
         when(objectProposalService.extractObjects(anyString(), anyMap(), any()))
                 .thenReturn(Single.just(objectProposals));
 
-        //When Object Proposal Api is asked to extract object from image byte array
+        // When Object Proposal Api is asked to extract object from image byte array
         TestObserver<List<ObjectProposal>> testObserver = objectProposalApi
                 .extractObjects(new byte[]{})
                 .test();
 
-        //verify extractObjects method called once
-        verify(objectProposalService, times(1)).extractObjects(anyString(), anyMap(), any());
+        // Verify extractObjects method called once
+        verify(objectProposalService, times(1))
+                .extractObjects(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -81,34 +82,38 @@ public class ObjectProposalApiTest extends BaseTest {
     @Test
     public void extractObjects_shouldTerminatedWithHttpError() {
         HttpException httpException = new HttpException(
-                Response.error(403, ResponseBody.create(MediaType.parse("application/json"),
-                        "Forbidden")));
+                Response.error(
+                        403,
+                        ResponseBody.create("Forbidden", MediaType.parse("application/json"))
+                )
+        );
 
-        //Get an instance of HttpException
+        // Get an instance of HttpException
         when(objectProposalService.extractObjects(anyString(), anyMap(), any()))
                 .thenReturn(Single.error(httpException));
 
-        //When Object Proposal Api is asked to extract object from image byte array
+        // When Object Proposal Api is asked to extract object from image byte array
         TestObserver<List<ObjectProposal>> testObserver = objectProposalApi
                 .extractObjects(new byte[]{})
                 .test();
 
-        //Then
+        // Then
         testObserver.assertError(HttpException.class);
     }
 
     @Test
     public void extractObjects_shouldTerminatedWithIOError() {
-        //Get an instance of IOException
+        // Get an instance of IOException
         when(objectProposalService.extractObjects(anyString(), anyMap(), any()))
                 .thenReturn(Single.error(new IOException()));
 
-        //When Object Proposal Api is asked to extract object from image byte array
+        // When Object Proposal Api is asked to extract object from image byte array
         TestObserver<List<ObjectProposal>> testObserver = objectProposalApi
                 .extractObjects(new byte[]{})
                 .test();
 
-        //Then
+        // Then
         testObserver.assertError(IOException.class);
     }
+
 }

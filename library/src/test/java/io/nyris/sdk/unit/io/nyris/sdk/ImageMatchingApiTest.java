@@ -30,142 +30,155 @@ import static org.mockito.Mockito.when;
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-@SuppressWarnings("KotlinInternalInJava")
 public class ImageMatchingApiTest extends BaseTest {
     @Mock
     private ImageMatchingService imageMatchingService;
-
     private ImageMatchingApi imageMatchingApi;
-
     private Gson gson;
 
     @Before
     @Override
     public void setUp() {
         super.setUp();
-
         gson = new Gson();
-
-        imageMatchingApi = new ImageMatchingApi(imageMatchingService,
+        imageMatchingApi = new ImageMatchingApi(
+                imageMatchingService,
                 "OUTPUT_FORMAT",
                 "OUTPUT_FORMAT",
                 gson,
                 sdkScheduler,
                 apiHeader,
-                endpoints);
+                endpoints
+        );
     }
 
     @Test
     public void match_shouldReturnCorrectOfferResponseBody() {
-        //Get an instance of OfferResponseBody
+        // Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
-        ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
-                gson.toJson(offerResponseBody, OfferResponseBody.class));
+        ResponseBody responseBody =
+                ResponseBody.create(
+                        gson.toJson(offerResponseBody, OfferResponseBody.class),
+                        MediaType.parse("application/json")
+                );
 
         when(imageMatchingService.match(anyString(), anyMap(), any()))
                 .thenReturn(Single.just(responseBody));
 
-        //When Image Matching Api is asked to match a image byte array
-        TestObserver<OfferResponseBody> testObserver = imageMatchingApi
-                .match(new byte[]{})
-                .test();
+        // When Image Matching Api is asked to match a image byte array
+        TestObserver<OfferResponseBody> testObserver = imageMatchingApi.match(new byte[]{}).test();
 
-        //verify match method called once
-        verify(imageMatchingService, times(1)).match(anyString(), anyMap(), any());
+        // Verify match method called once
+        verify(imageMatchingService, times(1))
+                .match(anyString(), anyMap(), any());
 
-        //verify matchAndGetRequestId method was not called
-        verify(imageMatchingService, times(0)).matchAndGetRequestId(anyString(), anyMap(), any());
+        // Verify matchAndGetRequestId method was not called
+        verify(imageMatchingService, times(0))
+                .matchAndGetRequestId(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
         testObserver.assertValue(Objects::nonNull);
-        //Assert the returned offers have the same size of mocked offers
+        // Assert the returned offers have the same size of mocked offers
         testObserver.assertValue(r -> r.getOffers().size() == OFFERS_SIZE);
     }
 
     @Test
     public void match_shouldReturnCorrectJsonResponseBody() {
-        //Get an instance of OfferResponseBody
+        // Get an instance of OfferResponseBody
         OfferResponseBody offerResponseBody = getOfferResponseBody();
-        ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"),
-                gson.toJson(offerResponseBody, OfferResponseBody.class));
+        ResponseBody responseBody =
+                ResponseBody.create(
+                        gson.toJson(offerResponseBody, OfferResponseBody.class),
+                        MediaType.parse("application/json")
+                );
 
         when(imageMatchingService.match(anyString(), anyMap(), any()))
                 .thenReturn(Single.just(responseBody));
 
-        //When Image Matching Api is asked to match a image byte array and asked to return response as JsonResponseBody
+        // When Image Matching Api is asked to match a image byte array and asked to return
+        // response as JsonResponseBody
         TestObserver<JsonResponseBody> testObserver = imageMatchingApi
                 .match(new byte[]{}, JsonResponseBody.class)
                 .test();
 
-        //verify match method was not called
-        verify(imageMatchingService, times(1)).match(anyString(), anyMap(), any());
+        // Verify match method was not called
+        verify(imageMatchingService, times(1))
+                .match(anyString(), anyMap(), any());
 
-        //verify matchAndGetRequestId method was once
-        verify(imageMatchingService, times(0)).matchAndGetRequestId(anyString(), anyMap(), any());
+        // Verify matchAndGetRequestId method was once
+        verify(imageMatchingService, times(0))
+                .matchAndGetRequestId(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
         testObserver.assertValue(Objects::nonNull);
-        //Assert the returned json string is the same of mocked offers
-        testObserver.assertValue(r -> r.getJson().equals(gson.toJson(offerResponseBody)));
+        // Assert the returned json string is the same of mocked offers
+        testObserver.assertValue(r -> Objects.equals(r.getJson(), gson.toJson(offerResponseBody)));
     }
 
     @Test
     public void match_shouldReturnCorrectOfferResponse() {
-        //Get an instance of OfferResponseBody
+        // Get an instance of OfferResponseBody
         Response<OfferResponseBody> response = Response.success(getOfferResponseBody());
         when(imageMatchingService.matchAndGetRequestId(anyString(), anyMap(), any()))
                 .thenReturn(Single.just(response));
 
-        //When Image Matching Api is asked to match an image byte array and asked to return response as OfferResponse
+        // When Image Matching Api is asked to match an image byte array and asked to return
+        // response as OfferResponse
         TestObserver<OfferResponse> testObserver = imageMatchingApi
                 .match(new byte[]{}, OfferResponse.class)
                 .test();
 
-        //verify match method was not called
-        verify(imageMatchingService, times(0)).match(anyString(), anyMap(), any());
+        // Verify match method was not called
+        verify(imageMatchingService, times(0))
+                .match(anyString(), anyMap(), any());
 
-        //verify matchAndGetRequestId method was once
-        verify(imageMatchingService, times(1)).matchAndGetRequestId(anyString(), anyMap(), any());
+        // Verify matchAndGetRequestId method was once
+        verify(imageMatchingService, times(1))
+                .matchAndGetRequestId(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
         testObserver.assertValue(Objects::nonNull);
-        //Assert the returned offers have the same size of mocked offers
-        testObserver.assertValue(r -> r.getBody().getOffers().size() == OFFERS_SIZE);
+        // Assert the returned offers have the same size of mocked offers
+        testObserver.assertValue(r ->
+                Objects.requireNonNull(r.getBody()).getOffers().size() == OFFERS_SIZE
+        );
     }
 
     @Test
     public void match_shouldTerminatedWithHttpError() {
-        //Get an instance of HttpException
+        // Get an instance of HttpException
         HttpException httpException = new HttpException(
-                Response.error(403, ResponseBody.create(MediaType.parse("application/json"),
-                        "Forbidden")));
+                Response.error(
+                        403,
+                        ResponseBody.create("Forbidden", MediaType.parse("application/json"))
+                )
+        );
         when(imageMatchingService.match(anyString(), anyMap(), any()))
                 .thenReturn(Single.error(httpException));
 
-        //When Image Matching Api is asked to match an image byte array
-        TestObserver<OfferResponseBody> testObserver = imageMatchingApi
-                .match(new byte[]{})
-                .test();
+        // When Image Matching Api is asked to match an image byte array
+        TestObserver<OfferResponseBody> testObserver = imageMatchingApi.match(new byte[]{}).test();
 
-        //Then
+        // Then
         testObserver.assertError(HttpException.class);
     }
 
     @Test
     public void match_shouldTerminatedWithIOError() {
-        //Get an instance of IOException
+        // Get an instance of IOException
         when(imageMatchingService.match(anyString(), anyMap(), any()))
                 .thenReturn(Single.error(new IOException()));
 
-        //When Image Matching Api is asked to match an image byte array
+        // When Image Matching Api is asked to match an image byte array
         TestObserver<OfferResponseBody> testObserver = imageMatchingApi
                 .match(new byte[]{})
                 .test();
 
-        //Then
+        // Then
         testObserver.assertError(IOException.class);
     }
+
 }

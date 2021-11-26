@@ -20,7 +20,7 @@ import io.reactivex.plugins.RxJavaPlugins;
  */
 
 public class TestSchedulerRule implements TestRule {
-    private Scheduler immediate = new Scheduler() {
+    private final Scheduler immediate = new Scheduler() {
         @Override
         public Disposable scheduleDirect(@NonNull Runnable run, long delay, @NonNull TimeUnit unit) {
             // this prevents StackOverflowErrors when scheduling with a delay
@@ -29,7 +29,7 @@ public class TestSchedulerRule implements TestRule {
 
         @Override
         public Worker createWorker() {
-            return new ExecutorScheduler.ExecutorWorker(Runnable::run);
+            return new ExecutorScheduler.ExecutorWorker(Runnable::run, true);
         }
     };
 

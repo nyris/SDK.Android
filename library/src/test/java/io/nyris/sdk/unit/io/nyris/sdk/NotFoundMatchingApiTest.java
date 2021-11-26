@@ -27,7 +27,6 @@ import static org.mockito.Mockito.when;
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-@SuppressWarnings("KotlinInternalInJava")
 public class NotFoundMatchingApiTest extends BaseTest {
     private final String emptyResponse = "";
     private final String requestId = "requestId";
@@ -39,27 +38,30 @@ public class NotFoundMatchingApiTest extends BaseTest {
     @Override
     public void setUp() {
         super.setUp();
-
-        notFoundMatchingApi = new NotFoundMatchingApi(notFoundMatchingService,
+        notFoundMatchingApi = new NotFoundMatchingApi(
+                notFoundMatchingService,
                 sdkScheduler,
                 apiHeader,
-                endpoints);
+                endpoints
+        );
     }
 
     @Test
     public void markAsNotFound_shouldReturnEmptyResponseBody() {
-        //Get an instance of ResponseBody
-        ResponseBody responseBody = ResponseBody.create(MediaType.parse("application/json"), emptyResponse);
+        // Get an instance of ResponseBody
+        ResponseBody responseBody =
+                ResponseBody.create(emptyResponse, MediaType.parse("application/json"));
         when(notFoundMatchingService.markAsNotFound(anyString(), anyMap()))
                 .thenReturn(Single.just(responseBody));
 
-        //When Manual Matching Api is asked to mark image for manual matching
+        // When Manual Matching Api is asked to mark image for manual matching
         TestObserver<ResponseBody> testObserver = notFoundMatchingApi
                 .markAsNotFound(requestId)
                 .test();
 
-        //verify markAsNotFound method called once
-        verify(notFoundMatchingService, times(1)).markAsNotFound(anyString(), anyMap());
+        // Verify markAsNotFound method called once
+        verify(notFoundMatchingService, times(1))
+                .markAsNotFound(anyString(), anyMap());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -70,34 +72,38 @@ public class NotFoundMatchingApiTest extends BaseTest {
     @Test
     public void markAsNotFound_shouldTerminatedWithHttpError() {
         HttpException httpException = new HttpException(
-                Response.error(403, ResponseBody.create(MediaType.parse("application/json"),
-                        "Forbidden")));
+                Response.error(
+                        403,
+                        ResponseBody.create("Forbidden", MediaType.parse("application/json"))
+                )
+        );
 
-        //Get an instance of HttpException
+        // Get an instance of HttpException
         when(notFoundMatchingService.markAsNotFound(anyString(), anyMap()))
                 .thenReturn(Single.error(httpException));
 
-        //When Manual MatchingApi Api is asked to mark image for manual matching
+        // When Manual MatchingApi Api is asked to mark image for manual matching
         TestObserver<ResponseBody> testObserver = notFoundMatchingApi
                 .markAsNotFound(requestId)
                 .test();
 
-        //Then
+        // Then
         testObserver.assertError(HttpException.class);
     }
 
     @Test
     public void markAsNotFound_shouldTerminatedWithIOError() {
-        //Get an instance of IOException
+        // Get an instance of IOException
         when(notFoundMatchingService.markAsNotFound(anyString(), anyMap()))
                 .thenReturn(Single.error(new IOException()));
 
-        //When Manual MatchingApi Api is asked to mark image for manual matching
+        // When Manual MatchingApi Api is asked to mark image for manual matching
         TestObserver<ResponseBody> testObserver = notFoundMatchingApi
                 .markAsNotFound(requestId)
                 .test();
 
-        //Then
+        // Then
         testObserver.assertError(IOException.class);
     }
+
 }
