@@ -52,10 +52,9 @@ class BasicUriBuilder {
      */
     fun build(): String {
         var url = "$scheme://$authority/"
-        listPath.forEach({
+        listPath.forEach {
             url += "$it/"
-        })
-
+        }
         return url
     }
 }
