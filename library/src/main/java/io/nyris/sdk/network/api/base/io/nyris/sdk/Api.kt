@@ -16,9 +16,9 @@
 
 package io.nyris.sdk
 
+import android.annotation.SuppressLint
 import com.google.gson.Gson
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
 import okhttp3.ResponseBody
 import retrofit2.Response
 
@@ -29,9 +29,11 @@ import retrofit2.Response
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal open class Api(protected val schedulerProvider: SdkSchedulerProvider,
-                        protected val apiHeader: ApiHeader,
-                        protected val endpoints: EndpointBuilder) {
+internal open class Api(
+    protected val schedulerProvider: SdkSchedulerProvider,
+    protected val apiHeader: ApiHeader,
+    protected val endpoints: EndpointBuilder
+) {
 
     /**
      * Create Default Headers
@@ -42,10 +44,13 @@ internal open class Api(protected val schedulerProvider: SdkSchedulerProvider,
     fun createDefaultHeadersMap(): HashMap<String, String> {
         val headers = HashMap<String, String>()
         headers["X-Api-Key"] = apiHeader.apiKey
-        headers["User-Agent"] = apiHeader.userAgent!!
-        //TODO : Check if client id is empty
-        if (!apiHeader.clientId.isEmpty())
+        apiHeader.userAgent?.let {
+            headers["User-Agent"] = it
+        }
+        // TODO : Check if client id is empty
+        if (apiHeader.clientId.isNotEmpty()) {
             headers["X-Nyris-ClientID"] = apiHeader.clientId
+        }
         return headers
     }
 
@@ -86,35 +91,41 @@ internal open class Api(protected val schedulerProvider: SdkSchedulerProvider,
      *
      * @return the generic single
      */
+    @SuppressLint("CheckResult")
     @Suppress("UNCHECKED_CAST")
-    fun <T : IResponse, Z> convertResponseBodyBasedOnType(id: Z, obs1: Single<ResponseBody>, clazz: Class<T>, gson: Gson): Single<T> {
+    fun <T : IResponse, Z> convertResponseBodyBasedOnType(
+        id: Z,
+        obs1: Single<ResponseBody>,
+        clazz: Class<T>,
+        gson: Gson
+    ): Single<T> {
         obs1
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
 
         val obs2 = Single.just(id)
 
         return Single
-                .zip(obs1, obs2, BiFunction<ResponseBody, Z, T> { responseBody: ResponseBody, _: Z ->
-                    val strResponse = responseBody.string()
-                    val typeOfferResponseBody = OfferResponseBody::class.java
-                    if (typeOfferResponseBody.name == clazz.name) {
-                        val offerResponse = gson.fromJson(strResponse, OfferResponseBody::class.java)
-                        offerResponse as T
-                    } else {
-                        val jsonResponse = JsonResponseBody()
-                        jsonResponse.json = strResponse
-                        jsonResponse as T
-                    }
-                })
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+            .zip(obs1, obs2, { responseBody: ResponseBody, _: Z ->
+                val strResponse = responseBody.string()
+                val typeOfferResponseBody = OfferResponseBody::class.java
+                if (typeOfferResponseBody.name == clazz.name) {
+                    val offerResponse = gson.fromJson(strResponse, OfferResponseBody::class.java)
+                    offerResponse as T
+                } else {
+                    val jsonResponse = JsonResponseBody()
+                    jsonResponse.json = strResponse
+                    jsonResponse as T
+                }
+            })
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
     }
 
     /**
      * Convert Response Based On Type
-     * This generic method convert Response<OfferResponseBody> to IResponse. this method will zip singles into one
-     * single and return offerResponse object.
+     * This generic method convert Response<OfferResponseBody> to IResponse. this method will zip
+     * singles into one single and return offerResponse object.
      *
      * @param id the id
      * @param obs1 the single response offer body
@@ -125,23 +136,31 @@ internal open class Api(protected val schedulerProvider: SdkSchedulerProvider,
      *
      * @return the generic single
      */
+    @SuppressLint("CheckResult")
     @Suppress("UNCHECKED_CAST")
-    fun <T, Z> convertResponseBasedOnType(id: Z, obs1: Single<Response<OfferResponseBody>>): Single<T> {
+    fun <T, Z> convertResponseBasedOnType(
+        id: Z?,
+        obs1: Single<Response<OfferResponseBody>>
+    ): Single<T> {
         obs1
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
 
         val obs2 = Single.just(id)
 
         return Single
-                .zip(obs1, obs2, BiFunction<Response<OfferResponseBody>, Z, T> { response: Response<OfferResponseBody>, _: Z ->
+            .zip(
+                obs1,
+                obs2,
+                { response: Response<OfferResponseBody>, _: Z ->
                     //For the moment one class handling
                     val offerResponse = OfferResponse()
                     offerResponse.headers = response.headers()
                     offerResponse.body = response.body()
                     offerResponse as T
-                })
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+                }
+            )
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
     }
 }
