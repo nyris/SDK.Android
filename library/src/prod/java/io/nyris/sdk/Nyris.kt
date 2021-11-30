@@ -105,9 +105,9 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris {
          */
         @JvmStatic
         fun createInstance(apiKey: String, isDebug: Boolean = false): INyris {
-            return if (instances.containsKey(apiKey))
+            return if (instances.containsKey(apiKey)) {
                 instances[apiKey] as INyris
-            else {
+            } else {
                 val instance = Nyris(apiKey, isDebug)
                 instances[apiKey] = instance
                 instance
@@ -128,6 +128,7 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris {
 }
 
 private var compositeDisposable: CompositeDisposable? = CompositeDisposable()
+
 fun Disposable.disposable() {
     compositeDisposable?.add(this)
 }

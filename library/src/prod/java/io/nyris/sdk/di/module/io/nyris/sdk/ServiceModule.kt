@@ -53,7 +53,7 @@ internal class ServiceModule {
     @Provides
     @Singleton
     fun provideImageMatchingService(retrofit: Retrofit): ImageMatchingService {
-        return retrofit.create<ImageMatchingService>(ImageMatchingService::class.java)
+        return retrofit.create(ImageMatchingService::class.java)
     }
 
     /**
@@ -66,7 +66,7 @@ internal class ServiceModule {
     @Provides
     @Singleton
     fun provideObjectProposalService(retrofit: Retrofit): ObjectProposalService {
-        return retrofit.create<ObjectProposalService>(ObjectProposalService::class.java)
+        return retrofit.create(ObjectProposalService::class.java)
     }
 
     /**
@@ -79,7 +79,7 @@ internal class ServiceModule {
     @Provides
     @Singleton
     fun provideNotFoundMatchingService(retrofit: Retrofit): NotFoundMatchingService {
-        return retrofit.create<NotFoundMatchingService>(NotFoundMatchingService::class.java)
+        return retrofit.create(NotFoundMatchingService::class.java)
     }
 
     /**
@@ -92,7 +92,7 @@ internal class ServiceModule {
     @Provides
     @Singleton
     fun provideTextSearchOfferService(retrofit: Retrofit): TextSearchService {
-        return retrofit.create<TextSearchService>(TextSearchService::class.java)
+        return retrofit.create(TextSearchService::class.java)
     }
 
     /**
@@ -105,7 +105,7 @@ internal class ServiceModule {
     @Provides
     @Singleton
     fun provideSimilarityService(retrofit: Retrofit): SimilarityService {
-        return retrofit.create<SimilarityService>(SimilarityService::class.java)
+        return retrofit.create(SimilarityService::class.java)
     }
 
     /**
@@ -123,14 +123,24 @@ internal class ServiceModule {
      */
     @Provides
     @Singleton
-    fun provideImageMatchingApi(imageMatchingService: ImageMatchingService,
-                                @OutputFormatInfo outputFormat: String,
-                                @LanguageInfo language: String,
-                                gson: Gson,
-                                schedulerProvider: SdkSchedulerProvider,
-                                apiHeader: ApiHeader,
-                                endpoints: EndpointBuilder): IImageMatchingApi {
-        return ImageMatchingApi(imageMatchingService, outputFormat, language, gson, schedulerProvider, apiHeader, endpoints)
+    fun provideImageMatchingApi(
+        imageMatchingService: ImageMatchingService,
+        @OutputFormatInfo outputFormat: String,
+        @LanguageInfo language: String,
+        gson: Gson,
+        schedulerProvider: SdkSchedulerProvider,
+        apiHeader: ApiHeader,
+        endpoints: EndpointBuilder
+    ): IImageMatchingApi {
+        return ImageMatchingApi(
+            imageMatchingService,
+            outputFormat,
+            language,
+            gson,
+            schedulerProvider,
+            apiHeader,
+            endpoints
+        )
     }
 
     /**
@@ -145,10 +155,12 @@ internal class ServiceModule {
      */
     @Provides
     @Singleton
-    fun provideObjectProposalApi(objectProposalService: ObjectProposalService,
-                                 schedulerProvider: SdkSchedulerProvider,
-                                 apiHeader: ApiHeader,
-                                 endpoints: EndpointBuilder): IObjectProposalApi {
+    fun provideObjectProposalApi(
+        objectProposalService: ObjectProposalService,
+        schedulerProvider: SdkSchedulerProvider,
+        apiHeader: ApiHeader,
+        endpoints: EndpointBuilder
+    ): IObjectProposalApi {
         return ObjectProposalApi(objectProposalService, schedulerProvider, apiHeader, endpoints)
     }
 
@@ -164,10 +176,12 @@ internal class ServiceModule {
      */
     @Provides
     @Singleton
-    fun provideNotFoundMatchingApi(notFoundMatchingService: NotFoundMatchingService,
-                                   schedulerProvider: SdkSchedulerProvider,
-                                   apiHeader: ApiHeader,
-                                   endpoints: EndpointBuilder): INotFoundMatchingApi {
+    fun provideNotFoundMatchingApi(
+        notFoundMatchingService: NotFoundMatchingService,
+        schedulerProvider: SdkSchedulerProvider,
+        apiHeader: ApiHeader,
+        endpoints: EndpointBuilder
+    ): INotFoundMatchingApi {
         return NotFoundMatchingApi(notFoundMatchingService, schedulerProvider, apiHeader, endpoints)
     }
 
@@ -183,14 +197,24 @@ internal class ServiceModule {
      */
     @Provides
     @Singleton
-    fun provideTextSearchApi(textSearchService: TextSearchService,
-                             @OutputFormatInfo outputFormat: String,
-                             @LanguageInfo language: String,
-                             gson: Gson,
-                             schedulerProvider: SdkSchedulerProvider,
-                             apiHeader: ApiHeader,
-                             endpoints: EndpointBuilder): ITextSearchApi {
-        return TextSearchApi(textSearchService, outputFormat, language, gson, schedulerProvider, apiHeader, endpoints)
+    fun provideTextSearchApi(
+        textSearchService: TextSearchService,
+        @OutputFormatInfo outputFormat: String,
+        @LanguageInfo language: String,
+        gson: Gson,
+        schedulerProvider: SdkSchedulerProvider,
+        apiHeader: ApiHeader,
+        endpoints: EndpointBuilder
+    ): ITextSearchApi {
+        return TextSearchApi(
+            textSearchService,
+            outputFormat,
+            language,
+            gson,
+            schedulerProvider,
+            apiHeader,
+            endpoints
+        )
     }
 
     /**
@@ -205,13 +229,23 @@ internal class ServiceModule {
      */
     @Provides
     @Singleton
-    fun provideSimilarityApi(similarityService: SimilarityService,
-                             @OutputFormatInfo outputFormat: String,
-                             @LanguageInfo language: String,
-                             gson: Gson,
-                             schedulerProvider: SdkSchedulerProvider,
-                             apiHeader: ApiHeader,
-                             endpoints: EndpointBuilder): ISimilarityApi {
-        return SimilarityApi(similarityService, outputFormat, language, gson, schedulerProvider, apiHeader, endpoints)
+    fun provideSimilarityApi(
+        similarityService: SimilarityService,
+        @OutputFormatInfo outputFormat: String,
+        @LanguageInfo language: String,
+        gson: Gson,
+        schedulerProvider: SdkSchedulerProvider,
+        apiHeader: ApiHeader,
+        endpoints: EndpointBuilder
+    ): ISimilarityApi {
+        return SimilarityApi(
+            similarityService,
+            outputFormat,
+            language,
+            gson,
+            schedulerProvider,
+            apiHeader,
+            endpoints
+        )
     }
 }

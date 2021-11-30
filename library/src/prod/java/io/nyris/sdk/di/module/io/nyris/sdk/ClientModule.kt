@@ -164,9 +164,11 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      */
     @Provides
     @Singleton
-    fun provideNyrisEndpoints(@SchemeInfo scheme: String,
-                              @HostUrlInfo hostUrl: String,
-                              @ApiVersionInfo apiVersion: String): EndpointBuilder {
+    fun provideNyrisEndpoints(
+        @SchemeInfo scheme: String,
+        @HostUrlInfo hostUrl: String,
+        @ApiVersionInfo apiVersion: String
+    ): EndpointBuilder {
         return EndpointBuilder(scheme, hostUrl, apiVersion)
     }
 
@@ -195,11 +197,13 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      */
     @Provides
     @Singleton
-    fun provideApiHeader(@ApiInfo apiKey: String,
-                         @SdkIdInfo libraryId: String,
-                         @SdkVersionInfo sdkVersion: String,
-                         @GitCommitHashInfo gitCommitHash: String,
-                         @AndroidVersionInfo androidVersion: String?): ApiHeader {
+    fun provideApiHeader(
+        @ApiInfo apiKey: String,
+        @SdkIdInfo libraryId: String,
+        @SdkVersionInfo sdkVersion: String,
+        @GitCommitHashInfo gitCommitHash: String,
+        @AndroidVersionInfo androidVersion: String?
+    ): ApiHeader {
         return ApiHeader(apiKey, libraryId, sdkVersion, gitCommitHash, androidVersion)
     }
 
@@ -231,21 +235,21 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
             val request = chain.request()
             var response: Response? = null
             var exception: IOException? = null
-
             var tryCount = 0
             // retry the request
-            while (tryCount < retryCount && (null == response || !response.isSuccessful)) try {
-                response = chain.proceed(request)
-            } catch (e: IOException) {
-                exception = e
-            } finally {
-                tryCount++
+            while (tryCount < retryCount && (null == response || !response.isSuccessful)) {
+                try {
+                    response = chain.proceed(request)
+                } catch (e: IOException) {
+                    exception = e
+                } finally {
+                    tryCount++
+                }
             }
-
             // throw last exception
-            if (null == response && null != exception)
+            if (response == null && exception != null) {
                 throw exception
-
+            }
             // otherwise just pass the original response on
             response!!
         }
@@ -301,20 +305,18 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
     @Singleton
     @Provides
     fun provideOkHttpClient(
-            @DebugInfo isDebug: Boolean,
-            @NetworkTimeOutInfo networkTimeoutInSeconds: Int,
-            loggingInterceptor: HttpLoggingInterceptor,
-            retryInterceptor: Interceptor): OkHttpClient {
-
+        @DebugInfo isDebug: Boolean,
+        @NetworkTimeOutInfo networkTimeoutInSeconds: Int,
+        loggingInterceptor: HttpLoggingInterceptor,
+        retryInterceptor: Interceptor
+    ): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(retryInterceptor)
                 .connectTimeout(networkTimeoutInSeconds.toLong(), TimeUnit.SECONDS)
-
-        //show logs if sdk is in Debug mode
+        // show logs if sdk is in Debug mode
         if (isDebug) {
             okHttpClient.addInterceptor(loggingInterceptor)
         }
-
         return okHttpClient.build()
     }
 
@@ -330,11 +332,12 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      */
     @Provides
     @Singleton
-    fun provideRetrofit(httpUrl: HttpUrl,
-                        converterFactory: Converter.Factory,
-                        callAdapterFactory: CallAdapter.Factory,
-                        okHttpClient: OkHttpClient): Retrofit {
-
+    fun provideRetrofit(
+        httpUrl: HttpUrl,
+        converterFactory: Converter.Factory,
+        callAdapterFactory: CallAdapter.Factory,
+        okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(httpUrl)
                 .addConverterFactory(converterFactory)

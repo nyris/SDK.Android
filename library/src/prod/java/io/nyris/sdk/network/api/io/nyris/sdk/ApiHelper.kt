@@ -27,18 +27,13 @@ import javax.inject.Inject
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 internal class ApiHelper(apiKey: String, isDebug: Boolean) : IApiHelper {
+
     private lateinit var apiHeader: ApiHeader
-
     private lateinit var endpointBuilder: EndpointBuilder
-
     private lateinit var imageMatching: IImageMatchingApi
-
     private lateinit var objectProposal: IObjectProposalApi
-
     private lateinit var notFoundMatching: INotFoundMatchingApi
-
     private lateinit var textSearch: ITextSearchApi
-
     private lateinit var similarity: ISimilarityApi
 
     /**
