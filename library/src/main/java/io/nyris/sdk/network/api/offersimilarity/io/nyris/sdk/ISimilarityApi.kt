@@ -45,7 +45,8 @@ interface ISimilarityApi {
     /**
      * Get Similar offer by sku
      *
-     * Default get by sku method for the advanced response return, please use {@link #getBySku(sku : String, clazz : Class<T>) label}
+     * Default get by sku method for the advanced response return,
+     * please use {@link #getBySku(sku : String, clazz : Class<T>) label}
      * @param sku the offer sku
      * @return the Single{Observable} OfferResponseBody
      */
@@ -56,7 +57,8 @@ interface ISimilarityApi {
      *
      * @param sku the offer sku
      * @param clazz the desired return response class
-     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
+     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody},
+     * {@link OfferResponse} or {@link JsonResponseBody}
      */
     fun <T : IResponse> getBySku(sku: String, clazz: Class<T>): Single<T>
 }

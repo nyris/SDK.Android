@@ -20,7 +20,7 @@ import androidx.annotation.FloatRange
 import com.google.gson.Gson
 import io.reactivex.Single
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * TextSearchApi.kt - class that implement ITextSearchApi interface.
@@ -30,23 +30,25 @@ import okhttp3.RequestBody
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class TextSearchApi(private val textSearchService: TextSearchService,
-                             private var outputFormat: String,
-                             private var language: String,
-                             private var gson: Gson,
-                             schedulerProvider: SdkSchedulerProvider,
-                             apiHeader: ApiHeader,
-                             endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), ITextSearchApi {
+internal class TextSearchApi(
+    private val textSearchService: TextSearchService,
+    private var outputFormat: String,
+    private var language: String,
+    private var gson: Gson,
+    schedulerProvider: SdkSchedulerProvider,
+    apiHeader: ApiHeader,
+    endpoints: EndpointBuilder
+) : Api(schedulerProvider, apiHeader, endpoints), ITextSearchApi {
 
     private var regroupOptions: RegroupOptions = RegroupOptions()
-    private var limit: Int = 20
+    private var limit: Int = DEFAULT_LIMIT
 
     /**
      * Init local properties
      */
     private fun reset() {
         regroupOptions.reset()
-        limit = 20
+        limit = DEFAULT_LIMIT
     }
 
     /**
@@ -92,18 +94,26 @@ internal class TextSearchApi(private val textSearchService: TextSearchService,
     /**
      * {@inheritDoc}
      */
-    override fun regroupThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): ITextSearchApi {
+    override fun regroupThreshold(
+        @FloatRange(from = 0.0, to = 1.0) threshold: Float
+    ): ITextSearchApi {
         regroupOptions.threshold = threshold
         return this
     }
 
     override fun buildXOptions(): String {
         var xOptions = ""
-        if (regroupOptions.enabled) xOptions += "regroup"
+        if (regroupOptions.enabled) {
+            xOptions += "regroup"
+        }
 
-        if (regroupOptions.enabled && regroupOptions.threshold != -1F) xOptions += " regroup.threshold=${regroupOptions.threshold}"
+        if (regroupOptions.enabled && regroupOptions.threshold != -1F) {
+            xOptions += " regroup.threshold=${regroupOptions.threshold}"
+        }
 
-        if (limit != 20) xOptions += " limit=$limit"
+        if (limit != DEFAULT_LIMIT) {
+            xOptions += " limit=$limit"
+        }
 
         reset()
         return xOptions
@@ -125,12 +135,15 @@ internal class TextSearchApi(private val textSearchService: TextSearchService,
         headers["Accept"] = outputFormat
         headers["Accept-Language"] = language
         headers["Content-Length"] = keyword.length.toString()
-        if (!xOptions.isEmpty())
+        if (xOptions.isNotEmpty()) {
             headers["X-Options"] = xOptions
-        val body = RequestBody.create("text/plain; charset=utf-8".toMediaTypeOrNull(), keyword)
-
+        }
+        val body = keyword.toRequestBody("text/plain; charset=utf-8".toMediaTypeOrNull())
         val obs1 = textSearchService.searchOffers(endpoints.textSearchUrl, headers, body)
-
         return convertResponseBodyBasedOnType(keyword, obs1, clazz, gson)
+    }
+
+    companion object {
+        private const val DEFAULT_LIMIT: Int = 20
     }
 }

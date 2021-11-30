@@ -47,7 +47,8 @@ interface IImageMatchingApi {
     /**
      * Enable exact matching phase
      *
-     * @param isEnabled boolean value, true to enable exact matching phase and false for disabled it.
+     * @param isEnabled boolean value, true to enable exact matching phase and false for
+     * disabled it.
      * @return the current instance of IImageMatchingApi
      */
     @Deprecated("similarity(Boolean) is deprecated and will be remove in version 1.6.")
@@ -65,7 +66,8 @@ interface IImageMatchingApi {
     /**
      * Enable similarity phase
      *
-     * @param isEnabled boolean value, true to enable similarity matching phase and false for disabled it.
+     * @param isEnabled boolean value, true to enable similarity matching phase and false for
+     * disabled it.
      * @return the current instance of IImageMatchingApi
      */
     @Deprecated("similarity(Boolean) is deprecated and will be remove in version 1.6.")
@@ -92,7 +94,8 @@ interface IImageMatchingApi {
     /**
      * Set Similarity Threshold
      *
-     * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
+     * @param threshold threshold int value between 0-1 helps to return only offer with score above
+     * the threshold
      * @return the current instance of IImageMatchingApi
      */
     @Deprecated("similarityThreshold(Float) is deprecated and will be remove in version 1.6.")
@@ -145,7 +148,8 @@ interface IImageMatchingApi {
     /**
      * Set Regroup Threshold
      *
-     * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
+     * @param threshold threshold int value between 0-1 helps to return only offer with score above
+     * the threshold
      * @return the current instance of IImageMatchingApi
      */
     @Deprecated("regroupThreshold(Float) is deprecated and will be remove in version 1.6.")
@@ -154,7 +158,8 @@ interface IImageMatchingApi {
     /**
      * Enable Recommendation XOptions
      *
-     * @param isEnabled boolean value, true to enable offer recommendations and false for disabled it.
+     * @param isEnabled boolean value, true to enable offer recommendations and false for
+     * disabled it.
      * @return the current instance of IImageMatchingApi
      */
     @Deprecated("recommendations(Boolean) is deprecated and will be remove in version 1.6.")
@@ -167,12 +172,15 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see RecommendationOptions
      */
-    fun recommendations(action: RecommendationOptions.() -> Unit = { enabled = true }): IImageMatchingApi
+    fun recommendations(
+        action: RecommendationOptions.() -> Unit = { enabled = true }
+    ): IImageMatchingApi
 
     /**
      * Enable the output of predicted categories.
      *
-     * @param isEnabled boolean value, true to enable categories predictions and false for disabled it.
+     * @param isEnabled boolean value, true to enable categories predictions and false for
+     * disabled it.
      * @return the current instance of IImageMatchingApi
      */
     @Deprecated("categoryPrediction(Boolean) is deprecated and will be remove in version 1.6.")
@@ -185,7 +193,9 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see CategoryPredictionOptions
      */
-    fun categoryPrediction(action: CategoryPredictionOptions.() -> Unit = { enabled = true }): IImageMatchingApi
+    fun categoryPrediction(
+        action: CategoryPredictionOptions.() -> Unit = { enabled = true }
+    ): IImageMatchingApi
 
     /**
      * Set Similarity Return Limit
@@ -199,16 +209,23 @@ interface IImageMatchingApi {
     /**
      * Set Similarity Threshold
      *
-     * @param threshold threshold int value between 0-1 helps to return only category with score above the threshold
+     * @param threshold threshold int value between 0-1 helps to return only category with score
+     * above the threshold
      * @return the current instance of IImageMatchingApi
      */
-    @Deprecated("categoryPredictionThreshold(Float) is deprecated and will be remove in version 1.6.")
-    fun categoryPredictionThreshold(@FloatRange(from = 0.0, to = 1.0) threshold: Float): IImageMatchingApi
+    @Deprecated(
+        "categoryPredictionThreshold(Float) is deprecated and will be remove in " +
+                "version 1.6."
+    )
+    fun categoryPredictionThreshold(
+        @FloatRange(from = 0.0, to = 1.0) threshold: Float
+    ): IImageMatchingApi
 
     /**
      * Match image byte array
      *
-     * Default image matching method for the advanced response return, please use {@link #match(image : ByteArray, clazz : Class<T>) label}
+     * Default image matching method for the advanced response return, please use
+     * {@link #match(image : ByteArray, clazz : Class<T>) label}
      * @param image the image byte array
      * @return the Single{Observable} OfferResponseBody
      */
@@ -217,7 +234,8 @@ interface IImageMatchingApi {
     /**
      * Match image float array
      *
-     * Default image matching method for the advanced response return, please use {@link #match(image : ByteArray, clazz : Class<T>) label}
+     * Default image matching method for the advanced response return, please use
+     * {@link #match(image : ByteArray, clazz : Class<T>) label}
      * @param image the image float array
      * @return the Single{Observable} OfferResponseBody
      */
@@ -228,7 +246,8 @@ interface IImageMatchingApi {
      *
      * @param image the image byte array
      * @param clazz the desired return response class
-     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
+     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody},
+     * {@link OfferResponse} or {@link JsonResponseBody}
      */
     fun <T : IResponse> match(image: ByteArray, clazz: Class<T>): Single<T>
 
@@ -237,7 +256,8 @@ interface IImageMatchingApi {
      *
      * @param image the image float array
      * @param clazz the desired return response class
-     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
+     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody},
+     * {@link OfferResponse} or {@link JsonResponseBody}
      */
     fun <T : IResponse> match(image: FloatArray, clazz: Class<T>): Single<T>
 }

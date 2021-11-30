@@ -27,10 +27,12 @@ import okhttp3.ResponseBody
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class NotFoundMatchingApi(private val notFoundMatchingService: NotFoundMatchingService,
-                                   schedulerProvider: SdkSchedulerProvider,
-                                   apiHeader: ApiHeader,
-                                   endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), INotFoundMatchingApi {
+internal class NotFoundMatchingApi(
+    private val notFoundMatchingService: NotFoundMatchingService,
+    schedulerProvider: SdkSchedulerProvider,
+    apiHeader: ApiHeader,
+    endpoints: EndpointBuilder
+) : Api(schedulerProvider, apiHeader, endpoints), INotFoundMatchingApi {
 
     /**
      * {@inheritDoc}
@@ -38,8 +40,8 @@ internal class NotFoundMatchingApi(private val notFoundMatchingService: NotFound
     override fun markAsNotFound(imageRequestId: String): Single<ResponseBody> {
         val headers = createDefaultHeadersMap()
         return notFoundMatchingService
-                .markAsNotFound(endpoints.getNotFoundMatchingUrl(imageRequestId), headers)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+            .markAsNotFound(endpoints.getNotFoundMatchingUrl(imageRequestId), headers)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
     }
 }

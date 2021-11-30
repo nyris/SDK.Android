@@ -18,7 +18,7 @@ package io.nyris.sdk
 
 import io.reactivex.Single
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * ObjectProposalApi.kt - class that implement IObjectProposalApi interface.
@@ -28,10 +28,12 @@ import okhttp3.RequestBody
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class ObjectProposalApi(private val objectProposalService: ObjectProposalService,
-                                 schedulerProvider: SdkSchedulerProvider,
-                                 apiHeader: ApiHeader,
-                                 endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), IObjectProposalApi {
+internal class ObjectProposalApi(
+    private val objectProposalService: ObjectProposalService,
+    schedulerProvider: SdkSchedulerProvider,
+    apiHeader: ApiHeader,
+    endpoints: EndpointBuilder
+) : Api(schedulerProvider, apiHeader, endpoints), IObjectProposalApi {
 
     /**
      * {@inheritDoc}
@@ -39,11 +41,11 @@ internal class ObjectProposalApi(private val objectProposalService: ObjectPropos
     override fun extractObjects(image: ByteArray): Single<List<ObjectProposal>> {
         val headers = createDefaultHeadersMap()
         headers["Content-Length"] = image.size.toString()
-        val body = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
+        val body = image.toRequestBody("image/jpg".toMediaTypeOrNull())
 
         return objectProposalService
-                .extractObjects(endpoints.objectProposalUrl, headers, body)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+            .extractObjects(endpoints.objectProposalUrl, headers, body)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
     }
 }

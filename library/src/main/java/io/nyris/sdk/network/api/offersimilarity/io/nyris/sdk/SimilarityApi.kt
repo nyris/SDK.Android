@@ -27,13 +27,15 @@ import io.reactivex.Single
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class SimilarityApi(private val similarityService: SimilarityService,
-                             private var outputFormat: String,
-                             private var language: String,
-                             private var gson: Gson,
-                             schedulerProvider: SdkSchedulerProvider,
-                             apiHeader: ApiHeader,
-                             endpoints: EndpointBuilder) : Api(schedulerProvider, apiHeader, endpoints), ISimilarityApi {
+internal class SimilarityApi(
+    private val similarityService: SimilarityService,
+    private var outputFormat: String,
+    private var language: String,
+    private var gson: Gson,
+    schedulerProvider: SdkSchedulerProvider,
+    apiHeader: ApiHeader,
+    endpoints: EndpointBuilder
+) : Api(schedulerProvider, apiHeader, endpoints), ISimilarityApi {
     /**
      * {@inheritDoc}
      */
@@ -64,9 +66,7 @@ internal class SimilarityApi(private val similarityService: SimilarityService,
         val headers = createDefaultHeadersMap()
         headers["Accept"] = outputFormat
         headers["Accept-Language"] = language
-
         val obs1 = similarityService.getBySku(endpoints.getSimilarityUrl(sku), headers)
-
         return convertResponseBodyBasedOnType(sku, obs1, clazz, gson)
     }
 }

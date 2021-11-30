@@ -73,7 +73,8 @@ interface ITextSearchApi {
     /**
      * Set Regroup Threshold
      *
-     * @param threshold threshold int value between 0-1 helps to return only offer with score above the threshold
+     * @param threshold threshold int value between 0-1 helps to return only offer with score above
+     * the threshold
      * @return the current instance of IImageMatchingApi
      */
     @Deprecated("regroupThreshold(Float) is deprecated and will be remove in version 1.6.")
@@ -82,7 +83,8 @@ interface ITextSearchApi {
     /**
      * Search Offers
      *
-     * Default search offers method for the advanced response return, please use {@link #searchOffers(keyword : String, clazz : Class<T>) label}
+     * Default search offers method for the advanced response return, please use
+     * {@link #searchOffers(keyword : String, clazz : Class<T>) label}
      * @param keyword the keyword
      * @return the Single{Observable} OfferResponseBody
      */
@@ -93,7 +95,8 @@ interface ITextSearchApi {
      *
      * @param keyword the keyword
      * @param clazz the desired return response class
-     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody}, {@link OfferResponse} or {@link JsonResponseBody}
+     * @return the Single{Observable} IResponse {Could be {@link OfferResponseBody},
+     * {@link OfferResponse} or {@link JsonResponseBody}
      */
     fun <T : IResponse> searchOffers(keyword: String, clazz: Class<T>): Single<T>
 }

@@ -24,18 +24,21 @@ package io.nyris.sdk
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 
-internal class ApiHeader constructor(var apiKey: String,
-                                     private val sdkId: String,
-                                     private val sdkVersion: String,
-                                     private val gitCommitHash: String,
-                                     private val androidVersion: String?) {
+internal class ApiHeader constructor(
+    var apiKey: String,
+    private val sdkId: String,
+    private val sdkVersion: String,
+    private val gitCommitHash: String,
+    private val androidVersion: String?
+) {
     /**
      * Get User Agent
      */
     var userAgent: String? = null
         get() {
-            if (field == null)
+            if (field == null) {
                 field = "$sdkId/$sdkVersion ($gitCommitHash Android $androidVersion)"
+            }
             return field
         }
 

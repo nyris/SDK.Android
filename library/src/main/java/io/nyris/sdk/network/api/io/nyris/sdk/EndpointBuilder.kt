@@ -29,59 +29,51 @@ internal class EndpointBuilder(var scheme: String, var hostUrl: String, var apiV
      */
     var imageMatchingUrl: String = ""
         internal set
-        get() {
-            return BasicUriBuilder()
-                    .scheme(scheme)
-                    .authority(hostUrl)
-                    .appendPath("find")
-                    .appendPath(apiVersion)
-                    .build()
-        }
+        get() = BasicUriBuilder()
+            .scheme(scheme)
+            .authority(hostUrl)
+            .appendPath("find")
+            .appendPath(apiVersion)
+            .build()
 
     /**
      * Get Image Matching Api Url
      */
     var imageMatchingUrl2: String = ""
         internal set
-        get() {
-            return BasicUriBuilder()
-                    .scheme(scheme)
-                    .authority(hostUrl)
-                    .appendPath("find")
-                    .appendPath(apiVersion)
-                    .appendPath("fingerprint")
-                    .appendPath("semantic")
-                    .build()
-        }
+        get() = BasicUriBuilder()
+            .scheme(scheme)
+            .authority(hostUrl)
+            .appendPath("find")
+            .appendPath(apiVersion)
+            .appendPath("fingerprint")
+            .appendPath("semantic")
+            .build()
 
     /**
      * Get Object Proposal Api Url
      */
     var objectProposalUrl: String = ""
-        get() {
-            return BasicUriBuilder()
-                    .scheme(scheme)
-                    .authority(hostUrl)
-                    .appendPath("find")
-                    .appendPath(apiVersion)
-                    .appendPath("regions")
-                    .build()
-        }
+        get() = BasicUriBuilder()
+            .scheme(scheme)
+            .authority(hostUrl)
+            .appendPath("find")
+            .appendPath(apiVersion)
+            .appendPath("regions")
+            .build()
 
     /**
      * Get Text Search Api Url
      */
     var textSearchUrl: String = ""
         internal set
-        get() {
-            return BasicUriBuilder()
-                    .scheme(scheme)
-                    .authority(hostUrl)
-                    .appendPath("find")
-                    .appendPath(apiVersion)
-                    .appendPath("text")
-                    .build()
-        }
+        get() = BasicUriBuilder()
+            .scheme(scheme)
+            .authority(hostUrl)
+            .appendPath("find")
+            .appendPath(apiVersion)
+            .appendPath("text")
+            .build()
 
     /**
      * Get Not Found Matching Api Url
@@ -89,13 +81,13 @@ internal class EndpointBuilder(var scheme: String, var hostUrl: String, var apiV
      */
     fun getNotFoundMatchingUrl(imageRequestId: String): String {
         return BasicUriBuilder()
-                .scheme(scheme)
-                .authority(hostUrl)
-                .appendPath("find")
-                .appendPath(apiVersion)
-                .appendPath("manual")
-                .appendPath(imageRequestId)
-                .build()
+            .scheme(scheme)
+            .authority(hostUrl)
+            .appendPath("find")
+            .appendPath(apiVersion)
+            .appendPath("manual")
+            .appendPath(imageRequestId)
+            .build()
     }
 
     /**
@@ -103,14 +95,14 @@ internal class EndpointBuilder(var scheme: String, var hostUrl: String, var apiV
      */
     fun getOfferManagerUrl(offerId: String): String {
         return BasicUriBuilder()
-                .scheme(scheme)
-                .authority(hostUrl)
-                .appendPath("manage")
-                .appendPath(apiVersion)
-                .appendPath("offers")
-                .appendPath(offerId)
-                .appendPath("images")
-                .build()
+            .scheme(scheme)
+            .authority(hostUrl)
+            .appendPath("manage")
+            .appendPath(apiVersion)
+            .appendPath("offers")
+            .appendPath(offerId)
+            .appendPath("images")
+            .build()
     }
 
     /**
@@ -118,11 +110,11 @@ internal class EndpointBuilder(var scheme: String, var hostUrl: String, var apiV
      */
     fun getSimilarityUrl(sku: String): String {
         return BasicUriBuilder()
-                .scheme(scheme)
-                .authority(hostUrl)
-                .appendPath("recommend")
-                .appendPath(apiVersion)
-                .appendPath(sku)
-                .build()
+            .scheme(scheme)
+            .authority(hostUrl)
+            .appendPath("recommend")
+            .appendPath(apiVersion)
+            .appendPath(sku)
+            .build()
     }
 }
