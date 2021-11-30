@@ -10,7 +10,6 @@ import io.reactivex.internal.disposables.DisposableContainer
 import io.reactivex.internal.functions.ObjectHelper
 import io.reactivex.internal.util.ExceptionHelper
 import io.reactivex.internal.util.OpenHashSet
-import java.util.*
 
 /**
  *
@@ -19,7 +18,10 @@ import java.util.*
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableContainer {
+class CustomCompositeDisposable :
+    LifecycleObserver,
+    Disposable,
+    DisposableContainer {
     private var resources: OpenHashSet<Disposable>? = null
 
     @Volatile
@@ -30,7 +32,7 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         if (disposed) {
             return
         }
-        var set: OpenHashSet<Disposable>? = null
+        var set: OpenHashSet<Disposable>?
         synchronized(this) {
             if (disposed) {
                 return
@@ -39,7 +41,6 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
             set = resources
             resources = null
         }
-
         dispose(set)
     }
 
@@ -49,7 +50,7 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
 
     override fun add(d: Disposable): Boolean {
         ObjectHelper.requireNonNull(d, "d is null")
-        if(disposed){
+        if (disposed) {
             d.dispose()
             return false
         }
@@ -84,7 +85,6 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
             if (disposed) {
                 return false
             }
-
             val set = resources
             if (set == null || !set.remove(d)) {
                 return false
@@ -100,16 +100,14 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
         if (disposed) {
             return
         }
-        var set: OpenHashSet<Disposable>? = null
+        var set: OpenHashSet<Disposable>?
         synchronized(this) {
             if (disposed) {
                 return
             }
-
             set = resources
             resources = null
         }
-
         dispose(set)
     }
 
@@ -140,10 +138,10 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
             return
         }
         var errors: MutableList<Throwable>? = null
-        val array = set.keys()
-        for (o in array) {
-            if (o !is Disposable)
+        for (o in set.keys()) {
+            if (o !is Disposable) {
                 continue
+            }
             try {
                 o.dispose()
             } catch (ex: Throwable) {
@@ -154,8 +152,9 @@ class CustomCompositeDisposable : LifecycleObserver, Disposable, DisposableConta
                 errors.add(ex)
             }
         }
-        if (errors == null)
+        if (errors == null) {
             return
+        }
         if (errors.size == 1) {
             throw ExceptionHelper.wrapOrThrow(errors[0])
         }

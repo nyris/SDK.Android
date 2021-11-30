@@ -34,8 +34,9 @@ class MainActivity : AppCompatActivity() {
                 binding.tvResults.text =
                     "Matched offers : ${it.offers.size} \n " +
                             "Predicted categories : ${it.predictedCategories}"
-            },{
+            }, {
                 binding.tvResults.text = it.message
-            }).disposable()
+            })
+            .disposable()
     }
 }
