@@ -45,5 +45,4 @@ class Links : Serializable {
     @SerializedName("mobile")
     var mobile: String? = null
         internal set
-
 }
