@@ -19,17 +19,15 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -41,78 +39,7 @@ import javax.inject.Singleton
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 @Module
-internal class ClientModule(private val apiKey: String, private val isDebug: Boolean) {
-    /**
-     * Provide debug status
-     * Used to enable debug output of the sdk.
-     *
-     * @return the debug status
-     */
-    @Provides
-    @DebugInfo
-    fun provideIsDebug(): Boolean {
-        return isDebug
-    }
-
-    /**
-     * Provide Network Time Out
-     * Used to set web client timeout.
-     *
-     * @return the time out value in seconds
-     */
-    @Provides
-    @NetworkTimeOutInfo
-    fun provideNetworkTimeoutInSeconds(): Int {
-        return Constants.NETWORK_CONNECTION_TIMEOUT
-    }
-
-    /**
-     * Provide Api Key
-     * Used to authorise sent http requests from the SDK.
-     *
-     * @return the api key
-     */
-    @Provides
-    @ApiInfo
-    fun provideApiKey(): String {
-        return apiKey
-    }
-
-    /**
-     * Provide HTTP Scheme
-     * Used to provide http scheme for url building.
-     *
-     * @return the http scheme
-     */
-    @Provides
-    @SchemeInfo
-    fun provideScheme(): String {
-        return Constants.SCHEME
-    }
-
-    /**
-     * Provide HOST URL
-     * Used to provide host url for url building
-     *
-     * @return the http scheme
-     */
-    @Provides
-    @HostUrlInfo
-    fun provideHostUrl(): String {
-        return Constants.HOST_URL
-    }
-
-    /**
-     * Provide Api Version
-     * Used to provide api version for url building.
-     *
-     * @return the api version
-     */
-    @Provides
-    @ApiVersionInfo
-    fun provideApiVersion(): String {
-        return Constants.API_VERSION
-    }
+internal class ClientModule {
 
     /**
      * Provide HttpUrl
@@ -122,36 +49,10 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      */
     @Provides
     @Singleton
-    fun provideHttpUrl(): HttpUrl {
-        val builder = BasicUriBuilder()
-            .scheme(Constants.SCHEME)
-            .authority(Constants.HOST_URL)
-        return builder.build().toHttpUrlOrNull()!!
-    }
-
-    /**
-     * Provide Default OutputFormat
-     * Used as request header to get different json response based on the specified output format.
-     *
-     * @return the default output format
-     */
-    @Provides
-    @OutputFormatInfo
-    fun provideDefaultOutputFormat(): String {
-        return Constants.DEFAULT_OUTPUT_FORMAT
-    }
-
-    /**
-     * Provide Default Language
-     * Used as request header to get only offers base on specified language.
-     *
-     * @return the default language
-     */
-    @Provides
-    @LanguageInfo
-    fun provideDefaultLanguage(): String {
-        return Constants.DEFAULT_LANGUAGE
-    }
+    fun provideHttpUrl(config: NyrisConfig): HttpUrl = BasicUriBuilder().apply {
+        scheme(config.scheme)
+        authority(config.hostUrl)
+    }.build().toHttpUrl()
 
     /**
      * Provide Nyris Endpoints Builder
@@ -164,24 +65,8 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      */
     @Provides
     @Singleton
-    fun provideNyrisEndpoints(
-        @SchemeInfo scheme: String,
-        @HostUrlInfo hostUrl: String,
-        @ApiVersionInfo apiVersion: String
-    ): EndpointBuilder {
-        return EndpointBuilder(scheme, hostUrl, apiVersion)
-    }
-
-    /**
-     * Provide Api Retry Count
-     * Used to retry failed http request until client reach retry count or successful request.
-     *
-     * @return the retry count
-     */
-    @Provides
-    @RetryCountInfo
-    fun provideApiRetryCount(): Int {
-        return Constants.HTTP_RETRY_COUNT
+    fun provideNyrisEndpoints(config: NyrisConfig): EndpointBuilder = with(config) {
+        EndpointBuilder(scheme, hostUrl, apiVersion)
     }
 
     /**
@@ -198,14 +83,12 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
     @Provides
     @Singleton
     fun provideApiHeader(
-        @ApiInfo apiKey: String,
+        @ApiKeyInfo apiKey: String,
         @SdkIdInfo libraryId: String,
         @SdkVersionInfo sdkVersion: String,
         @GitCommitHashInfo gitCommitHash: String,
         @AndroidVersionInfo androidVersion: String?
-    ): ApiHeader {
-        return ApiHeader(apiKey, libraryId, sdkVersion, gitCommitHash, androidVersion)
-    }
+    ): ApiHeader = ApiHeader(apiKey, libraryId, sdkVersion, gitCommitHash, androidVersion)
 
     /**
      * Provide Http Logging Interceptor
@@ -213,12 +96,10 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      *
      * @return the http logging interceptor
      */
-    @Singleton
     @Provides
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-        return logging
+    @Singleton
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
     }
 
     /**
@@ -230,30 +111,9 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      */
     @Singleton
     @Provides
-    fun provideRetryInterceptor(@RetryCountInfo retryCount: Int): Interceptor {
-        return Interceptor { chain ->
-            val request = chain.request()
-            var response: Response? = null
-            var exception: IOException? = null
-            var tryCount = 0
-            // retry the request
-            while (tryCount < retryCount && (null == response || !response.isSuccessful)) {
-                try {
-                    response = chain.proceed(request)
-                } catch (e: IOException) {
-                    exception = e
-                } finally {
-                    tryCount++
-                }
-            }
-            // throw last exception
-            if (response == null && exception != null) {
-                throw exception
-            }
-            // otherwise just pass the original response on
-            response!!
-        }
-    }
+    fun provideRetryInterceptor(
+        config: NyrisConfig
+    ): Interceptor = RetryInterceptor(config.httpRetryCount)
 
     /**
      * Provide Gson
@@ -261,8 +121,8 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      *
      * @return the gson
      */
-    @Singleton
     @Provides
+    @Singleton
     fun provideGson(): Gson {
         return Gson()
     }
@@ -302,22 +162,20 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
      * @param retryInterceptor the http retry interceptor
      * @return the ok http client
      */
-    @Singleton
     @Provides
+    @Singleton
     fun provideOkHttpClient(
-        @DebugInfo isDebug: Boolean,
-        @NetworkTimeOutInfo networkTimeoutInSeconds: Int,
+        config: NyrisConfig,
         loggingInterceptor: HttpLoggingInterceptor,
         retryInterceptor: Interceptor
-    ): OkHttpClient {
-        val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(retryInterceptor)
-                .connectTimeout(networkTimeoutInSeconds.toLong(), TimeUnit.SECONDS)
-        // show logs if sdk is in Debug mode
-        if (isDebug) {
-            okHttpClient.addInterceptor(loggingInterceptor)
-        }
-        return okHttpClient.build()
+    ): OkHttpClient = with(config) {
+        OkHttpClient.Builder().apply {
+            addInterceptor(retryInterceptor)
+            connectTimeout(config.networkConnectionTimeOut, TimeUnit.SECONDS)
+            if (isDebug) {
+                addInterceptor(loggingInterceptor)
+            }
+        }.build()
     }
 
     /**
@@ -337,12 +195,10 @@ internal class ClientModule(private val apiKey: String, private val isDebug: Boo
         converterFactory: Converter.Factory,
         callAdapterFactory: CallAdapter.Factory,
         okHttpClient: OkHttpClient
-    ): Retrofit {
-        return Retrofit.Builder()
-                .baseUrl(httpUrl)
-                .addConverterFactory(converterFactory)
-                .addCallAdapterFactory(callAdapterFactory)
-                .client(okHttpClient)
-                .build()
-    }
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(httpUrl)
+        .addConverterFactory(converterFactory)
+        .addCallAdapterFactory(callAdapterFactory)
+        .client(okHttpClient)
+        .build()
 }

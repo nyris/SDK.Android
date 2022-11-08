@@ -26,7 +26,7 @@ import javax.inject.Inject
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class ApiHelper(apiKey: String, isDebug: Boolean) : IApiHelper {
+internal class ApiHelper(apiKey: String, config: NyrisConfig) : IApiHelper {
 
     private lateinit var apiHeader: ApiHeader
     private lateinit var endpointBuilder: EndpointBuilder
@@ -40,11 +40,10 @@ internal class ApiHelper(apiKey: String, isDebug: Boolean) : IApiHelper {
      * Create instance of SdkComponent
      */
     private var sdkComponent: SdkComponent = DaggerSdkComponent
-            .builder()
-            .sdkModule(SdkModule())
-            .clientModule(ClientModule(apiKey, isDebug))
-            .serviceModule(ServiceModule())
-            .build()
+        .builder()
+        .bindApiInfo(apiKey)
+        .bindConfig(config)
+        .build()
 
     init {
         sdkComponent.inject(this)
