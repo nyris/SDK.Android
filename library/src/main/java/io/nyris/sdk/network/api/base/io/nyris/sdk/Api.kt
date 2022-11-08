@@ -30,7 +30,6 @@ import retrofit2.Response
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 internal open class Api(
-    protected val schedulerProvider: SdkSchedulerProvider,
     protected val apiHeader: ApiHeader,
     protected val endpoints: EndpointBuilder
 ) {
@@ -44,6 +43,7 @@ internal open class Api(
     fun createDefaultHeadersMap(): HashMap<String, String> {
         val headers = HashMap<String, String>()
         headers["X-Api-Key"] = apiHeader.apiKey
+        headers["apikey"] = apiHeader.apiKey
         apiHeader.userAgent?.let {
             headers["User-Agent"] = it
         }
@@ -99,14 +99,10 @@ internal open class Api(
         clazz: Class<T>,
         gson: Gson
     ): Single<T> {
-        obs1
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-
         val obs2 = Single.just(id)
 
         return Single
-            .zip(obs1, obs2, { responseBody: ResponseBody, _: Z ->
+            .zip(obs1, obs2) { responseBody: ResponseBody, _: Z ->
                 val strResponse = responseBody.string()
                 val typeOfferResponseBody = OfferResponseBody::class.java
                 if (typeOfferResponseBody.name == clazz.name) {
@@ -117,9 +113,7 @@ internal open class Api(
                     jsonResponse.json = strResponse
                     jsonResponse as T
                 }
-            })
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
+            }
     }
 
     /**
@@ -142,25 +136,18 @@ internal open class Api(
         id: Z?,
         obs1: Single<Response<OfferResponseBody>>
     ): Single<T> {
-        obs1
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-
         val obs2 = Single.just(id)
 
         return Single
             .zip(
                 obs1,
-                obs2,
-                { response: Response<OfferResponseBody>, _: Z ->
-                    //For the moment one class handling
-                    val offerResponse = OfferResponse()
-                    offerResponse.headers = response.headers()
-                    offerResponse.body = response.body()
-                    offerResponse as T
-                }
-            )
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
+                obs2
+            ) { response: Response<OfferResponseBody>, _: Z ->
+                //For the moment one class handling
+                val offerResponse = OfferResponse()
+                offerResponse.headers = response.headers()
+                offerResponse.body = response.body()
+                offerResponse as T
+            }
     }
 }
