@@ -29,10 +29,9 @@ import okhttp3.ResponseBody
  */
 internal class NotFoundMatchingApi(
     private val notFoundMatchingService: NotFoundMatchingService,
-    schedulerProvider: SdkSchedulerProvider,
     apiHeader: ApiHeader,
     endpoints: EndpointBuilder
-) : Api(schedulerProvider, apiHeader, endpoints), INotFoundMatchingApi {
+) : Api(apiHeader, endpoints), INotFoundMatchingApi {
 
     /**
      * {@inheritDoc}
@@ -41,7 +40,5 @@ internal class NotFoundMatchingApi(
         val headers = createDefaultHeadersMap()
         return notFoundMatchingService
             .markAsNotFound(endpoints.getNotFoundMatchingUrl(imageRequestId), headers)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
     }
 }

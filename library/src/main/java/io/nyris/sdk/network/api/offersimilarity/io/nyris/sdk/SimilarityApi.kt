@@ -32,10 +32,9 @@ internal class SimilarityApi(
     private var outputFormat: String,
     private var language: String,
     private var gson: Gson,
-    schedulerProvider: SdkSchedulerProvider,
     apiHeader: ApiHeader,
     endpoints: EndpointBuilder
-) : Api(schedulerProvider, apiHeader, endpoints), ISimilarityApi {
+) : Api(apiHeader, endpoints), ISimilarityApi {
     /**
      * {@inheritDoc}
      */

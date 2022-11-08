@@ -16,8 +16,6 @@
 
 package io.nyris.sdk
 
-import androidx.annotation.FloatRange
-import androidx.annotation.IntRange
 import android.util.Base64
 import com.google.gson.Gson
 import io.reactivex.Single
@@ -39,10 +37,9 @@ internal class ImageMatchingApi(
     private var outputFormat: String,
     private var language: String,
     private var gson: Gson,
-    schedulerProvider: SdkSchedulerProvider,
     apiHeader: ApiHeader,
     endpoints: EndpointBuilder
-) : Api(schedulerProvider, apiHeader, endpoints), IImageMatchingApi {
+) : Api(apiHeader, endpoints), IImageMatchingApi {
 
     private val exactOptions: ExactOptions = ExactOptions()
     private val similarityOptions: SimilarityOptions = SimilarityOptions()
@@ -88,50 +85,11 @@ internal class ImageMatchingApi(
         return this
     }
 
-    override fun exact(isEnabled: Boolean): IImageMatchingApi {
-        exactOptions.enabled = isEnabled
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun similarity(isEnabled: Boolean): IImageMatchingApi {
-        similarityOptions.enabled = isEnabled
-        return this
-    }
-
     /**
      * {@inheritDoc}
      */
     override fun similarity(action: SimilarityOptions.() -> Unit): IImageMatchingApi {
         action(similarityOptions)
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun similarityLimit(@IntRange(from = 1, to = 100) limit: Int): IImageMatchingApi {
-        similarityOptions.limit = limit
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun similarityThreshold(
-        @FloatRange(from = 0.0, to = 1.0) threshold: Float
-    ): IImageMatchingApi {
-        similarityOptions.threshold = threshold
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun ocr(isEnabled: Boolean): IImageMatchingApi {
-        ocrOptions.enabled = isEnabled
         return this
     }
 
@@ -154,34 +112,8 @@ internal class ImageMatchingApi(
     /**
      * {@inheritDoc}
      */
-    override fun regroup(isEnabled: Boolean): IImageMatchingApi {
-        regroupOptions.enabled = isEnabled
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     override fun regroup(action: RegroupOptions.() -> Unit): IImageMatchingApi {
         action(regroupOptions)
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun regroupThreshold(
-        @FloatRange(from = 0.0, to = 1.0) threshold: Float
-    ): IImageMatchingApi {
-        regroupOptions.threshold = threshold
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun recommendations(isEnabled: Boolean): IImageMatchingApi {
-        recommendationOptions.enabled = isEnabled
         return this
     }
 
@@ -193,34 +125,10 @@ internal class ImageMatchingApi(
         return this
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    override fun categoryPrediction(isEnabled: Boolean): IImageMatchingApi {
-        categoryPredictionOptions.enabled = isEnabled
-        return this
-    }
-
     override fun categoryPrediction(
         action: CategoryPredictionOptions.() -> Unit
     ): IImageMatchingApi {
         action(categoryPredictionOptions)
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun categoryPredictionLimit(limit: Int): IImageMatchingApi {
-        categoryPredictionOptions.limit = limit
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun categoryPredictionThreshold(threshold: Float): IImageMatchingApi {
-        categoryPredictionOptions.threshold = threshold
         return this
     }
 
@@ -237,7 +145,7 @@ internal class ImageMatchingApi(
         if (similarityOptions.enabled && xOptions.isEmpty()) {
             xOptions = "similarity"
         } else if (similarityOptions.enabled) {
-                xOptions += " +similarity"
+            xOptions += " +similarity"
         }
 
         if (ocrOptions.enabled && xOptions.isEmpty()) {

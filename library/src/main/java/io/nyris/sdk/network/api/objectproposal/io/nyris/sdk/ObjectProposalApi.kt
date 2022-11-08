@@ -30,10 +30,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
  */
 internal class ObjectProposalApi(
     private val objectProposalService: ObjectProposalService,
-    schedulerProvider: SdkSchedulerProvider,
     apiHeader: ApiHeader,
     endpoints: EndpointBuilder
-) : Api(schedulerProvider, apiHeader, endpoints), IObjectProposalApi {
+) : Api(apiHeader, endpoints), IObjectProposalApi {
 
     /**
      * {@inheritDoc}
@@ -45,7 +44,5 @@ internal class ObjectProposalApi(
 
         return objectProposalService
             .extractObjects(endpoints.objectProposalUrl, headers, body)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
     }
 }

@@ -35,10 +35,9 @@ internal class TextSearchApi(
     private var outputFormat: String,
     private var language: String,
     private var gson: Gson,
-    schedulerProvider: SdkSchedulerProvider,
     apiHeader: ApiHeader,
     endpoints: EndpointBuilder
-) : Api(schedulerProvider, apiHeader, endpoints), ITextSearchApi {
+) : Api(apiHeader, endpoints), ITextSearchApi {
 
     private var regroupOptions: RegroupOptions = RegroupOptions()
     private var limit: Int = DEFAULT_LIMIT
@@ -78,26 +77,8 @@ internal class TextSearchApi(
     /**
      * {@inheritDoc}
      */
-    override fun regroup(isEnabled: Boolean): ITextSearchApi {
-        regroupOptions.enabled = isEnabled
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     override fun regroup(action: RegroupOptions.() -> Unit): ITextSearchApi {
         action(regroupOptions)
-        return this
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override fun regroupThreshold(
-        @FloatRange(from = 0.0, to = 1.0) threshold: Float
-    ): ITextSearchApi {
-        regroupOptions.threshold = threshold
         return this
     }
 
