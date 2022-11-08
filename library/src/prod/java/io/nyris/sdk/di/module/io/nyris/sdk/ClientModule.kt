@@ -49,25 +49,8 @@ internal class ClientModule {
      */
     @Provides
     @Singleton
-    fun provideHttpUrl(config: NyrisConfig): HttpUrl = BasicUriBuilder().apply {
-        scheme(config.scheme)
-        authority(config.hostUrl)
-    }.build().toHttpUrl()
-
-    /**
-     * Provide Nyris Endpoints Builder
-     * Used to generate endpoints.
-     *
-     * @param scheme the scheme
-     * @param hostUrl the host url
-     * @param apiVersion the api version
-     * @return the nyris endpoint
-     */
-    @Provides
-    @Singleton
-    fun provideNyrisEndpoints(config: NyrisConfig): EndpointBuilder = with(config) {
-        EndpointBuilder(scheme, hostUrl, apiVersion)
-    }
+    fun provideHttpUrl(config: NyrisConfig): HttpUrl =
+        config.hostUrl.toHttpUrl()
 
     /**
      * Provide Api Header

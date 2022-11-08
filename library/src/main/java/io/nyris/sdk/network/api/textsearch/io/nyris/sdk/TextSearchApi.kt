@@ -35,9 +35,8 @@ internal class TextSearchApi(
     private var outputFormat: String,
     private var language: String,
     private var gson: Gson,
-    apiHeader: ApiHeader,
-    endpoints: EndpointBuilder
-) : Api(apiHeader, endpoints), ITextSearchApi {
+    apiHeader: ApiHeader
+) : Api(apiHeader), ITextSearchApi {
 
     private var regroupOptions: RegroupOptions = RegroupOptions()
     private var limit: Int = DEFAULT_LIMIT
@@ -120,7 +119,7 @@ internal class TextSearchApi(
             headers["X-Options"] = xOptions
         }
         val body = keyword.toRequestBody("text/plain; charset=utf-8".toMediaTypeOrNull())
-        val obs1 = textSearchService.searchOffers(endpoints.textSearchUrl, headers, body)
+        val obs1 = textSearchService.searchOffers(headers, body)
         return convertResponseBodyBasedOnType(keyword, obs1, clazz, gson)
     }
 

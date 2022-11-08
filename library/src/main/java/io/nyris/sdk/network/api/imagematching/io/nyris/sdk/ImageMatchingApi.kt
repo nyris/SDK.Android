@@ -38,8 +38,7 @@ internal class ImageMatchingApi(
     private var language: String,
     private var gson: Gson,
     apiHeader: ApiHeader,
-    endpoints: EndpointBuilder
-) : Api(apiHeader, endpoints), IImageMatchingApi {
+) : Api(apiHeader), IImageMatchingApi {
 
     private val exactOptions: ExactOptions = ExactOptions()
     private val similarityOptions: SimilarityOptions = SimilarityOptions()
@@ -259,11 +258,10 @@ internal class ImageMatchingApi(
         val typeOfferResponse = OfferResponse::class.java
 
         return if (clazz.name == typeOfferResponse.name) {
-            val obs1 =
-                imageMatchingService.matchAndGetRequestId(endpoints.imageMatchingUrl, headers, body)
+            val obs1 = imageMatchingService.matchAndGetRequestId(headers, body)
             convertResponseBasedOnType(image, obs1)
         } else {
-            val obs1 = imageMatchingService.match(endpoints.imageMatchingUrl, headers, body)
+            val obs1 = imageMatchingService.match(headers, body)
             convertResponseBodyBasedOnType(image, obs1, clazz, gson)
         }
     }
@@ -301,16 +299,11 @@ internal class ImageMatchingApi(
         val typeOfferResponse = OfferResponse::class.java
 
         return if (clazz.name == typeOfferResponse.name) {
-            val obs1 = imageMatchingService.matchAndGetRequestId(
-                endpoints.imageMatchingUrl2,
-                headers,
-                body
-            )
+            val obs1 = imageMatchingService.semanticSearch(headers, body)
             convertResponseBasedOnType(image, obs1)
         } else {
-            val obs1 = imageMatchingService.match(endpoints.imageMatchingUrl2, headers, body)
+            val obs1 = imageMatchingService.semanticSearch2(headers, body)
             convertResponseBodyBasedOnType(image, obs1, clazz, gson)
         }
     }
-
 }

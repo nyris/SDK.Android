@@ -112,14 +112,12 @@ internal class ServiceModule {
         imageMatchingService: ImageMatchingService,
         gson: Gson,
         apiHeader: ApiHeader,
-        endpoints: EndpointBuilder
     ): IImageMatchingApi = ImageMatchingApi(
         imageMatchingService,
         config.defaultOutputFormat,
         config.defaultLanguage,
         gson,
-        apiHeader,
-        endpoints
+        apiHeader
     )
 
     /**
@@ -137,8 +135,7 @@ internal class ServiceModule {
     fun provideObjectProposalApi(
         objectProposalService: ObjectProposalService,
         apiHeader: ApiHeader,
-        endpoints: EndpointBuilder
-    ): IObjectProposalApi = ObjectProposalApi(objectProposalService, apiHeader, endpoints)
+    ): IObjectProposalApi = ObjectProposalApi(objectProposalService, apiHeader)
 
     /**
      * Provide Not Found Matching Api
@@ -154,9 +151,8 @@ internal class ServiceModule {
     @Singleton
     fun provideNotFoundMatchingApi(
         notFoundMatchingService: NotFoundMatchingService,
-        apiHeader: ApiHeader,
-        endpoints: EndpointBuilder
-    ): INotFoundMatchingApi = NotFoundMatchingApi(notFoundMatchingService, apiHeader, endpoints)
+        apiHeader: ApiHeader
+    ): INotFoundMatchingApi = NotFoundMatchingApi(notFoundMatchingService, apiHeader)
 
     /**
      * Provide Text Search Api
@@ -174,15 +170,13 @@ internal class ServiceModule {
         config: NyrisConfig,
         textSearchService: TextSearchService,
         gson: Gson,
-        apiHeader: ApiHeader,
-        endpoints: EndpointBuilder
+        apiHeader: ApiHeader
     ): ITextSearchApi = TextSearchApi(
         textSearchService,
         config.defaultOutputFormat,
         config.defaultLanguage,
         gson,
-        apiHeader,
-        endpoints
+        apiHeader
     )
 
     /**
@@ -201,14 +195,12 @@ internal class ServiceModule {
         config: NyrisConfig,
         similarityService: SimilarityService,
         gson: Gson,
-        apiHeader: ApiHeader,
-        endpoints: EndpointBuilder
+        apiHeader: ApiHeader
     ): ISimilarityApi = SimilarityApi(
         similarityService,
         config.defaultOutputFormat,
         config.defaultLanguage,
         gson,
-        apiHeader,
-        endpoints
+        apiHeader
     )
 }

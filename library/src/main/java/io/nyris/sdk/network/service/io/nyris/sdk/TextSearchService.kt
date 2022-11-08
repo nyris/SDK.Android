@@ -40,9 +40,8 @@ internal interface TextSearchService {
      * @param body the body
      * @return the Single Response Body
      */
-    @POST
+    @POST("find/v1/text")
     fun searchOffers(
-        @Url url: String,
         @HeaderMap headers: Map<String, String>,
         @Body body: RequestBody
     ): Single<ResponseBody>

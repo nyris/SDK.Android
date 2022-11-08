@@ -29,7 +29,6 @@ import javax.inject.Inject
 internal class ApiHelper(apiKey: String, config: NyrisConfig) : IApiHelper {
 
     private lateinit var apiHeader: ApiHeader
-    private lateinit var endpointBuilder: EndpointBuilder
     private lateinit var imageMatching: IImageMatchingApi
     private lateinit var objectProposal: IObjectProposalApi
     private lateinit var notFoundMatching: INotFoundMatchingApi
@@ -72,15 +71,6 @@ internal class ApiHelper(apiKey: String, config: NyrisConfig) : IApiHelper {
      */
     override fun getApiKey(): String {
         return apiHeader.apiKey
-    }
-
-    /**
-     * Set Endpoints Builder
-     * @param endpointBuilder the endpoint builder
-     */
-    @Inject
-    fun setEndpointBuilder(endpointBuilder: EndpointBuilder) {
-        this.endpointBuilder = endpointBuilder
     }
 
     /**

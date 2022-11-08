@@ -41,9 +41,8 @@ internal interface ImageMatchingService {
      * @param body the body
      * @return the Single Response Body
      */
-    @POST
+    @POST("find/v1")
     fun match(
-        @Url url: String,
         @HeaderMap headers: Map<String, String>,
         @Body body: RequestBody
     ): Single<ResponseBody>
@@ -56,10 +55,37 @@ internal interface ImageMatchingService {
      * @param body the body
      * @return the Single Response Offer Response Body
      */
-    @POST
+    @POST("find/v1")
     fun matchAndGetRequestId(
-        @Url url: String,
         @HeaderMap headers: Map<String, String>,
         @Body body: RequestBody
     ): Single<Response<OfferResponseBody>>
+
+    /**
+     * Http Post Match image byte Array
+     *
+     * @param url the url
+     * @param headers the headers
+     * @param body the body
+     * @return the Single Response Body
+     */
+    @POST("find/v1/fingerprint/semantic")
+    fun semanticSearch(
+        @HeaderMap headers: Map<String, String>,
+        @Body body: RequestBody
+    ): Single<Response<OfferResponseBody>>
+
+    /**
+     * Http Post Match image byte Array
+     *
+     * @param url the url
+     * @param headers the headers
+     * @param body the body
+     * @return the Single Response Body
+     */
+    @POST("find/v1/fingerprint/semantic")
+    fun semanticSearch2(
+        @HeaderMap headers: Map<String, String>,
+        @Body body: RequestBody
+    ): Single<ResponseBody>
 }

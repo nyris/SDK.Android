@@ -33,8 +33,7 @@ internal class SimilarityApi(
     private var language: String,
     private var gson: Gson,
     apiHeader: ApiHeader,
-    endpoints: EndpointBuilder
-) : Api(apiHeader, endpoints), ISimilarityApi {
+) : Api(apiHeader), ISimilarityApi {
     /**
      * {@inheritDoc}
      */
@@ -65,7 +64,7 @@ internal class SimilarityApi(
         val headers = createDefaultHeadersMap()
         headers["Accept"] = outputFormat
         headers["Accept-Language"] = language
-        val obs1 = similarityService.getBySku(endpoints.getSimilarityUrl(sku), headers)
+        val obs1 = similarityService.getBySku(sku, headers)
         return convertResponseBodyBasedOnType(sku, obs1, clazz, gson)
     }
 }

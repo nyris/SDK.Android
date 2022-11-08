@@ -29,10 +29,7 @@ import retrofit2.Response
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal open class Api(
-    protected val apiHeader: ApiHeader,
-    protected val endpoints: EndpointBuilder
-) {
+internal open class Api(protected val apiHeader: ApiHeader) {
 
     /**
      * Create Default Headers

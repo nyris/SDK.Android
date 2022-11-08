@@ -30,9 +30,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
  */
 internal class ObjectProposalApi(
     private val objectProposalService: ObjectProposalService,
-    apiHeader: ApiHeader,
-    endpoints: EndpointBuilder
-) : Api(apiHeader, endpoints), IObjectProposalApi {
+    apiHeader: ApiHeader
+) : Api(apiHeader), IObjectProposalApi {
 
     /**
      * {@inheritDoc}
@@ -43,6 +42,6 @@ internal class ObjectProposalApi(
         val body = image.toRequestBody("image/jpg".toMediaTypeOrNull())
 
         return objectProposalService
-            .extractObjects(endpoints.objectProposalUrl, headers, body)
+            .extractObjects(headers, body)
     }
 }

@@ -20,6 +20,7 @@ import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
+import retrofit2.http.Path
 import retrofit2.http.Url
 
 /**
@@ -33,6 +34,6 @@ internal interface SimilarityService {
     /**
      * Http Get By SKU
      */
-    @GET
-    fun getBySku(@Url url: String, @HeaderMap headers: Map<String, String>): Single<ResponseBody>
+    @GET("recommend/v1/{sku}")
+    fun getBySku(@Path("sku") sku: String, @HeaderMap headers: Map<String, String>): Single<ResponseBody>
 }

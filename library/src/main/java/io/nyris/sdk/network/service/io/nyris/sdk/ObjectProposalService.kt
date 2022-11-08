@@ -39,9 +39,8 @@ internal interface ObjectProposalService {
      * @param body the body
      * @return the Single List Object Proposal
      */
-    @POST
+    @POST("find/v1/regions")
     fun extractObjects(
-        @Url url: String,
         @HeaderMap headers: Map<String, String>,
         @Body body: RequestBody
     ): Single<List<ObjectProposal>>

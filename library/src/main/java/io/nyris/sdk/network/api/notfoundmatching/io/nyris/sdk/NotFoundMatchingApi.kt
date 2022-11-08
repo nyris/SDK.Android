@@ -30,8 +30,7 @@ import okhttp3.ResponseBody
 internal class NotFoundMatchingApi(
     private val notFoundMatchingService: NotFoundMatchingService,
     apiHeader: ApiHeader,
-    endpoints: EndpointBuilder
-) : Api(apiHeader, endpoints), INotFoundMatchingApi {
+) : Api(apiHeader), INotFoundMatchingApi {
 
     /**
      * {@inheritDoc}
@@ -39,6 +38,6 @@ internal class NotFoundMatchingApi(
     override fun markAsNotFound(imageRequestId: String): Single<ResponseBody> {
         val headers = createDefaultHeadersMap()
         return notFoundMatchingService
-            .markAsNotFound(endpoints.getNotFoundMatchingUrl(imageRequestId), headers)
+            .markAsNotFound(imageRequestId, headers)
     }
 }
