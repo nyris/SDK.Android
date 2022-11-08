@@ -17,7 +17,6 @@
 buildscript {
     ext.gradleVersion = '7.0.3'
     ext.kotlinVersion = '1.6.0'
-    ext.dexcountVersion = '0.8.2'
     repositories {
         google()
         mavenCentral()
@@ -25,7 +24,6 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$dexcountVersion"
     }
 }
 
@@ -42,7 +40,7 @@ task clean(type: Delete) {
 
 ext {
     // Tools
-    buildToolsVersion = '32.0.0 rc1'
+    buildToolsVersion = '32.0.0'
     compileSdkVersion = 31
     minSdkVersion = 21
     targetSdkVersion = 30

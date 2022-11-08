@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nyris.sdk.android.iml" filepath="$PROJECT_DIR$/nyris.sdk.android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SDK.Android.iml" filepath="$PROJECT_DIR$/.idea/modules/SDK.Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SDK.Android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SDK.Android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SDK.Android.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SDK.Android.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SDK.Android.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SDK.Android.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SDK.Android.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SDK.Android.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/SDK.Android.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/SDK.Android.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/SDK.Android.library.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/library/SDK.Android.library.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/SDK.Android.library.main.iml" filepath="$PROJECT_DIR$/.idea/modules/library/SDK.Android.library.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/SDK.Android.library.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/library/SDK.Android.library.unitTest.iml" />
     </modules>
   </component>
 </project>

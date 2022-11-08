@@ -16,7 +16,6 @@
 
 plugins {
     id 'com.android.library'
-    id 'com.getkeepsafe.dexcount'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'maven-publish'
@@ -184,7 +183,6 @@ dependencies {
 
     // reactive
     api "io.reactivex.rxjava2:rxjava:$rxjava2Version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
 
     //Network
     api "com.squareup.retrofit2:retrofit:$retrofit2Version"

@@ -1,4 +1,4 @@
-group='io.nyris'
+group = 'io.nyris'
 version = gitVersionName
 
 afterEvaluate {

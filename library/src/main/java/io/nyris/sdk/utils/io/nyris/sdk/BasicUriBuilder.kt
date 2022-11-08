@@ -51,6 +51,14 @@ class BasicUriBuilder {
      * @return the uri
      */
     fun build(): String {
+        var url = "$scheme://$authority"
+        listPath.forEach {
+            url += "/$it"
+        }
+        return url
+    }
+
+    fun buildHost(): String {
         var url = "$scheme://$authority/"
         listPath.forEach {
             url += "$it/"

@@ -37,6 +37,7 @@ class OfferResponse : IResponse {
      */
     var headers: Headers? = null
         internal set
+
     /**
      * Get Offer Response Body
      *

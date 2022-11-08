@@ -1,5 +1,11 @@
 package io.nyris.sdk;
 
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -13,12 +19,6 @@ import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 import retrofit2.Response;
-
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * NotFoundMatchingApiTest.java - Unit tests for the implementation of {@link INotFoundMatchingApi}.

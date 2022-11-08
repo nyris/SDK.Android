@@ -36,7 +36,7 @@ ext {
     gitCommitHash = grgit.head().abbreviatedId
 
     if (gitVersionName == null) {
-        gitVersionName="develop-$gitCommitHash"
+        gitVersionName = "develop-$gitCommitHash"
     }
 }
 
