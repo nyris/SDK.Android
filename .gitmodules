@@ -1,6 +1,0 @@
-[submodule "library/src/dev"]
-	path = library/src/dev
-	url = ../nyris.sdk.android.internal.git
-[submodule "library/src/testDev"]
-	path = library/src/testDev
-	url = ../nyris.sdk.android.internal.test.git
