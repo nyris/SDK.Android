@@ -26,5 +26,5 @@ import javax.inject.Qualifier
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 @Qualifier
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-internal annotation class ApiInfo
+@Retention(AnnotationRetention.RUNTIME)
+internal annotation class ApiKeyInfo

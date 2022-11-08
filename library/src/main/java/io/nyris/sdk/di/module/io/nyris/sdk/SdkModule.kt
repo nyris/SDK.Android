@@ -18,6 +18,7 @@ package io.nyris.sdk
 import android.os.Build
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 /**
  * SdkModule.kt - class defines methods which provide singleton dependencies for user agent creation.
@@ -36,6 +37,7 @@ internal class SdkModule {
      */
     @Provides
     @SdkIdInfo
+    @Singleton
     fun provideLibraryId(): String {
         return BuildConfig.LIBRARY_PACKAGE_NAME
     }
@@ -48,6 +50,7 @@ internal class SdkModule {
      */
     @Provides
     @SdkVersionInfo
+    @Singleton
     fun provideSdkVersion(): String {
         return BuildConfig.SDK_VERSION
     }
@@ -60,6 +63,7 @@ internal class SdkModule {
      */
     @Provides
     @GitCommitHashInfo
+    @Singleton
     fun provideGitCommitHash(): String {
         return BuildConfig.GIT_COMMIT_HASH
     }
@@ -72,6 +76,7 @@ internal class SdkModule {
      */
     @Provides
     @AndroidVersionInfo
+    @Singleton
     fun provideAndroidVersion(): String? {
         return Build.VERSION.RELEASE
     }

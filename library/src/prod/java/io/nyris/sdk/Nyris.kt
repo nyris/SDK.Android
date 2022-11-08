@@ -29,8 +29,8 @@ import io.reactivex.disposables.Disposable
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris {
-    private var apiHelper: IApiHelper = ApiHelper(apiKey, isDebug)
+class Nyris private constructor(apiKey: String, config: NyrisConfig) : INyris {
+    private var apiHelper: IApiHelper = ApiHelper(apiKey, config)
 
     /**
      * {@inheritDoc}
@@ -96,6 +96,7 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris {
      */
     companion object {
         private var instances: HashMap<String, INyris> = hashMapOf()
+
         /**
          * Create instances of Nyris SDK
          *
@@ -104,25 +105,15 @@ class Nyris private constructor(apiKey: String, isDebug: Boolean) : INyris {
          * @return the nyris sdk instance
          */
         @JvmStatic
-        fun createInstance(apiKey: String, isDebug: Boolean = false): INyris {
+        @JvmOverloads
+        fun createInstance(apiKey: String, config: NyrisConfig = NyrisConfig()): INyris {
             return if (instances.containsKey(apiKey)) {
                 instances[apiKey] as INyris
             } else {
-                val instance = Nyris(apiKey, isDebug)
+                val instance = Nyris(apiKey, config)
                 instances[apiKey] = instance
                 instance
             }
-        }
-
-        /**
-         * Create instances of Nyris SDK
-         *
-         * @param apiKey the api key
-         * @return the nyris sdk instance
-         */
-        @JvmStatic
-        fun createInstance(apiKey: String): INyris {
-            return createInstance(apiKey, false)
         }
     }
 }

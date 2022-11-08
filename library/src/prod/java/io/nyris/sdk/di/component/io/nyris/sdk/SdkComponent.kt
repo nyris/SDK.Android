@@ -15,6 +15,7 @@
  */
 package io.nyris.sdk
 
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -30,4 +31,15 @@ import javax.inject.Singleton
 @Component(modules = [(SdkModule::class), (ServiceModule::class), (ClientModule::class)])
 internal interface SdkComponent {
     fun inject(apiHelper: ApiHelper)
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun bindApiInfo(@ApiKeyInfo apikey: String): Builder
+
+        @BindsInstance
+        fun bindConfig(config: NyrisConfig): Builder
+
+        fun build(): SdkComponent
+    }
 }
