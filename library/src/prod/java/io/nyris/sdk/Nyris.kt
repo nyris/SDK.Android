@@ -82,6 +82,10 @@ class Nyris private constructor(apiKey: String, config: NyrisConfig) : INyris {
         return apiHelper.similarity()
     }
 
+    override fun feedback(): IFeedbackApi {
+        return apiHelper.feedback()
+    }
+
     /**
      * {@inheritDoc}
      */

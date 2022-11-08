@@ -34,6 +34,7 @@ internal class ApiHelper(apiKey: String, config: NyrisConfig) : IApiHelper {
     private lateinit var notFoundMatching: INotFoundMatchingApi
     private lateinit var textSearch: ITextSearchApi
     private lateinit var similarity: ISimilarityApi
+    private lateinit var feedback: IFeedbackApi
 
     /**
      * Create instance of SdkComponent
@@ -151,5 +152,22 @@ internal class ApiHelper(apiKey: String, config: NyrisConfig) : IApiHelper {
      */
     override fun similarity(): ISimilarityApi {
         return similarity
+    }
+
+    /**
+     * Set Similarity Api
+     * @param feedback the feedback api
+     */
+    @Inject
+    fun setFeedback(feedback: IFeedbackApi) {
+        this.feedback = feedback
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun feedback(): IFeedbackApi {
+        return feedback
     }
 }

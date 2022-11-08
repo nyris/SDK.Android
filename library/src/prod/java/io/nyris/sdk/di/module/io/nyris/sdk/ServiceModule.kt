@@ -93,6 +93,18 @@ internal class ServiceModule {
         retrofit.create(SimilarityService::class.java)
 
     /**
+     * Provide Feedback Service
+     * Used as service to log user feedback {@code service}.
+     *
+     * @param retrofit the retrofit
+     * @return the feedback service
+     */
+    @Provides
+    @Singleton
+    fun provideFeedbackService(retrofit: Retrofit): FeedbackService =
+        retrofit.create(FeedbackService::class.java)
+
+    /**
      * Provide Image Matching Api
      * Used as api to match image byte array.
      *
@@ -201,6 +213,18 @@ internal class ServiceModule {
         config.defaultOutputFormat,
         config.defaultLanguage,
         gson,
+        apiHeader
+    )
+
+    @Provides
+    @Singleton
+    fun provideFeedbackApi(
+        feedbackService: FeedbackService,
+        requestMapper: FeedbackRequestMapper,
+        apiHeader: ApiHeader,
+    ): IFeedbackApi = FeedbackApi(
+        feedbackService,
+        requestMapper,
         apiHeader
     )
 }

@@ -53,6 +53,10 @@ class OfferResponse : IResponse {
      * @return the request id
      */
     fun getRequestId(): String? {
-        return headers!!["X-Matching-Request"]
+        return headers!!["x-matching-request"]
+    }
+
+    fun getSessionId(): String? {
+        return headers!!["x-nyris-session"]
     }
 }

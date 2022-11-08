@@ -7,11 +7,9 @@ class NyrisConfig @JvmOverloads constructor(
     var defaultLanguage: String = DEFAULT_LANGUAGE,
     var networkConnectionTimeOut: Long = NETWORK_CONNECTION_TIMEOUT,
     var httpRetryCount: Int = HTTP_RETRY_COUNT,
-    internal val apiVersion: String = API_VERSION,
 ) {
     internal companion object {
         const val HOST_URL = "https://api.nyris.io/"
-        const val API_VERSION = "v1"
         const val DEFAULT_OUTPUT_FORMAT = "application/offers.complete+json"
         const val DEFAULT_LANGUAGE = "*"
         const val NETWORK_CONNECTION_TIMEOUT = 30L

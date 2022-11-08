@@ -78,4 +78,12 @@ interface IApiHelper {
      * @return the similarity api
      */
     fun similarity(): ISimilarityApi
+
+    /**
+     * Get Similarity Api
+     *
+     * @see ISimilarityApi
+     * @return the similarity api
+     */
+    fun feedback(): IFeedbackApi
 }
