@@ -21,16 +21,15 @@ import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
-import retrofit2.http.Url
 
 /**
- * ObjectProposalService.kt - http interface of Object Proposal Service
+ * RegionsService.kt - http interface of Object Proposal Service
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal interface ObjectProposalService {
+internal interface RegionsService {
     /**
      * Http Post Extract Objects
      *
@@ -39,9 +38,9 @@ internal interface ObjectProposalService {
      * @param body the body
      * @return the Single List Object Proposal
      */
-    @POST("find/v1/regions")
-    fun extractObjects(
+    @POST("find/v2/regions")
+    fun detect(
         @HeaderMap headers: Map<String, String>,
         @Body body: RequestBody
-    ): Single<List<ObjectProposal>>
+    ): Single<ObjectList>
 }

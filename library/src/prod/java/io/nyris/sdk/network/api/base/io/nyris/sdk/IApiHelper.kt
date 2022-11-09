@@ -50,10 +50,10 @@ interface IApiHelper {
     /**
      * Get Object Proposal Api instance
      *
-     * @see IObjectProposalApi
+     * @see IRegionsApi
      * @return the image matching api
      */
-    fun objectProposal(): IObjectProposalApi
+    fun regions(): IRegionsApi
 
     /**
      * Get Not found Api

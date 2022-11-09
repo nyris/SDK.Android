@@ -30,7 +30,7 @@ internal class ApiHelper(apiKey: String, config: NyrisConfig) : IApiHelper {
 
     private lateinit var apiHeader: ApiHeader
     private lateinit var imageMatching: IImageMatchingApi
-    private lateinit var objectProposal: IObjectProposalApi
+    private lateinit var regionsApi: IRegionsApi
     private lateinit var notFoundMatching: INotFoundMatchingApi
     private lateinit var textSearch: ITextSearchApi
     private lateinit var similarity: ISimilarityApi
@@ -91,19 +91,19 @@ internal class ApiHelper(apiKey: String, config: NyrisConfig) : IApiHelper {
     }
 
     /**
-     * Set Object Proposal Api
-     * @param objectProposal the object proposal api
+     * Set region Api
+     * @param regionsApi the region api
      */
     @Inject
-    fun setObjectProposal(objectProposal: IObjectProposalApi) {
-        this.objectProposal = objectProposal
+    fun setRegionApi(regionsApi: IRegionsApi) {
+        this.regionsApi = regionsApi
     }
 
     /**
      * {@inheritDoc}
      */
-    override fun objectProposal(): IObjectProposalApi {
-        return objectProposal
+    override fun regions(): IRegionsApi {
+        return regionsApi
     }
 
     /**

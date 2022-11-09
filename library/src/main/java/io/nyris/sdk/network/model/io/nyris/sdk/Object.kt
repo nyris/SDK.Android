@@ -16,21 +16,47 @@
 
 package io.nyris.sdk
 
-import io.reactivex.Single
+import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
 /**
- * IObjectProposalApi.kt - interface of object proposal api.
+ * ObjectList.kt - class model
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-interface IObjectProposalApi {
-    /**
-     * Extract Objects from Image
-     *
-     * @param image the image byte array
-     * @return the Single List<ObjectProposal>
-     */
-    fun extractObjects(image: ByteArray): Single<List<ObjectProposal>>
+
+@Keep
+data class ObjectList(
+    @SerializedName("regions")
+    val regions: List<Object>? = null
+)
+
+@Keep
+data class Object(
+    @SerializedName("confidence")
+    val confidence: Float = 0.0F,
+
+    @SerializedName("region")
+    val region: Region? = null
+)
+
+@Keep
+data class Region(
+    @SerializedName("left")
+    val left: Int = 0,
+
+    @SerializedName("top")
+    val top: Int = 0,
+
+    @SerializedName("right")
+    val right: Int = 0,
+
+    @SerializedName("bottom")
+    val bottom: Int = 0,
+) {
+    fun width(): Int = right - left
+
+    fun height(): Int = bottom - top
 }

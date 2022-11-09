@@ -53,8 +53,8 @@ internal class ServiceModule {
      */
     @Provides
     @Singleton
-    fun provideObjectProposalService(retrofit: Retrofit): ObjectProposalService =
-        retrofit.create(ObjectProposalService::class.java)
+    fun provideRegionService(retrofit: Retrofit): RegionsService =
+        retrofit.create(RegionsService::class.java)
 
     /**
      * Provide Not Found Matching Service
@@ -136,7 +136,7 @@ internal class ServiceModule {
      * Provide Object Proposal Api
      * Used as api to extract objects from image byte array.
      *
-     * @param objectProposalService the object proposal service
+     * @param regionService the object proposal service
      * @param schedulerProvider the sdk scheduler
      * @param apiHeader the api header
      * @param endpoints the endpoint builder
@@ -144,10 +144,10 @@ internal class ServiceModule {
      */
     @Provides
     @Singleton
-    fun provideObjectProposalApi(
-        objectProposalService: ObjectProposalService,
+    fun provideRegionApi(
+        regionService: RegionsService,
         apiHeader: ApiHeader,
-    ): IObjectProposalApi = ObjectProposalApi(objectProposalService, apiHeader)
+    ): IRegionsApi = RegionsApi(regionService, apiHeader)
 
     /**
      * Provide Not Found Matching Api

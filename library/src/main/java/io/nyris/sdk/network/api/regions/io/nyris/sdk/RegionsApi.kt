@@ -21,27 +21,27 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
- * ObjectProposalApi.kt - class that implement IObjectProposalApi interface.
- * @see IObjectProposalApi
+ * RegionsApi.kt - class that implement IRegionsApi interface.
+ * @see IRegionsApi
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-internal class ObjectProposalApi(
-    private val objectProposalService: ObjectProposalService,
+internal class RegionsApi(
+    private val regionsService: RegionsService,
     apiHeader: ApiHeader
-) : Api(apiHeader), IObjectProposalApi {
+) : Api(apiHeader), IRegionsApi {
 
     /**
      * {@inheritDoc}
      */
-    override fun extractObjects(image: ByteArray): Single<List<ObjectProposal>> {
+    override fun detect(image: ByteArray): Single<ObjectList> {
         val headers = createDefaultHeadersMap()
         headers["Content-Length"] = image.size.toString()
         val body = image.toRequestBody("image/jpg".toMediaTypeOrNull())
 
-        return objectProposalService
-            .extractObjects(headers, body)
+        return regionsService
+            .detect(headers, body)
     }
 }

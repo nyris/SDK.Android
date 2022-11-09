@@ -57,8 +57,8 @@ class Nyris private constructor(apiKey: String, config: NyrisConfig) : INyris {
     /**
      * {@inheritDoc}
      */
-    override fun objectProposal(): IObjectProposalApi {
-        return apiHelper.objectProposal()
+    override fun regions(): IRegionsApi {
+        return apiHelper.regions()
     }
 
     /**

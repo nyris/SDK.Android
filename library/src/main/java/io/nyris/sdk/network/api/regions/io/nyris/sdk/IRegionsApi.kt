@@ -16,23 +16,21 @@
 
 package io.nyris.sdk
 
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import io.reactivex.Single
 
 /**
- * ObjectProposal.kt - class model
+ * IRegionsApi.kt - interface of regions api.
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
-
-@Keep
-class ObjectProposal : Serializable {
-    @SerializedName("confidence")
-    var confidence: Float = 0.toFloat()
-
-    @SerializedName("region")
-    var region: Region? = null
+interface IRegionsApi {
+    /**
+     * Extract Objects from Image
+     *
+     * @param image the image byte array
+     * @return the Single ObjectList
+     */
+    fun detect(image: ByteArray): Single<ObjectList>
 }

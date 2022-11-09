@@ -24,24 +24,24 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 
 /**
- * ObjectProposalApiTest.java - Unit tests for the implementation of {@link IObjectProposalApi}.
+ * RegionsApiTest.java - Unit tests for the implementation of {@link IRegionsApi}.
  *
  * @author Sidali Mellouk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 
-public class ObjectProposalApiTest extends BaseTest {
+public class RegionsApiTest extends BaseTest {
     private final int OBJECTS_SIZE = 10;
     @Mock
-    private ObjectProposalService objectProposalService;
-    private ObjectProposalApi objectProposalApi;
+    private RegionsService objectProposalService;
+    private RegionsApi objectProposalApi;
 
     @Before
     @Override
     public void setUp() {
         super.setUp();
-        objectProposalApi = new ObjectProposalApi(
+        objectProposalApi = new RegionsApi(
                 objectProposalService,
                 sdkScheduler,
                 apiHeader,
@@ -49,10 +49,10 @@ public class ObjectProposalApiTest extends BaseTest {
         );
     }
 
-    private List<ObjectProposal> getObjectProposalList() {
-        List<ObjectProposal> list = new ArrayList<>();
+    private List<Object> getObjectProposalList() {
+        List<Object> list = new ArrayList<>();
         for (int i = 0; i < OBJECTS_SIZE; i++) {
-            list.add(new ObjectProposal());
+            list.add(new Object());
         }
         return list;
     }
@@ -60,18 +60,18 @@ public class ObjectProposalApiTest extends BaseTest {
     @Test
     public void extractObjects_shouldReturnOfferResponseBody() {
         // Get an instance of List of ObjectProposal
-        List<ObjectProposal> objectProposals = getObjectProposalList();
-        when(objectProposalService.extractObjects(anyString(), anyMap(), any()))
+        List<Object> objectProposals = getObjectProposalList();
+        when(objectProposalService.detect(anyString(), anyMap(), any()))
                 .thenReturn(Single.just(objectProposals));
 
         // When Object Proposal Api is asked to extract object from image byte array
-        TestObserver<List<ObjectProposal>> testObserver = objectProposalApi
-                .extractObjects(new byte[]{})
+        TestObserver<List<Object>> testObserver = objectProposalApi
+                .detect(new byte[]{})
                 .test();
 
         // Verify extractObjects method called once
         verify(objectProposalService, times(1))
-                .extractObjects(anyString(), anyMap(), any());
+                .detect(anyString(), anyMap(), any());
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -89,12 +89,12 @@ public class ObjectProposalApiTest extends BaseTest {
         );
 
         // Get an instance of HttpException
-        when(objectProposalService.extractObjects(anyString(), anyMap(), any()))
+        when(objectProposalService.detect(anyString(), anyMap(), any()))
                 .thenReturn(Single.error(httpException));
 
         // When Object Proposal Api is asked to extract object from image byte array
-        TestObserver<List<ObjectProposal>> testObserver = objectProposalApi
-                .extractObjects(new byte[]{})
+        TestObserver<List<Object>> testObserver = objectProposalApi
+                .detect(new byte[]{})
                 .test();
 
         // Then
@@ -104,12 +104,12 @@ public class ObjectProposalApiTest extends BaseTest {
     @Test
     public void extractObjects_shouldTerminatedWithIOError() {
         // Get an instance of IOException
-        when(objectProposalService.extractObjects(anyString(), anyMap(), any()))
+        when(objectProposalService.detect(anyString(), anyMap(), any()))
                 .thenReturn(Single.error(new IOException()));
 
         // When Object Proposal Api is asked to extract object from image byte array
-        TestObserver<List<ObjectProposal>> testObserver = objectProposalApi
-                .extractObjects(new byte[]{})
+        TestObserver<List<Object>> testObserver = objectProposalApi
+                .detect(new byte[]{})
                 .test();
 
         // Then
