@@ -3,6 +3,7 @@ package io.nyris.sdk.app
 import android.app.Application
 import io.nyris.sdk.INyris
 import io.nyris.sdk.Nyris
+import io.nyris.sdk.NyrisConfig
 
 /**
  *
@@ -12,10 +13,8 @@ import io.nyris.sdk.Nyris
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
 class DemoApp : Application() {
-    lateinit var nyris: INyris
-
-    override fun onCreate() {
-        super.onCreate()
-        nyris = Nyris.createInstance(BuildConfig.API_KEY, BuildConfig.DEBUG)
-    }
+    val nyris = Nyris.createInstance(
+        apiKey = BuildConfig.API_KEY,
+        config = NyrisConfig(isDebug = true)
+    )
 }
