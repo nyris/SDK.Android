@@ -16,7 +16,6 @@
 
 package io.nyris.sdk
 
-import androidx.annotation.FloatRange
 import com.google.gson.Gson
 import io.reactivex.Single
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -102,8 +101,8 @@ internal class TextSearchApi(
     /**
      * {@inheritDoc}
      */
-    override fun searchOffers(keyword: String): Single<OfferResponseBody> {
-        return searchOffers(keyword, OfferResponseBody::class.java)
+    override fun searchOffers(keyword: String): Single<OfferResponse> {
+        return searchOffers(keyword, OfferResponse::class.java)
     }
 
     /**

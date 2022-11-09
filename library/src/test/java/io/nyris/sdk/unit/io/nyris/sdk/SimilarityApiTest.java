@@ -56,9 +56,9 @@ public class SimilarityApiTest extends BaseTest {
     @Test
     public void getBySku_shouldReturnOfferResponseBody() {
         // Get an instance of OfferResponseBody
-        OfferResponseBody offerResponseBody = getOfferResponseBody();
+        OfferResponse offerResponse = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(
-                gson.toJson(offerResponseBody, OfferResponseBody.class),
+                gson.toJson(offerResponse, OfferResponse.class),
                 MediaType.parse("application/json")
         );
 
@@ -66,7 +66,7 @@ public class SimilarityApiTest extends BaseTest {
                 .thenReturn(Single.just(responseBody));
 
         // When Similarity Api is asked to give similar offers based on sku
-        TestObserver<OfferResponseBody> testObserver = similarityApi
+        TestObserver<OfferResponse> testObserver = similarityApi
                 .getBySku(sku)
                 .test();
 
@@ -83,9 +83,9 @@ public class SimilarityApiTest extends BaseTest {
     @Test
     public void getBySku_shouldReturnJsonResponseBody() {
         // Get an instance of OfferResponseBody
-        OfferResponseBody offerResponseBody = getOfferResponseBody();
+        OfferResponse offerResponse = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(
-                gson.toJson(offerResponseBody, OfferResponseBody.class),
+                gson.toJson(offerResponse, OfferResponse.class),
                 MediaType.parse("application/json")
         );
 
@@ -104,7 +104,7 @@ public class SimilarityApiTest extends BaseTest {
         testObserver.assertComplete();
         testObserver.assertNoErrors();
         testObserver.assertValue(Objects::nonNull);
-        testObserver.assertValue(r -> Objects.equals(r.getJson(), gson.toJson(offerResponseBody)));
+        testObserver.assertValue(r -> Objects.equals(r.getJson(), gson.toJson(offerResponse)));
     }
 
     @Test

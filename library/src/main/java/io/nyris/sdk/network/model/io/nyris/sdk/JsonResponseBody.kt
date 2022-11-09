@@ -28,12 +28,6 @@ import androidx.annotation.Keep
  */
 
 @Keep
-class JsonResponseBody : IResponse {
-    /**
-     * Get JSON
-     *
-     * @return the json
-     */
-    var json: String? = null
-        internal set
-}
+class JsonResponseBody(
+    val json: String? = null
+) : IResponse

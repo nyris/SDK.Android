@@ -53,8 +53,8 @@ internal class SimilarityApi(
     /**
      * {@inheritDoc}
      */
-    override fun getBySku(sku: String): Single<OfferResponseBody> {
-        return getBySku(sku, OfferResponseBody::class.java)
+    override fun getBySku(sku: String): Single<OfferResponse> {
+        return getBySku(sku, OfferResponse::class.java)
     }
 
     /**

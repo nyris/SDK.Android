@@ -17,10 +17,10 @@
 package io.nyris.sdk
 
 import androidx.annotation.Keep
-import okhttp3.Headers
+import com.google.gson.annotations.SerializedName
 
 /**
- * OfferResponse.kt - class model implement IResponse
+ * OfferResponseBody.kt - class model implement IResponse
  * @see IResponse
  *
  * @author Sidali Mellouk
@@ -29,34 +29,89 @@ import okhttp3.Headers
  */
 
 @Keep
-class OfferResponse : IResponse {
-    /**
-     * Get Headers
-     *
-     * @return the headers
-     */
-    var headers: Headers? = null
-        internal set
+data class OfferResponse(
+    @SerializedName("id")
+    val requestId: String? = null,
 
-    /**
-     * Get Offer Response Body
-     *
-     * @see OfferResponseBody
-     * @return the offer response body
-     */
-    var body: OfferResponseBody? = null
-        internal set
+    @SerializedName("session")
+    val sessionId: String? = null,
 
-    /**
-     * Get Request Id
-     *
-     * @return the request id
-     */
-    fun getRequestId(): String? {
-        return headers!!["x-matching-request"]
-    }
+    @SerializedName("predicted_category")
+    val predictedCategories: Map<String, Float> = mapOf(),
 
-    fun getSessionId(): String? {
-        return headers!!["x-nyris-session"]
-    }
-}
+    @SerializedName("results")
+    val offers: List<Offer> = emptyList(),
+) : IResponse
+
+@Keep
+data class Offer(
+    @SerializedName("oid")
+    val id: String? = null,
+
+    @SerializedName("title")
+    val title: String? = null,
+
+    @SerializedName("descriptionShort")
+    val description: String? = null,
+
+    @SerializedName("descriptionLong")
+    val descriptionLong: String? = null,
+
+    @SerializedName("language")
+    val language: String? = null,
+
+    @SerializedName("brand")
+    val brand: String? = null,
+
+    @SerializedName("catalogNumbers")
+    val catalogNumbers: List<String>? = null,
+
+    @SerializedName("customIds")
+    val customIds: Map<String, String>? = null,
+
+    @SerializedName("keywords")
+    val keywords: List<String>? = null,
+
+    @SerializedName("categories")
+    val categories: List<String>? = null,
+
+    @SerializedName("availability")
+    val availability: String? = null,
+
+    @SerializedName("feedId")
+    val feedId: String? = null,
+
+    @SerializedName("groupId")
+    val groupId: String? = null,
+
+    @SerializedName("price")
+    val priceStr: String? = null,
+
+    @SerializedName("salePrice")
+    val salePrice: String? = null,
+
+    @SerializedName("links")
+    val links: Links? = null,
+
+    @SerializedName("images")
+    val images: List<String>? = null,
+
+    @SerializedName("metadata")
+    val metadata: String? = null,
+
+    @SerializedName("sku")
+    val sku: String? = null,
+
+    @SerializedName("score")
+    val score: Float = 0.0F
+)
+
+@Keep
+data class Links (
+    @SerializedName("main")
+    val main: String? = null,
+
+    @SerializedName("mobile")
+    val mobile: String? = null
+)
+

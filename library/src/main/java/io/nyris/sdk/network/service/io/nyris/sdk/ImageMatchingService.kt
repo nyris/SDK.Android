@@ -23,7 +23,6 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
-import retrofit2.http.Url
 
 /**
  * ImageMatchingService.kt - http interface of Image Matching Service
@@ -59,7 +58,7 @@ internal interface ImageMatchingService {
     fun matchAndGetRequestId(
         @HeaderMap headers: Map<String, String>,
         @Body body: RequestBody
-    ): Single<Response<OfferResponseBody>>
+    ): Single<Response<OfferResponse>>
 
     /**
      * Http Post Match image byte Array
@@ -73,7 +72,7 @@ internal interface ImageMatchingService {
     fun semanticSearch(
         @HeaderMap headers: Map<String, String>,
         @Body body: RequestBody
-    ): Single<Response<OfferResponseBody>>
+    ): Single<Response<OfferResponse>>
 
     /**
      * Http Post Match image byte Array

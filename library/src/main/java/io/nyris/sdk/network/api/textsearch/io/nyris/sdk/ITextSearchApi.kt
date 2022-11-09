@@ -16,7 +16,6 @@
 
 package io.nyris.sdk
 
-import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
 import io.reactivex.Single
 
@@ -69,7 +68,7 @@ interface ITextSearchApi {
      * @param keyword the keyword
      * @return the Single{Observable} OfferResponseBody
      */
-    fun searchOffers(keyword: String): Single<OfferResponseBody>
+    fun searchOffers(keyword: String): Single<OfferResponse>
 
     /**
      * Generic Search Offers

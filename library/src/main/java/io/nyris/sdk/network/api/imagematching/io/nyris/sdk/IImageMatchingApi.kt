@@ -117,7 +117,7 @@ interface IImageMatchingApi {
      * @param image the image byte array
      * @return the Single{Observable} OfferResponseBody
      */
-    fun match(image: ByteArray): Single<OfferResponseBody>
+    fun match(image: ByteArray): Single<OfferResponse>
 
     /**
      * Match image float array
@@ -127,7 +127,7 @@ interface IImageMatchingApi {
      * @param image the image float array
      * @return the Single{Observable} OfferResponseBody
      */
-    fun match(image: FloatArray): Single<OfferResponseBody>
+    fun match(image: FloatArray): Single<OfferResponse>
 
     /**
      * Generic Match image byte array

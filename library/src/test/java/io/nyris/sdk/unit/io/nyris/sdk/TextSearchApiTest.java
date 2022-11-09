@@ -57,9 +57,9 @@ public class TextSearchApiTest extends BaseTest {
     @Test
     public void searchOffers_shouldReturnOfferResponseBody() {
         // Get an instance of OfferResponseBody
-        OfferResponseBody offerResponseBody = getOfferResponseBody();
+        OfferResponse offerResponse = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(
-                gson.toJson(offerResponseBody, OfferResponseBody.class),
+                gson.toJson(offerResponse, OfferResponse.class),
                 MediaType.parse("application/json")
         );
 
@@ -67,7 +67,7 @@ public class TextSearchApiTest extends BaseTest {
                 .thenReturn(Single.just(responseBody));
 
         // When Text Search Api is asked to search offers using keyword
-        TestObserver<OfferResponseBody> testObserver = textSearchApi
+        TestObserver<OfferResponse> testObserver = textSearchApi
                 .searchOffers(keyword)
                 .test();
 
@@ -84,9 +84,9 @@ public class TextSearchApiTest extends BaseTest {
     @Test
     public void searchOffers_shouldReturnJsonResponseBody() {
         // Get an instance of OfferResponseBody
-        OfferResponseBody offerResponseBody = getOfferResponseBody();
+        OfferResponse offerResponse = getOfferResponseBody();
         ResponseBody responseBody = ResponseBody.create(
-                gson.toJson(offerResponseBody, OfferResponseBody.class),
+                gson.toJson(offerResponse, OfferResponse.class),
                 MediaType.parse("application/json")
         );
 
@@ -105,7 +105,7 @@ public class TextSearchApiTest extends BaseTest {
         testObserver.assertComplete();
         testObserver.assertNoErrors();
         testObserver.assertValue(Objects::nonNull);
-        testObserver.assertValue(r -> Objects.equals(r.getJson(), gson.toJson(offerResponseBody)));
+        testObserver.assertValue(r -> Objects.equals(r.getJson(), gson.toJson(offerResponse)));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class TextSearchApiTest extends BaseTest {
                 .thenReturn(Single.error(httpException));
 
         // When Text Search Api is asked to search offers using keyword
-        TestObserver<OfferResponseBody> testObserver = textSearchApi
+        TestObserver<OfferResponse> testObserver = textSearchApi
                 .searchOffers(keyword)
                 .test();
 
@@ -137,7 +137,7 @@ public class TextSearchApiTest extends BaseTest {
                 .thenReturn(Single.error(new IOException()));
 
         // When Text Search Api is asked to search offers using keyword
-        TestObserver<OfferResponseBody> testObserver = textSearchApi
+        TestObserver<OfferResponse> testObserver = textSearchApi
                 .searchOffers(keyword)
                 .test();
 

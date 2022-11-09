@@ -208,15 +208,15 @@ internal class ImageMatchingApi(
     /**
      * {@inheritDoc}
      */
-    override fun match(image: ByteArray): Single<OfferResponseBody> {
-        return match(image, OfferResponseBody::class.java)
+    override fun match(image: ByteArray): Single<OfferResponse> {
+        return match(image, OfferResponse::class.java)
     }
 
     /**
      * {@inheritDoc}
      */
-    override fun match(image: FloatArray): Single<OfferResponseBody> {
-        return match(image, OfferResponseBody::class.java)
+    override fun match(image: FloatArray): Single<OfferResponse> {
+        return match(image, OfferResponse::class.java)
     }
 
     private fun encodeFloatArray(floatArray: FloatArray): String {
@@ -255,15 +255,9 @@ internal class ImageMatchingApi(
 
         val headers = buildHeaders(image.size)
         val body = image.toRequestBody("image/jpg".toMediaTypeOrNull())
-        val typeOfferResponse = OfferResponse::class.java
 
-        return if (clazz.name == typeOfferResponse.name) {
-            val obs1 = imageMatchingService.matchAndGetRequestId(headers, body)
-            convertResponseBasedOnType(image, obs1)
-        } else {
-            val obs1 = imageMatchingService.match(headers, body)
-            convertResponseBodyBasedOnType(image, obs1, clazz, gson)
-        }
+        val obs1 = imageMatchingService.match(headers, body)
+        return convertResponseBodyBasedOnType(image, obs1, clazz, gson)
     }
 
     /**
@@ -296,14 +290,9 @@ internal class ImageMatchingApi(
         val json = "{\"b64\":\"$b64\"}"
         val headers = buildHeaders(json.length)
         val body = json.toRequestBody("application/json".toMediaTypeOrNull())
-        val typeOfferResponse = OfferResponse::class.java
 
-        return if (clazz.name == typeOfferResponse.name) {
-            val obs1 = imageMatchingService.semanticSearch(headers, body)
-            convertResponseBasedOnType(image, obs1)
-        } else {
-            val obs1 = imageMatchingService.semanticSearch2(headers, body)
-            convertResponseBodyBasedOnType(image, obs1, clazz, gson)
-        }
+
+        val obs1 = imageMatchingService.semanticSearch2(headers, body)
+        return convertResponseBodyBasedOnType(image, obs1, clazz, gson)
     }
 }

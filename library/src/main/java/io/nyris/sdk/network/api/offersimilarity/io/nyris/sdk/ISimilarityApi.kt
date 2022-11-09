@@ -50,7 +50,7 @@ interface ISimilarityApi {
      * @param sku the offer sku
      * @return the Single{Observable} OfferResponseBody
      */
-    fun getBySku(sku: String): Single<OfferResponseBody>
+    fun getBySku(sku: String): Single<OfferResponse>
 
     /**
      * Generic Get Similar offer by sku

@@ -50,15 +50,15 @@ public class BaseTest {
      * Get Offer Response Body : Get dummy offerResponse
      *
      * @return OfferResponseBody instance
-     * @see OfferResponseBody
+     * @see OfferResponse
      */
-    OfferResponseBody getOfferResponseBody() {
-        OfferResponseBody offerResponseBody = new OfferResponseBody();
-        offerResponseBody.offers = new ArrayList<>();
+    OfferResponse getOfferResponseBody() {
+        OfferResponse offerResponse = new OfferResponse();
+        offerResponse.offers = new ArrayList<>();
         for (int i = 0; i < OFFERS_SIZE; i++) {
-            offerResponseBody.getOffers().add(new Offer());
+            offerResponse.getOffers().add(new Offer());
         }
-        return offerResponseBody;
+        return offerResponse;
     }
 
 }

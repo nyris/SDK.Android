@@ -55,10 +55,10 @@ public class ImageMatchingApiTest extends BaseTest {
     @Test
     public void match_shouldReturnCorrectOfferResponseBody() {
         // Get an instance of OfferResponseBody
-        OfferResponseBody offerResponseBody = getOfferResponseBody();
+        OfferResponse offerResponse = getOfferResponseBody();
         ResponseBody responseBody =
                 ResponseBody.create(
-                        gson.toJson(offerResponseBody, OfferResponseBody.class),
+                        gson.toJson(offerResponse, OfferResponse.class),
                         MediaType.parse("application/json")
                 );
 
@@ -66,7 +66,7 @@ public class ImageMatchingApiTest extends BaseTest {
                 .thenReturn(Single.just(responseBody));
 
         // When Image Matching Api is asked to match a image byte array
-        TestObserver<OfferResponseBody> testObserver = imageMatchingApi.match(new byte[]{}).test();
+        TestObserver<OfferResponse> testObserver = imageMatchingApi.match(new byte[]{}).test();
 
         // Verify match method called once
         verify(imageMatchingService, times(1))
@@ -86,10 +86,10 @@ public class ImageMatchingApiTest extends BaseTest {
     @Test
     public void match_shouldReturnCorrectJsonResponseBody() {
         // Get an instance of OfferResponseBody
-        OfferResponseBody offerResponseBody = getOfferResponseBody();
+        OfferResponse offerResponse = getOfferResponseBody();
         ResponseBody responseBody =
                 ResponseBody.create(
-                        gson.toJson(offerResponseBody, OfferResponseBody.class),
+                        gson.toJson(offerResponse, OfferResponse.class),
                         MediaType.parse("application/json")
                 );
 
@@ -114,13 +114,13 @@ public class ImageMatchingApiTest extends BaseTest {
         testObserver.assertNoErrors();
         testObserver.assertValue(Objects::nonNull);
         // Assert the returned json string is the same of mocked offers
-        testObserver.assertValue(r -> Objects.equals(r.getJson(), gson.toJson(offerResponseBody)));
+        testObserver.assertValue(r -> Objects.equals(r.getJson(), gson.toJson(offerResponse)));
     }
 
     @Test
     public void match_shouldReturnCorrectOfferResponse() {
         // Get an instance of OfferResponseBody
-        Response<OfferResponseBody> response = Response.success(getOfferResponseBody());
+        Response<OfferResponse> response = Response.success(getOfferResponseBody());
         when(imageMatchingService.matchAndGetRequestId(anyString(), anyMap(), any()))
                 .thenReturn(Single.just(response));
 
@@ -160,7 +160,7 @@ public class ImageMatchingApiTest extends BaseTest {
                 .thenReturn(Single.error(httpException));
 
         // When Image Matching Api is asked to match an image byte array
-        TestObserver<OfferResponseBody> testObserver = imageMatchingApi.match(new byte[]{}).test();
+        TestObserver<OfferResponse> testObserver = imageMatchingApi.match(new byte[]{}).test();
 
         // Then
         testObserver.assertError(HttpException.class);
@@ -173,7 +173,7 @@ public class ImageMatchingApiTest extends BaseTest {
                 .thenReturn(Single.error(new IOException()));
 
         // When Image Matching Api is asked to match an image byte array
-        TestObserver<OfferResponseBody> testObserver = imageMatchingApi
+        TestObserver<OfferResponse> testObserver = imageMatchingApi
                 .match(new byte[]{})
                 .test();
 

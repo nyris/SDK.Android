@@ -20,7 +20,6 @@ import android.annotation.SuppressLint
 import com.google.gson.Gson
 import io.reactivex.Single
 import okhttp3.ResponseBody
-import retrofit2.Response
 
 /**
  * Api.kt - class define common methods for child extended classes.
@@ -101,50 +100,14 @@ internal open class Api(protected val apiHeader: ApiHeader) {
         return Single
             .zip(obs1, obs2) { responseBody: ResponseBody, _: Z ->
                 val strResponse = responseBody.string()
-                val typeOfferResponseBody = OfferResponseBody::class.java
-                if (typeOfferResponseBody.name == clazz.name) {
-                    val offerResponse = gson.fromJson(strResponse, OfferResponseBody::class.java)
+                val typeOfferResponse = OfferResponse::class.java
+                if (typeOfferResponse.name == clazz.name) {
+                    val offerResponse = gson.fromJson(strResponse, OfferResponse::class.java)
                     offerResponse as T
                 } else {
-                    val jsonResponse = JsonResponseBody()
-                    jsonResponse.json = strResponse
+                    val jsonResponse = JsonResponseBody(strResponse)
                     jsonResponse as T
                 }
-            }
-    }
-
-    /**
-     * Convert Response Based On Type
-     * This generic method convert Response<OfferResponseBody> to IResponse. this method will zip
-     * singles into one single and return offerResponse object.
-     *
-     * @param id the id
-     * @param obs1 the single response offer body
-     *
-     * @see IResponse
-     * @see OfferResponse
-     * @see JsonResponseBody
-     *
-     * @return the generic single
-     */
-    @SuppressLint("CheckResult")
-    @Suppress("UNCHECKED_CAST")
-    fun <T, Z> convertResponseBasedOnType(
-        id: Z?,
-        obs1: Single<Response<OfferResponseBody>>
-    ): Single<T> {
-        val obs2 = Single.just(id)
-
-        return Single
-            .zip(
-                obs1,
-                obs2
-            ) { response: Response<OfferResponseBody>, _: Z ->
-                //For the moment one class handling
-                val offerResponse = OfferResponse()
-                offerResponse.headers = response.headers()
-                offerResponse.body = response.body()
-                offerResponse as T
             }
     }
 }
