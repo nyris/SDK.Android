@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.6 - 09.11.2022
+### Added 
+* Feedback api implementation 
+* Config that allows to config the sdk based on URLS, RETRY, ...
+* Migration of the matching api v2
+
+### Updated 
+* Library DI setup 
+* Gradle dependencies
+* AGP
+* README
+
+### Removed 
+* Old deprecated code
+* Removed old implementation of the object proposals 
+* URL builders
+
 ## 1.5 - 13.09.2018
 ### Added
 - xOptions feature to image and text search

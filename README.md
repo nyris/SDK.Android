@@ -36,6 +36,7 @@ We offer :
 * Manual matching
 * Text Search
 * Similarity search by SKU
+* Feedback API
 
 Requirements
 ----- 
@@ -43,6 +44,7 @@ Requirements
 * Images in **JPEG** format
 * The minimum dimensions of the image are `512x512 px`
 * The maximum size of the image is less than or equal to `500 KB` 
+* RxJava and RxAndroid
 
 Installation
 -----
@@ -57,6 +59,7 @@ repositories {
 
 dependencies {
     implementation 'io.nyris:sdk:1.x.x'
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
     implementation "android.arch.lifecycle:extensions:1.x.x" //Optional
 }
 ```
@@ -71,37 +74,19 @@ Get Started
 * [Extract objects from your image](#extract-objects-from-your-image)
 * [Mark sent image as not found](#mark-sent-image-as-not-found)
 * [Text Match Search](#text-match-search)
-* [Dex Count Methods Info](#dex-count-methods-info)
+* [Send user feedback](#send-user-feedback)
 
 ### Get instance 
 First, initialize an instance of `INyris` with your API Key :
  
-`java`
-```java
-class DemoApp{
-    private INyris nyris;
-    @Override
-    public onCreate(){
-        nyris = Nyris.createInstance("YOUR_API_KEY");
-        // OR
-        nyris = Nyris.createInstance("YOUR_API_KEY", /*Enable debug output*/true);
-    }
-    
-    public INyris getNyrisInstance(){
-        return nyris;
-    }
-}
-```
-
-`kotlin`
 ```kotlin
 class DemoApp : Application(){
     private var nyris : INyris    
     override fun onCreate() {
         super.onCreate()
-        nyris = Nyris.createInstance(BuildConfig.API_KEY, true)
+        nyris = Nyris.createInstance(BuildConfig.API_KEY)
         // OR
-        nyris = Nyris.createInstance("YOUR_API_KEY", /* Enable debug output */true)
+        nyris = Nyris.createInstance("YOUR_API_KEY", NyrisConfig(isDebug = true))
     }
 }
 ```
@@ -109,7 +94,6 @@ class DemoApp : Application(){
 You can easily free all the created instances by adding `nyris` to the lifecyle of your main activity
 or by calling `destroy()` of the sdk
 
-`kotlin`
 ```kotlin
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,35 +118,13 @@ dependencies {
 ```
 
 ### Match your first image 
-#### Basic way to match an image : 
-
-`java`
-```java
-    byte[] imageByteArray = /*Your byte array*/;
-    nyris
-        .imageMatching()
-        .match(imageByteArray)
-        .subscribe(offerResponseBody -> {   
-            // Handle your response
-            List<Offer> offers = offerResponseBody.offers
-        }, throwable -> {
-            if(throwable instanceof HttpException){
-                ...
-            }else if(throwable instanceof IOException){
-                ...
-            }else {
-                // Unknown
-            }
-        });
-```
-
-`kotlin`
+#### Basic way to match an image :
 ```kotlin
     val imageByteArray : ByteArray = /*Your byte array*/
     nyris
         .imageMatching()
         .match(imageByteArray)
-        .subscribe({/*it:OfferResponseBody*/        
+        .subscribe({/*it:OfferResponse*/        
             // Handle your response
             val offers = it.offers
             
@@ -183,7 +145,6 @@ dependencies {
 
 #### Advanced way to match an image : 
 
-`kotlin`
 ```kotlin
     //For more details about available feed attributes please check our documentation : http://docs.nyris.io/#available-feed-attributes.
     val imageByteArray : ByteArray = /* Your byte array */
@@ -213,7 +174,7 @@ dependencies {
         })
         .limit(10) // Limit returned offers
         .match(imageTestBytes)
-        .subscribe({/* it:OfferResponseBody */
+        .subscribe({/* it:OfferResponse */
             // Handle your response
             val offers = it.offers
             
@@ -221,11 +182,10 @@ dependencies {
             ...
         })
 ```
-The response is an object of type `OfferResponseBody` that contains list of `offers`. 
+The response is an object of type `OfferResponse` that contains list of `offers`. 
 
 * If you specified a custom output format, you should use this call to get response as `JSON` format :
 
-`kotlin`
 ```kotlin
     val imageByteArray : ByteArray = /*Your byte array*/
     nyris
@@ -241,26 +201,24 @@ The response is an object of type `OfferResponseBody` that contains list of `off
 ```
 
 ### Extract objects from your image 
-Extract objects from an image
+find objects in an image
 
-`kotlin`
 ```kotlin
     nyris
         .objectProposal()
-        .extractObjects(imageByteArray)
-        .subscribe({/* it:List<ObjectProposal> */
+        .regions(imageByteArray)
+        .subscribe({/* it:ObjectList */
             // Handle your response
             val objects = it
         },{/* it:Throwable */
             ...
         })
 ```
-Returned response is a List of ObjectProposal. 
+Returned response is a List of objects. 
 
 The extracted object has:
 * `confidence` is the probability of the top item. Value range between : `0-1`.
 * `region` is a Bounding box. It represents the location and the size of the object in the sent image. 
-
 
 ### Mark sent image as not found
 It may happen that our service can't recognize or match an image. This is why we provide you a service to notify us
@@ -268,14 +226,13 @@ about the unrecognized image.
 
 Before you mark an image as not found, you will need to extract the `requestId`. 
 
-`kotlin`
 ```kotlin   
     nyris
         .imageMatching()
-        .match<OfferResponse>(imageByteArray, OfferResponse::class.java)
+        .match<OfferResponse>(imageByteArray)
         .subscribe({/* it:OfferResponse */
             // Handle your response
-            requestId = it.getRequestId()
+            requestId = it.requestId
             
         },{/* it:Throwable */
             ...
@@ -284,7 +241,6 @@ Before you mark an image as not found, you will need to extract the `requestId`.
 
 After getting the `requestId` you can mark the image as not found. 
 
-`kotlin`
 ```kotlin
     nyris
         .notFoundMatching()
@@ -303,7 +259,6 @@ you can use the text search service the same way as [image matching service](#ma
 
 #### Basic way to search : 
 
-`kotlin`
 ```kotlin
     nyris
         .textSearch()
@@ -319,7 +274,6 @@ you can use the text search service the same way as [image matching service](#ma
 
 #### Advanced way to search : 
 
-`kotlin`
 ```kotlin
     nyris
         .textSearch()
@@ -340,13 +294,84 @@ you can use the text search service the same way as [image matching service](#ma
         })
 ```
 
-### Dex Count Methods Info
-The dex count for the SDK is around 580 methods which mean around 1% of 64k methods Limit.  
+### Send user feedback
 
-    Total methods in library: 652 (0.99% used)
-    Total fields in library:  265 (0.40% used)
-    Total classes in library: 136 (0.21% used)
+Before you send a feedback event, you will need to get the `requestId` and the `sessionId`.
 
+```kotlin   
+    nyris
+        .imageMatching()
+        .match<OfferResponse>(imageByteArray)
+        .subscribe({/* it:OfferResponse */
+            // Handle your response
+            requestId = it.requestId
+            sessionId = it.sessionId
+            
+        },{/* it:Throwable */
+            ...
+        })
+```
+#### Send click event
+```kotlin
+    nyris
+        .feedback()
+        .send(
+            Event.Click(
+                requestId = "REQUEST_ID",
+                sessionId = "SESSION_ID",
+                poductIds = listof("1","2","3"), //A list of string values, containing the Product IDs
+                position = listof(0,2) // A list of int values describing the zero-based index of the result returned by our Find API.
+            )
+        )
+        .subscribe({}, {}) //Completable
+```
+
+### Send Conversion event
+```kotlin
+    nyris
+        .feedback()
+        .send(
+            Event.Conversion(
+                requestId = "REQUEST_ID",
+                sessionId = "SESSION_ID",
+                poductIds = listof("1","2","3"), //A list of string values, containing the Product IDs
+                position = listof(0,2) // A list of int values describing the zero-based index of the result returned by our Find API.
+            )
+        )
+        .subscribe({}, {}) //Completable
+```
+
+### Send feedback event
+```kotlin
+    nyris
+        .feedback()
+        .send(
+            Event.Feedback(
+                requestId = "REQUEST_ID",
+                sessionId = "SESSION_ID",
+                success = true, //A boolean resembling general business success of a result.
+                comment = "a comment" // An optional string containing verbatim user feedback.
+            )
+        )
+        .subscribe({}, {}) //Completable
+```
+
+### Send region event
+```kotlin
+    nyris
+        .feedback()
+        .send(
+            Event.Region(
+                requestId = "REQUEST_ID",
+                sessionId = "SESSION_ID",
+                lefy = 1, // The left coordinate of the region as a fraction of the image width (range 0..1 ).
+                top = 1, // The top coordinate of the region as a fraction of the image height (range 0..1 ).
+                width = 1, // The width of the region as a fraction of the image width (range 0..1 ). 
+                height = 1 // The height of the region as a fraction of the image height (range 0..1 ).
+            )
+        )
+        .subscribe({}, {}) //Completable
+```
 License
 =======
     Copyright 2018 nyris GmbH

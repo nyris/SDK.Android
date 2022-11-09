@@ -30,7 +30,7 @@ sealed class Event(
         requestId: String,
         sessionId: String,
         val success: Boolean,
-        val comment: String = ""
+        val comment: String? = null
     ) : Event(requestId, sessionId, System.currentTimeMillis())
 
     @Keep

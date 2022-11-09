@@ -37,7 +37,7 @@ internal class FeedbackEventDto(
     @SerializedName("success")
     val success: Boolean,
     @SerializedName("comment")
-    val comment: String
+    val comment: String?
 ) : EventDto()
 
 internal class RegionEventDto(
