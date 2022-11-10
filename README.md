@@ -58,7 +58,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.nyris:sdk:1.x.x'
+    implementation 'io.nyris:sdk:1.6.0'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
     implementation "android.arch.lifecycle:extensions:1.x.x" //Optional
 }
