@@ -42,6 +42,7 @@ android {
             dimension 'environment'
         }
     }
+    namespace 'io.nyris.sdk.app'
 }
 
 dependencies {

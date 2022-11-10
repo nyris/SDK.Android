@@ -51,8 +51,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode gitVersionCode
-        versionName gitVersionName
     }
 
 
@@ -141,6 +139,7 @@ android {
 
     defaultPublishConfig getDefaultPublishConfig()
     publishNonDefault true
+    namespace 'io.nyris.sdk'
 }
 
 dependencies {

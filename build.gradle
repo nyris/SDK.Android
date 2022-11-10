@@ -15,7 +15,7 @@
  */
 
 buildscript {
-    ext.gradleVersion = '7.0.3'
+    ext.gradleVersion = '7.3.1'
     ext.kotlinVersion = '1.6.0'
     repositories {
         google()
