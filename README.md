@@ -58,7 +58,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.nyris:sdk:1.6.0'
+    implementation 'io.nyris:sdk:1.6.1'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
     implementation "android.arch.lifecycle:extensions:1.x.x" //Optional
 }
@@ -87,6 +87,12 @@ class DemoApp : Application(){
         nyris = Nyris.createInstance(BuildConfig.API_KEY)
         // OR
         nyris = Nyris.createInstance("YOUR_API_KEY", NyrisConfig(isDebug = true))
+        // OR
+        nyris = Nyris.createInstance("YOUR_API_KEY", NyrisConfig(
+                isDebug = true,
+                hostUrl = "YOUR_HOST_URL"
+            )
+        )
     }
 }
 ```
