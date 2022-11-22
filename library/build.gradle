@@ -51,9 +51,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        aarMetadata {
-            minCompileSdk = rootProject.ext.minSdkVersion
-        }
     }
 
 
@@ -141,11 +138,8 @@ android {
     }
 
     namespace 'io.nyris.sdk'
-    publishing {
-        singleVariant('prdRelease') {
-            withSourcesJar()
-        }
-    }
+    defaultPublishConfig "prodRelease"
+    publishNonDefault true
 }
 
 dependencies {

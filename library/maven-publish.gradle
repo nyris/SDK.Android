@@ -18,7 +18,7 @@ afterEvaluate {
         }
 
         publications {
-            prod(MavenPublication) {
+            prodRelease(MavenPublication) {
                 from components.findByName('prodRelease')
 
                 groupId = POM_GROUP_ID
