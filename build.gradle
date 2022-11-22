@@ -32,6 +32,9 @@ allprojects {
         google()
         mavenCentral()
     }
+    tasks.withType(GenerateModuleMetadata) {
+        enabled = false
+    }
 }
 
 task clean(type: Delete) {
