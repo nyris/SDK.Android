@@ -75,6 +75,7 @@ Get Started
 * [Mark sent image as not found](#mark-sent-image-as-not-found)
 * [Text Match Search](#text-match-search)
 * [Send user feedback](#send-user-feedback)
+* [Filters](#filters)
 
 ### Get instance 
 First, initialize an instance of `INyris` with your API Key :
@@ -332,7 +333,7 @@ Before you send a feedback event, you will need to get the `requestId` and the `
         .subscribe({}, {}) //Completable
 ```
 
-### Send Conversion event
+#### Send Conversion event
 ```kotlin
     nyris
         .feedback()
@@ -347,7 +348,7 @@ Before you send a feedback event, you will need to get the `requestId` and the `
         .subscribe({}, {}) //Completable
 ```
 
-### Send feedback event
+#### Send feedback event
 ```kotlin
     nyris
         .feedback()
@@ -362,7 +363,7 @@ Before you send a feedback event, you will need to get the `requestId` and the `
         .subscribe({}, {}) //Completable
 ```
 
-### Send region event
+#### Send region event
 ```kotlin
     nyris
         .feedback()
@@ -378,6 +379,23 @@ Before you send a feedback event, you will need to get the `requestId` and the `
         )
         .subscribe({}, {}) //Completable
 ```
+
+### Filters
+Search options is a way to filter the results on the backend side. To search with filters you need to: 
+```kotlin
+    nyris
+        .imageMatching()
+        .filters {
+            list = listOf(
+                Filter(filterType = "YOUR_FILTER_TYPE_1", listOf("YOUR_FILTER_VALUE_1", "YOUR_FILTER_VALUE_2")),
+                Filter(filterType = "YOUR_FILTER_TYPE_2", listOf("YOUR_FILTER_VALUE_1", "YOUR_FILTER_VALUE_2")),
+            )
+        }
+        .match(byteArray)
+        .subscribe({}, {})
+```
+We will process the image with provided filters and return a JSON object containing the metadata of the identified items. The returned items will have the provided filter types and values.
+
 License
 =======
     Copyright 2018 nyris GmbH
