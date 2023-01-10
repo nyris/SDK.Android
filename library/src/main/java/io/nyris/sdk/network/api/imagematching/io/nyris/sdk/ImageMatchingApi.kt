@@ -20,6 +20,7 @@ import android.util.Base64
 import com.google.gson.Gson
 import io.reactivex.Single
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -46,6 +47,7 @@ internal class ImageMatchingApi(
     private val regroupOptions: RegroupOptions = RegroupOptions()
     private val recommendationOptions: RecommendationOptions = RecommendationOptions()
     private val categoryPredictionOptions: CategoryPredictionOptions = CategoryPredictionOptions()
+    private val filtersOptions: FiltersOptions = FiltersOptions()
     private var limit: Int = 20
 
     /**
@@ -57,6 +59,7 @@ internal class ImageMatchingApi(
         ocrOptions.reset()
         recommendationOptions.reset()
         categoryPredictionOptions.reset()
+        filtersOptions.reset()
         limit = 20
     }
 
@@ -124,10 +127,21 @@ internal class ImageMatchingApi(
         return this
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override fun categoryPrediction(
         action: CategoryPredictionOptions.() -> Unit
     ): IImageMatchingApi {
         action(categoryPredictionOptions)
+        return this
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun filters(action: FiltersOptions.() -> Unit): IImageMatchingApi {
+        action(filtersOptions)
         return this
     }
 
@@ -189,7 +203,6 @@ internal class ImageMatchingApi(
             xOptions += " category-prediction.threshold=${categoryPredictionOptions.threshold}"
         }
 
-        reset()
         return xOptions
     }
 
@@ -254,9 +267,15 @@ internal class ImageMatchingApi(
         }
 
         val headers = buildHeaders(image.size)
-        val body = image.toRequestBody("image/jpg".toMediaTypeOrNull())
+        val imagePart = image.toRequestBody("image/jpg".toMediaTypeOrNull())
+        val multiPartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .buildFiltersParts()
+            .addFormDataPart("image", "image.jpg", imagePart)
+            .build()
 
-        val obs1 = imageMatchingService.match(headers, body)
+        // you need to call reset before send the query to allow the 2nd request to be executed
+        reset()
+        val obs1 = imageMatchingService.match(headers, multiPartBody)
         return convertResponseBodyBasedOnType(image, obs1, clazz, gson)
     }
 
@@ -294,5 +313,15 @@ internal class ImageMatchingApi(
 
         val obs1 = imageMatchingService.semanticSearch2(headers, body)
         return convertResponseBodyBasedOnType(image, obs1, clazz, gson)
+    }
+
+    private fun MultipartBody.Builder.buildFiltersParts(): MultipartBody.Builder {
+        filtersOptions.list.forEachIndexed { i, filter ->
+            addFormDataPart("filters[$i].filterType", filter.filterType)
+            filter.filterValue.forEachIndexed { j, value ->
+                addFormDataPart("filters[$i].filterValues[$j]", value)
+            }
+        }
+        return this
     }
 }
