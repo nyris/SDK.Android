@@ -110,6 +110,17 @@ interface IImageMatchingApi {
     ): IImageMatchingApi
 
     /**
+     * Set filter options, that allow to have a prefiltered results
+     *
+     * @param action parameter function function type with FiltersOptions receiver.
+     * @return the current instance of IImageMatchingApi
+     * @see FiltersOptions
+     */
+    fun filters(
+        action: FiltersOptions.() -> Unit = {}
+    ): IImageMatchingApi
+
+    /**
      * Match image byte array
      *
      * Default image matching method for the advanced response return, please use
