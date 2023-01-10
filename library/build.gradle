@@ -70,16 +70,6 @@ android {
         }
     }
 
-    flavorDimensions 'environment'
-    productFlavors {
-        dev {
-            dimension 'environment'
-        }
-        prod {
-            dimension 'environment'
-        }
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/di'
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/di/component'
@@ -95,38 +85,16 @@ android {
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/offermanager'
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/offersimilarity'
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/textsearch'
-        prod.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/feedback'
-        prod.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/regions'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/feedback'
+        main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/api/regions'
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/model'
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/network/service'
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/utils'
         main.java.srcDirs += 'src/main/java/io/nyris/sdk/utils/rx'
 
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/component'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/module'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/qualifier'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/qualifier/network'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/di/qualifier/sdk'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/base'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/imagematching'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/notfoundmatching'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/offermanager'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/offersimilarity'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/api/textsearch'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/model'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/network/service'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/utils'
-        prod.java.srcDirs += 'src/prod/java/io/nyris/sdk/utils/rx'
-
 
         test.java.srcDirs += 'src/test/java/io/nyris/sdk/rules'
         test.java.srcDirs += 'src/test/java/io/nyris/sdk/unit'
-
-        testDev.java.srcDirs += 'src/testDev/java/io/nyris/sdk/rules'
-        testDev.java.srcDirs += 'src/testDev/java/io/nyris/sdk/unit'
     }
 
     testOptions {

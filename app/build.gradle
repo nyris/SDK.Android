@@ -35,13 +35,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-
-    flavorDimensions 'environment'
-    productFlavors {
-        prod {
-            dimension 'environment'
-        }
-    }
+    
     namespace 'io.nyris.sdk.app'
 }
 

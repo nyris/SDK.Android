@@ -18,8 +18,8 @@ afterEvaluate {
         }
 
         publications {
-            prod(MavenPublication) {
-                from components.findByName('prodRelease')
+            release(MavenPublication) {
+                from components.findByName('release')
 
                 groupId = POM_GROUP_ID
                 artifactId = POM_ARTIFACT_ID
