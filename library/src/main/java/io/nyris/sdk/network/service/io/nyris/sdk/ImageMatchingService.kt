@@ -40,7 +40,7 @@ internal interface ImageMatchingService {
      * @param body the body
      * @return the Single Response Body
      */
-    @POST("find/v1")
+    @POST("find/v1.1")
     fun match(
         @HeaderMap headers: Map<String, String>,
         @Body body: RequestBody
