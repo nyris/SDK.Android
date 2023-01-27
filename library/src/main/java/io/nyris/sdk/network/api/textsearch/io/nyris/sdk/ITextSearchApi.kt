@@ -58,6 +58,7 @@ interface ITextSearchApi {
      * @return the current instance of IImageMatchingApi
      * @see RegroupOptions
      */
+    @Deprecated("Need to be removed with the next release 1.8.0")
     fun regroup(action: RegroupOptions.() -> Unit = { enabled = true }): ITextSearchApi
 
     /**
