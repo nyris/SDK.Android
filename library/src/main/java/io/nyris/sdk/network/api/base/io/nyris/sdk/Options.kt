@@ -1,5 +1,7 @@
 package io.nyris.sdk
 
+import androidx.annotation.Keep
+
 /**
  * Options.kt - Base class that contain common fields between all options
  *
@@ -7,6 +9,7 @@ package io.nyris.sdk
  * Created by nyris GmbH
  * Copyright © 2018 nyris GmbH. All rights reserved.
  */
+@Deprecated("Need to be removed with the next release 1.8.0")
 abstract class Options {
     var enabled = false
 

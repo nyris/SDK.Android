@@ -50,6 +50,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see ExactOptions
      */
+    @Deprecated("Need to be removed with the next release 1.8.0")
     fun exact(action: ExactOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
@@ -59,6 +60,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see SimilarityOptions
      */
+    @Deprecated("Need to be removed with the next release 1.8.0")
     fun similarity(action: SimilarityOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
@@ -68,6 +70,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see OcrOptions
      */
+    @Deprecated("Need to be removed with the next release 1.8.0")
     fun ocr(action: OcrOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
@@ -85,6 +88,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see RegroupOptions
      */
+    @Deprecated("Need to be removed with the next release 1.8.0")
     fun regroup(action: RegroupOptions.() -> Unit = { enabled = true }): IImageMatchingApi
 
     /**
@@ -94,6 +98,7 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see RecommendationOptions
      */
+    @Deprecated("Need to be removed with the next release 1.8.0")
     fun recommendations(
         action: RecommendationOptions.() -> Unit = { enabled = true }
     ): IImageMatchingApi
@@ -105,6 +110,8 @@ interface IImageMatchingApi {
      * @return the current instance of IImageMatchingApi
      * @see CategoryPredictionOptions
      */
+
+    @Deprecated("Need to be removed with the next release 1.8.0")
     fun categoryPrediction(
         action: CategoryPredictionOptions.() -> Unit = { enabled = true }
     ): IImageMatchingApi

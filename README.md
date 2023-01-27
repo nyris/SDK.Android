@@ -144,7 +144,7 @@ dependencies {
 ```
 
 #### Advanced way to match an image : 
-
+Some options are deprecated and they will be removed on the next release 1.8.0
 ```kotlin
     //For more details about available feed attributes please check our documentation : http://docs.nyris.io/#available-feed-attributes.
     val imageByteArray : ByteArray = /* Your byte array */
@@ -152,22 +152,22 @@ dependencies {
         .imageMatching()
         .outputFormat("PROVIDED_OUTPUT_FORMAT") // Set the desired OUTPUT_FORMAT
         .language("de") // Return only offers with language "de".
-        .exact({
+        .exact({ //[DEPRECATED]
             enabled = false // disable exact matching
         })
-        .similarity({//Performs similarity matching
+        .similarity({ //[DEPRECATED]
             threshold = 0.5F // The lower limit of confidences to be considered good from similarity
             limit = 10 // The upper limit for the number of results to be returned from similarity
         })
-        .ocr({//Performs optical character recognition on the images
+        .ocr({ //[DEPRECATED]
             enabled = false // disable OCR
         })
-        .regroup({
+        .regroup({ //[DEPRECATED]
             enabled = false // This mode enables regrouping of the items
             threshold = 0.5F // The lower limit of confidences to be considered good from similarity
         })
-        .recommendations() // Enables recommendation type searches that return all discovered results regardless of their score.
-        .categoryPrediction({
+        .recommendations() //[DEPRECATED]
+        .categoryPrediction({  //[DEPRECATED]
             enabled = true // Enables the output of predicted categories.
             threshold = 0.5F // Sets the cutoff threshold for category predictions (range 0..1).
             limit = 10 // Limits the number of categories to return.
@@ -205,7 +205,6 @@ find objects in an image
 
 ```kotlin
     nyris
-        .objectProposal()
         .regions(imageByteArray)
         .subscribe({/* it:ObjectList */
             // Handle your response
@@ -279,7 +278,7 @@ you can use the text search service the same way as [image matching service](#ma
         .textSearch()
         .outputFormat("PROVIDED_OUTPUT_FORMAT") // Set the desired OUTPUT_FORMAT
         .language("de") // Return only offer with language "de"
-        .regroup({
+        .regroup({ //[DEPRECATED]
             enabled = true // This mode enables regrouping of the items
             threshold = 0.5F // The lower limit of confidences for the regroup
         })
