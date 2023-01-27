@@ -148,6 +148,7 @@ internal class ImageMatchingApi(
     /**
      * {@inheritDoc}
      */
+
     override fun buildXOptions(): String {
         var xOptions = ""
 
@@ -211,10 +212,13 @@ internal class ImageMatchingApi(
      */
     private fun buildHeaders(contentSize: Int): HashMap<String, String> {
         val headers = createDefaultHeadersMap()
+        val xoptions = buildXOptions()
         headers["Accept"] = outputFormat
         headers["Accept-Language"] = language
         headers["Content-Length"] = contentSize.toString()
-        headers["X-Options"] = buildXOptions()
+        if (xoptions.isNotEmpty()) {
+            headers["X-Options"] = xoptions
+        }
         return headers
     }
 

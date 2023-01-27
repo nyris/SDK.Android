@@ -67,6 +67,7 @@ internal open class Api(protected val apiHeader: ApiHeader) {
      *
      * @return the x-options string
      */
+    @Deprecated("Need to be removed with the next release 1.8.0")
     open fun buildXOptions(): String {
         return String()
     }
