@@ -1,7 +1,5 @@
 package io.nyris.sdk
 
-import androidx.annotation.Keep
-
 /**
  * CategoryPredictionOptions.kt - Category Prediction Options that contains params related to it.
  *

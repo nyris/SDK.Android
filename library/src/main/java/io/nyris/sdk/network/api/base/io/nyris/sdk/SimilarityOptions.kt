@@ -1,7 +1,5 @@
 package io.nyris.sdk
 
-import androidx.annotation.Keep
-
 /**
  * SimilarityOptions.kt - Similarity Options that contains params related to it.
  *
