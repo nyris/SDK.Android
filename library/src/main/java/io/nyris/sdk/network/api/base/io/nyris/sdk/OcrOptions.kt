@@ -1,7 +1,5 @@
 package io.nyris.sdk
 
-import androidx.annotation.Keep
-
 /**
  * OcrOptions.kt - OCR Options that contains params related to it.
  *
@@ -16,6 +14,6 @@ class OcrOptions : Options() {
     }
 
     override fun reset() {
-        enabled = true
+        enabled = false
     }
 }

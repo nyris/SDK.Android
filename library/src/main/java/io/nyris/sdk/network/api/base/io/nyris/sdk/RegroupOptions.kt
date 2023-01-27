@@ -1,7 +1,5 @@
 package io.nyris.sdk
 
-import androidx.annotation.Keep
-
 /**
  * RegroupOptions.kt - Regroup Options that contains params related to it.
  *

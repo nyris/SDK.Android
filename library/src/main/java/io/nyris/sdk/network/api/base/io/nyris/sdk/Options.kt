@@ -1,7 +1,5 @@
 package io.nyris.sdk
 
-import androidx.annotation.Keep
-
 /**
  * Options.kt - Base class that contain common fields between all options
  *

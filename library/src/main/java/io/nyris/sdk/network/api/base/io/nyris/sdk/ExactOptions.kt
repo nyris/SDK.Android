@@ -1,7 +1,5 @@
 package io.nyris.sdk
 
-import androidx.annotation.Keep
-
 /**
  * ExactOptions.kt - Exact Options that contains params related to it.
  *
