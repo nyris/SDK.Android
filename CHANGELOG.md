@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## 1.7.4 - 30.01.2023
+* Fix a crash related to wrong conversion Int to Float related to Region Model
+
 ## 1.7.3 - 27.01.2023
 ### Fixed 
 * a bug related to xoptions which was blocking the image search api to work properly
