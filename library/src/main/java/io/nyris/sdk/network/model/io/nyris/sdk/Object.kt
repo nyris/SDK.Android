@@ -45,18 +45,18 @@ data class Object(
 @Keep
 data class Region(
     @SerializedName("left")
-    val left: Int = 0,
+    val left: Float = 0F,
 
     @SerializedName("top")
-    val top: Int = 0,
+    val top: Float = 0F,
 
     @SerializedName("right")
-    val right: Int = 0,
+    val right: Float = 0F,
 
     @SerializedName("bottom")
-    val bottom: Int = 0,
+    val bottom: Float = 0F,
 ) {
-    fun width(): Int = right - left
+    fun width(): Float = right - left
 
-    fun height(): Int = bottom - top
+    fun height(): Float = bottom - top
 }
