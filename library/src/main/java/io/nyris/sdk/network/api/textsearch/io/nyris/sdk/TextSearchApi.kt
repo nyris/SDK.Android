@@ -111,7 +111,7 @@ internal class TextSearchApi(
     override fun <T : IResponse> searchOffers(keyword: String, clazz: Class<T>): Single<T> {
         val headers = createDefaultHeadersMap()
         val xOptions = buildXOptions()
-        headers["Accept"] = outputFormat
+        headers["Accept"] = "$outputFormat; charset=UTF-8"
         headers["Accept-Language"] = language
         headers["Content-Length"] = keyword.length.toString()
         if (xOptions.isNotEmpty()) {

@@ -62,7 +62,7 @@ internal class SimilarityApi(
      */
     override fun <T : IResponse> getBySku(sku: String, clazz: Class<T>): Single<T> {
         val headers = createDefaultHeadersMap()
-        headers["Accept"] = outputFormat
+        headers["Accept"] = "$outputFormat; charset=UTF-8"
         headers["Accept-Language"] = language
         val obs1 = similarityService.getBySku(sku, headers)
         return convertResponseBodyBasedOnType(sku, obs1, clazz, gson)

@@ -213,7 +213,7 @@ internal class ImageMatchingApi(
     private fun buildHeaders(contentSize: Int): HashMap<String, String> {
         val headers = createDefaultHeadersMap()
         val xoptions = buildXOptions()
-        headers["Accept"] = outputFormat
+        headers["Accept"] = "$outputFormat; charset=UTF-8"
         headers["Accept-Language"] = language
         headers["Content-Length"] = contentSize.toString()
         if (xoptions.isNotEmpty()) {
